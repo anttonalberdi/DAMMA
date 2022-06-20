@@ -15,8 +15,8 @@ install_github("anttonalberdi/DAMMA")
 ```
 #Load annotations
 library(data.table)
-annotations_file="/Users/anttonalberdi/annotations.tsv"
-annotations <- fread(annotations_file)
+#annotations_file="/mydir/annotations.tsv"
+#annotations <- fread(annotations_file)
 
 #Load example annotations
 data(damma_data)
@@ -24,37 +24,37 @@ head(annotations_example)
 
 #Load functions
 data(damma_data)
-head(functions)
+head(functions_table)
 
 #Run distillation
-distilled_table <- damma(annotations_example,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Aggregrate compounds
 ```
-compounds_table <- aggregate_compounds(distilled_table,functions)
+compounds_table <- aggregate_compounds(distilled_table,functions_table)
 ```
 
-### Module-level heatmap
+### Compound-level heatmap
 ```
 library(ggplot2)
 library(RColorBrewer)
 
-distilled_table2 <- distilled_table_binary
+compounds_table
 
-distilled_table2[is.na(distilled_table2)] <- 0
-distilled_df <- melt(distilled_table2)
-colnames(distilled_df) <- c("MAGs","Functions","Fullness")
-distilled_df2 <- merge(distilled_df,functions,by.x="Functions",by.y="row.names")
+compounds_table_df <- melt(compounds_table)
+colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
+compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
 
-ggplot(distilled_df2, aes(x=Functions, y=MAGs, fill=Fullness, group=Function))+
+ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Function))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
   #scale_fill_gradientn( colours = rev(c("#781a25","#d53e4f", "#f46d43", "#fdae61", "#fee08b", "#e6f598", "#abdda4", "#ddf1da","#f1faf0","#f4f4f4")))+
   scale_fill_gradientn(colours=brewer.pal(7, "YlGnBu"))+
-  facet_grid(~ Function, scales = "free", space = "free")
-  theme_grey(base_size=8)
+  facet_grid(Function ~ ., scales = "free", space = "free")+
+  theme_grey(base_size=8)+
+  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
 
 ### Compound-level heatmap
