@@ -10,5 +10,4 @@
 #' @keywords datasets
 #' @examples
 #' data(function_table)
-#' @export
 "function_table"
