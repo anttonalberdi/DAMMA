@@ -6,9 +6,9 @@
 #' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
 #' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
-#' @import stringr
-#' @import dplyr
 #' @import data.table
+#' @importFrom stringr str_extract str_match_all strsplit
+#' @importFrom dplyr pull
 #' @return A fullness matrix
 #' @examples
 #' damma(annotations,functions,magcol,keggcol,eccol,pepcol)
