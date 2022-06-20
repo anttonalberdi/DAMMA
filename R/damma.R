@@ -8,6 +8,7 @@
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
 #' @import stringr
 #' @import dplyr
+#' @import data.table
 #' @return A fullness matrix
 #' @examples
 #' damma(annotations,functions,magcol,keggcol,eccol,pepcol)
@@ -17,6 +18,7 @@
 damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
 
   #Simplify annotations table
+  setDT(annotations)
   annotations2 <- annotations[,c(magcol,keggcol,eccol,pepcol), with=FALSE]
   colnames(annotations2) <- c("MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
 
