@@ -33,9 +33,7 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
     m=m+1
     cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
     #Fetch MAG annotations
-    cat("1\n")
     annotations_MAG <- annotations2[annotations2$MAGs == MAG]
-    cat("2\n")
     #K00000
     kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
     kegg <- unique(kegg[!is.na(kegg)])
