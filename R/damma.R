@@ -54,8 +54,11 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
     #Compute completeness scores
     fullness_vector <- c()
     for(f in c(1:nrow(functions))){
+      cat("1\n")
       definition=functions[f,5]
+      cat("2\n")
       fullness <- compute_fullness(definition,present)
+      cat("3\n")
       fullness_vector <- c(fullness_vector,fullness)
     }
     fullness_table <- rbind(fullness_table,fullness_vector)
