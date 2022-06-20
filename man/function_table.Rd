@@ -15,8 +15,6 @@ Information compiled from databases KEGG, MetaSys and MEROPS.
 }
 \details{
 Data created from version 20220619
-function_table <- read.table("data/DAMMA_functions_20220619.tsv", header=TRUE, sep="\t")
-save(function_table, file="data/function_table.RData")
 }
 \examples{
 data(function_table)
