@@ -1,8 +1,8 @@
 #' Convert the fullness table of metabolic pathways/modules into a binary (present/absent) matrix
 #'
-#' @param fullness_table Table containing MAG identifiers and annotation codes
-#' @param threshold Table containing definitions and metadata of metabolic functions (provided by GAMMA)
-#' @param completeness Column index (number) of the annotations table containing the MAG identifiers
+#' @param fullness_table Table containing fullness scores of functions (X axis) per MAG (Y axis)
+#' @param threshold Minimum fullness value to consider a function (pathway/module) to be present in a MAG
+#' @param completeness Two-column table indicating the completeness (eg. CheckM) percentage (column 2) of each MAG (column 1)
 #' @return A binary function matrix
 #' @examples
 #' damma_bin(fullness_table)
@@ -12,7 +12,7 @@
 
 damma_bin <- function(fullness_table,threshold=0.9,completeness){
   if(missing(completeness)){
-    if(nrow(fullness_table) != nrow(completeness)) stop("Dimensions of function fullness and MAG completeness data do not match")
+
   }
 
   if(missing(completeness)){
@@ -24,11 +24,14 @@ damma_bin <- function(fullness_table,threshold=0.9,completeness){
 
   }else{
     #ACCOUNTING FOR MAG COMPLETENESS
+
+    if(nrow(fullness_table) != nrow(completeness)) stop("Dimensions of function fullness and MAG completeness data do not match")
+
     #Adjust thresholds to each MAG
-    threshold_corrected <- completeness[,1]/100 * threshold
+    threshold_corrected <- completeness[,2]/100 * threshold
 
     #Convert table into binary
-    fullness_table_binary <- fullness_table
+    fullness_table_binary <- fullness_table[completeness[,1],]
     for(r in c(1:nrow(fullness_table_binary))){
       row <- fullness_table_binary[r, ]
       row[row >= threshold_corrected[r]] <- 1
