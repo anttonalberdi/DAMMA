@@ -55,7 +55,7 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
     fullness_vector <- c()
     for(f in c(1:nrow(functions))){
       definition=functions[f,4]
-      fullness <- compute_fullness(present,definition)
+      fullness <- compute_fullness(definition,present)
       fullness_vector <- c(fullness_vector,fullness)
     }
     fullness_table <- rbind(fullness_table,fullness_vector)
