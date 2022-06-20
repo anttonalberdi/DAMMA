@@ -2,40 +2,65 @@
 Distillation of Animal-associated Microorganisms' Metabolic Annotations
 
 ### Install DAMMA
+DAMMA can be directly installed from this Github repository using install_github() function.
 ```
 install.packages("devtools") #only if devtools is not installed
 library(devtools)
 install_github("anttonalberdi/DAMMA")
 ```
 
-### Run distillation
-- **Required files / tables**: A) single table containing all MAG annotations; B) functions table provided with DAMMA.
-- **Arguments**: magcol=[number of column containing MAG identifies], keggcol=[index(es) of column(s) containing KO codes (eg: K00169)], eccol=[index(es) of column(s) containing EC codes (eg: EC:3.2.4.15)], pepcol=[index(es) of column(s) containing peptidase codes (eg: C03H]
+### Input data
+DAMMA only requires an annotations table containing MAG identifiers and annotations. Such tables are usually quite large, so using data.table is recommended for smooth processing of the data.
 
 ```
 #Load annotations
 library(data.table)
 #annotations_file="/mydir/annotations.tsv"
 #annotations <- fread(annotations_file)
+```
 
-#Load example annotations
+DAMMA contains an example annotation table that can be loaded along with the functions table.
+
+```
+#Load DAMMA support data
 data(damma_data)
+
+#Visualise example annotations
 head(annotations_example)
 
-#Load functions
-data(damma_data)
+#Visualise functions table
 head(functions_table)
+```
 
-#Run distillation
+### Run distillation
+The damma() function requires specifying in which column(s) to find MAG identifiers and annotation data.
+- magcol=[number of column containing MAG identifies]
+- keggcol=[index(es) of column(s) containing KO codes (eg: K00169)]
+- eccol=[index(es) of column(s) containing EC codes (eg: EC:3.2.4.15)]
+- pepcol=[index(es) of column(s) containing peptidase codes (eg: C03H]
+
+```
+#Using example data
 distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-### Aggregrate compounds
+### Aggregrate data to 73 compounds
+
+The raw fullness data can be aggregated to the compound level using the aggregate_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
 compounds_table <- aggregate_compounds(distilled_table,functions_table)
 ```
 
+### Aggregrate compounds to 10 functions
+
+The compounds data can be aggregated to the main functional levels using the aggregate_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
+```
+functions_table <- aggregate_functions(compounds_table,functions_table)
+```
+
 ### Compound-level heatmap
+
+Functional data can be visualised as a heatmap using ggplot2.
 ```
 library(ggplot2)
 library(RColorBrewer)
