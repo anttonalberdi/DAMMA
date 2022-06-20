@@ -61,5 +61,6 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
   }
   rownames(fullness_table) <- MAGs
   colnames(fullness_table) <- rownames(functions)
+  fullness_table[is.na(fullness_table)] <- 0
   return(fullness_table)
 }
