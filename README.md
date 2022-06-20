@@ -19,7 +19,7 @@ library(data.table)
 #annotations <- fread(annotations_file)
 ```
 
-DAMMA contains an example annotation table that can be loaded along with the functions table.
+DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing functions.
 
 ```
 #Load DAMMA support data
@@ -34,24 +34,24 @@ head(functions_table)
 
 ### Run distillation
 The damma() function requires specifying in which column(s) to find MAG identifiers and annotation data.
-- magcol=[number of column containing MAG identifies]
-- keggcol=[index(es) of column(s) containing KO codes (eg: K00169)]
-- eccol=[index(es) of column(s) containing EC codes (eg: EC:3.2.4.15)]
-- pepcol=[index(es) of column(s) containing peptidase codes (eg: C03H]
+- magcol: number of column containing MAG identifies.
+- keggcol: index(es) of column(s) containing KO codes (eg: K00169).
+- eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15).
+- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H.
 
 ```
 #Using example data
 distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-### Aggregrate data to 73 compounds
+### Aggregrate raw distillates into 73 compounds
 
 The raw fullness data can be aggregated to the compound level using the aggregate_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
 compounds_table <- aggregate_compounds(distilled_table,functions_table)
 ```
 
-### Aggregrate compounds to 10 functions
+### Aggregrate compounds into 10 functions
 
 The compounds data can be aggregated to the main functional levels using the aggregate_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
