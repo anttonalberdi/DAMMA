@@ -28,37 +28,16 @@ distilled_table <- damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19)
 
 ### Transform fullness table
 ```
-#Raw
-heatmap(distilled_table, Colv=NA, scale="none")
-
-#Binary
-threshold=0.9
-distilled_table_binary <- distilled_table
-distilled_table_binary[distilled_table_binary >= threshold] <- 1
-distilled_table_binary[distilled_table_binary < threshold] <- 0
-
-#Binary corrected
-threshold=0.9
-completeness <- read.csv("/Users/anttonalberdi/genomeInfo.csv",row.names=1)
-completeness <- completeness[rownames(completeness) %in% rownames(distilled_table),]
-threshold_corrected <- completeness[,1]/100 * threshold
-
-distilled_table_binary_corrected <- distilled_table
-for(r in c(1:nrow(distilled_table_binary_corrected))){
-  row <- distilled_table_binary_corrected[r, ]
-  row[row >= threshold_corrected[r]] <- 1
-  row[row < threshold_corrected[r]] <- 0
-  distilled_table_binary_corrected[r, ] <- row
-}
+completeness <- read.csv("/Users/anttonalberdi/genomeInfo.csv")
+distilled_table_binary <- damma_bin(distilled_table,0.9,completeness[,c(1:2)])
 ```
 
-### Compound-level heatmap
+### Module-level heatmap
 ```
 library(ggplot2)
 library(RColorBrewer)
 
-distilled_table2=distilled_table
-distilled_table2=distilled_table_binary_corrected
+distilled_table2 <- distilled_table_binary
 
 distilled_table2[is.na(distilled_table2)] <- 0
 distilled_df <- melt(distilled_table2)
@@ -75,7 +54,7 @@ ggplot(distilled_df2, aes(x=Functions, y=MAGs, fill=Fullness, group=Function))+
   theme_grey(base_size=8)
 ```
 
-### Function-level heatmap
+### Compound-level heatmap
 ```
 library(ggplot2)
 library(RColorBrewer)
