@@ -62,13 +62,18 @@ functions_table <- aggregate_functions(compounds_table,functions_table)
 
 Functional data can be visualised as a heatmap using ggplot2.
 ```
+library(data.table)
 library(ggplot2)
 library(RColorBrewer)
 
+#Prepare input table
 compounds_table_df <- melt(compounds_table)
 colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
 compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
+compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Dietary carbohydrate degradation","Dietary lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 
+#Plot heatmap
 ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Function))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
