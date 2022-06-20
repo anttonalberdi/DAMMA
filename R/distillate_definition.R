@@ -4,7 +4,7 @@
 #' @param def_table Decomposed hierarchy matrix produced by create_step_matrix.R
 #' @param level Hierarchical level
 #' @param present Vector of functional units present in the genome
-#' @import stringr
+#' @importFrom stringr str_sub
 #' @return A (partially) distilled definition string
 #' @examples
 #' distillate_definition(definition, def_table, level, present)
