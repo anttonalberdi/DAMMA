@@ -7,11 +7,11 @@
 damma_bin(fullness_table, threshold = 0.9, completeness)
 }
 \arguments{
-\item{fullness_table}{Table containing MAG identifiers and annotation codes}
+\item{fullness_table}{Table containing fullness scores of functions (X axis) per MAG (Y axis)}
 
-\item{threshold}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{threshold}{Minimum fullness value to consider a function (pathway/module) to be present in a MAG}
 
-\item{completeness}{Column index (number) of the annotations table containing the MAG identifiers}
+\item{completeness}{Two-column table indicating the completeness (eg. CheckM) percentage (column 2) of each MAG (column 1)}
 }
 \value{
 A binary function matrix
