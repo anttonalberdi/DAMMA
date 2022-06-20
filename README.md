@@ -21,7 +21,9 @@ annotations <- fread(annotations_file)
 #Load functions
 data(function_table)
 functions <- function_table
-distilled_table <- fullness_matrix(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+
+#Run distillation
+distilled_table <- damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Transform fullness table
