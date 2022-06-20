@@ -1,0 +1,19 @@
+Package: DAMMA
+Type: Package
+Title: Distillation of Animal-Associated Microbiome Metabolic Annotations
+Version: 1.0.0
+Author: Antton Alberdi
+Maintainer: Antton Alberdi <antton.alberdi@sund.ku.dk>
+Description: DAMMA contains a set of functions to distillate raw functional annotations
+    of genome-resolved metagenomic data of microbial communities associated with animals
+    into meaningful functional information.
+License: CC-by-sa 4.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.0
+Imports:
+    stringr,
+    dplyr
+Suggests:
+    data.table,
+    ggplot2
