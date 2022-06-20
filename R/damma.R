@@ -26,6 +26,7 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
   #annotations2 <- annotations2[, .(MAGs, Annotations)]
 
   #List MAGs
+  cat("1\n")
   MAGs <- unique(dplyr::pull(annotations2, MAGs))
 
   #Calculate fullness values
@@ -36,7 +37,9 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
     m=m+1
     cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
     #Fetch MAG annotations
+    cat("2\n")
     annotations_MAG <- annotations2[annotations2$MAGs == MAG]
+    cat("3\n")
     #K00000
     kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
     kegg <- unique(kegg[!is.na(kegg)])
@@ -56,11 +59,8 @@ damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
     #Compute completeness scores
     fullness_vector <- c()
     for(f in c(1:nrow(functions))){
-      cat("1\n")
       definition=functions[f,5]
-      cat("2\n")
       fullness <- compute_fullness(definition,present)
-      cat("3\n")
       fullness_vector <- c(fullness_vector,fullness)
     }
     fullness_table <- rbind(fullness_table,fullness_vector)
