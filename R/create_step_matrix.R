@@ -5,6 +5,7 @@
 #' @return A decomposed hierarchy matrix
 #' @examples
 #' create_step_matrix(definition_decomposed,definition_levels)
+#' @export
 
 create_step_matrix <- function(def_decomp,def_level){
   def_table <- as.data.frame(cbind(def_decomp,def_level))

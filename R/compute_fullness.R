@@ -6,6 +6,7 @@
 #' @examples
 #' compute_fullness(definition,present)
 #' compute_fullness("K01580 (K13524,K07250,K00823,K16871) (K00135,K00139,K17761)",c("K01580","K00823","K16871"))
+#' @export
 
 compute_fullness <- function(definition,present){
   #If using EC codes

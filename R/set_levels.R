@@ -4,6 +4,7 @@
 #' @return A vector of hierarchical levels per character in string
 #' @examples
 #' set_levels(definition_decomposed)
+#' @export
 
 set_levels <- function(def_decomp){
   def_level <- c()

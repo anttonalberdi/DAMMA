@@ -12,6 +12,7 @@
 #' @examples
 #' damma(annotations,functions,magcol,keggcol,eccol,pepcol)
 #' damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+#' @export
 
 damma <- function(annotations,functions,magcol,keggcol,eccol,pepcol){
 

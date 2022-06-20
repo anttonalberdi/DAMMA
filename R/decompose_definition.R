@@ -5,6 +5,7 @@
 #' @examples
 #' decompose_definition(definition)
 #' decompose_definition("K01580 (K13524,K07250,K00823,K16871) (K00135,K00139,K17761)")
+#' @export
 
 decompose_definition <- function(definition){
     #Separate strings
