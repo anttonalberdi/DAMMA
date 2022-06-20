@@ -18,18 +18,21 @@ library(data.table)
 annotations_file="/Users/anttonalberdi/annotations.tsv"
 annotations <- fread(annotations_file)
 
+#Load example annotations
+data(damma_data)
+head(annotations_example)
+
 #Load functions
-data(function_table)
-functions <- function_table
+data(damma_data)
+head(functions)
 
 #Run distillation
-distilled_table <- damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_table <- damma(annotations_example,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-### Transform fullness table
+### Aggregrate compounds
 ```
-completeness <- read.csv("/Users/anttonalberdi/genomeInfo.csv")
-distilled_table_binary <- damma_bin(distilled_table,0.9,completeness[,c(1:2)])
+compounds_table <- aggregate_compounds(distilled_table,functions)
 ```
 
 ### Module-level heatmap
