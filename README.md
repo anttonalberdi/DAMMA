@@ -19,7 +19,7 @@ library(data.table)
 #annotations <- fread(annotations_file)
 ```
 
-DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing functions.
+DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
 
 ```
 #Load DAMMA support data
