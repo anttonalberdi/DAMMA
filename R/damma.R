@@ -7,7 +7,7 @@
 #' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
 #' @import data.table
-#' @importFrom stringr str_extract str_match_all strsplit
+#' @importFrom stringr str_extract str_match_all
 #' @importFrom dplyr pull
 #' @return A fullness matrix
 #' @examples
