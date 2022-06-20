@@ -7,25 +7,20 @@
 damma_bin(fullness_table, threshold = 0.9, completeness)
 }
 \arguments{
-\item{annotations}{Table containing MAG identifiers and annotation codes}
+\item{fullness_table}{Table containing MAG identifiers and annotation codes}
 
-\item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{threshold}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 
-\item{magcol}{Column index (number) of the annotations table containing the MAG identifiers}
-
-\item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
-
-\item{eccol}{Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations}
-
-\item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
+\item{completeness}{Column index (number) of the annotations table containing the MAG identifiers}
 }
 \value{
-A fullness matrix
+A binary function matrix
 }
 \description{
 Convert the fullness table of metabolic pathways/modules into a binary (present/absent) matrix
 }
 \examples{
-damma(annotations,functions,magcol,keggcol,eccol,pepcol)
-damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+damma_bin(fullness_table)
+damma_bin(fullness_table,0.9)
+damma_bin(fullness_table,threshold=0.9,completeness)
 }
