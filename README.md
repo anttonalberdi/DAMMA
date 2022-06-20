@@ -13,11 +13,14 @@ install_github("anttonalberdi/DAMMA")
 - **Arguments**: magcol=[number of column containing MAG identifies], keggcol=[index(es) of column(s) containing KO codes (eg: K00169)], eccol=[index(es) of column(s) containing EC codes (eg: EC:3.2.4.15)], pepcol=[index(es) of column(s) containing peptidase codes (eg: C03H]
 
 ```
+#Load annotations
+library(data.table)
 annotations_file="/Users/anttonalberdi/annotations.tsv"
-functions_file="/Users/anttonalberdi/github/DAMMA/functions/DAMMA_functions_20220619.tsv"
-
 annotations <- fread(annotations_file)
-functions <- read.table(functions_file,header=TRUE,row.names=1,sep="\t")
+
+#Load functions
+data(function_table)
+functions <- function_table
 distilled_table <- fullness_matrix(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
