@@ -10,7 +10,6 @@
 
 compute_fullness <- function(definition,present){
   #If using EC codes
-  cat(definition,"\n")
   if (grepl(".", definition, fixed = TRUE)){
     present <- gsub(".","_",present,fixed=TRUE)
     definition <- gsub(".","_",definition,fixed=TRUE)
