@@ -15,7 +15,8 @@ Depends:
     R (>= 3.5.0)
 Imports:
     stringr,
-    dplyr
+    dplyr,
+    data.table
 Suggests:
     data.table,
     ggplot2
