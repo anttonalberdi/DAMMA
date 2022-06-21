@@ -103,6 +103,8 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Functi
   theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
 
+Combining DAMMA with ggplot2, it is possible to produce visual representations of both continuous fullness values as well as binary versions of it.
+
 ![Comparison of fullness and binary outcome of compound metabolism.](images/compound_fullness-binary.jpg)
 
 ### Function-level heatmap
