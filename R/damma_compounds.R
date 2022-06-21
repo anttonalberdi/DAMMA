@@ -12,21 +12,28 @@ damma_compounds <- function(distilled_table,functions){
   #Create empty table
   aggregated_table <- c()
 
-  #Aggregate dietary carbohydrates
-  codes <- functions[functions$Function == "Dietary carbohydrate degradation","Code"]
-  compounds <- functions[functions$Function == "Dietary carbohydrate degradation","Compound"]
+  #Aggregate polysaccharides
+  codes <- functions[functions$Function == "Polysaccharide degradation","Code"]
+  compounds <- functions[functions$Function == "Polysaccharide degradation","Compound"]
   distilled_table_sub <- distilled_table[,codes]
   colnames(distilled_table_sub) <- compounds
   aggregated_table <- cbind(aggregated_table,distilled_table_sub)
 
-  #Aggregate dietary lipids
-  codes <- functions[functions$Function == "Dietary lipid degradation","Code"]
-  compounds <- functions[functions$Function == "Dietary lipid degradation","Compound"]
+  #Aggregate sugars
+  codes <- functions[functions$Function == "Sugar degradation","Code"]
+  compounds <- functions[functions$Function == "Sugar degradation","Compound"]
   distilled_table_sub <- distilled_table[,codes]
   colnames(distilled_table_sub) <- compounds
   aggregated_table <- cbind(aggregated_table,distilled_table_sub)
 
-  #Aggregate dietary proteins
+  #Aggregate lipids
+  codes <- functions[functions$Function == "Lipid degradation","Code"]
+  compounds <- functions[functions$Function == "Lipid degradation","Compound"]
+  distilled_table_sub <- distilled_table[,codes]
+  colnames(distilled_table_sub) <- compounds
+  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
+
+  #Aggregate proteins
   codes <- functions[functions$Function == "Protein degradation","Code"]
   enzyme_groups <- functions[functions$Function == "Protein degradation","Compound"]
   distilled_table_sub <- distilled_table[,codes]

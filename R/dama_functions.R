@@ -15,8 +15,8 @@ damma_functions <- function(compounds_table,functions_table,normalise=FALSE){
   #Create empty table
   aggregated_table <- c()
 
-  #Aggregate dietary carbohydrates
-  compounds <- unique(functions_table[functions_table$Function == "Dietary carbohydrate degradation","Compound"])
+  #Aggregate polysaccharides
+  compounds <- unique(functions_table[functions_table$Function == "Polysaccharide degradation","Compound"])
   compounds_table_sub <- compounds_table[,compounds]
   compounds_table_sub <- rowSums(compounds_table_sub)
   if(normalise == FALSE){
@@ -24,10 +24,10 @@ damma_functions <- function(compounds_table,functions_table,normalise=FALSE){
   }else{
     compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
   }
-  aggregated_table <- cbind(aggregated_table,"Dietary carbohydrate degradation"=compounds_table_sub)
+  aggregated_table <- cbind(aggregated_table,"Polysaccharide degradation"=compounds_table_sub)
 
-  #Aggregate dietary lipids
-  compounds <- unique(functions_table[functions_table$Function == "Dietary lipid degradation","Compound"])
+  #Aggregate sugars
+  compounds <- unique(functions_table[functions_table$Function == "Sugar degradation","Compound"])
   compounds_table_sub <- compounds_table[,compounds]
   compounds_table_sub <- rowSums(compounds_table_sub)
   if(normalise == FALSE){
@@ -35,16 +35,27 @@ damma_functions <- function(compounds_table,functions_table,normalise=FALSE){
   }else{
     compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
   }
-  aggregated_table <- cbind(aggregated_table,"Dietary lipid degradation"=compounds_table_sub)
+  aggregated_table <- cbind(aggregated_table,"Sugar degradation"=compounds_table_sub)
 
-  #Aggregate dietary proteins
+  #Aggregate lipids
+  compounds <- unique(functions_table[functions_table$Function == "Lipid degradation","Compound"])
+  compounds_table_sub <- compounds_table[,compounds]
+  compounds_table_sub <- rowSums(compounds_table_sub)
+  if(normalise == FALSE){
+    compounds_table_sub <- compounds_table_sub/length(compounds)
+  }else{
+    compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
+  }
+  aggregated_table <- cbind(aggregated_table,"Lipid degradation"=compounds_table_sub)
+
+  #Aggregate proteins
   compounds_table_sub <- t(t(compounds_table[,"Peptides"]))
   if(normalise == FALSE){
     compounds_table_sub <- compounds_table_sub
   }else{
     compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
   }
-  colnames(compounds_table_sub) <- "Dietary protein degradation"
+  colnames(compounds_table_sub) <- "Protein degradation"
 
   #Aggregate mucins
   compounds <- unique(functions_table[functions_table$Function == "Mucin degradation","Compound"])
