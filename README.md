@@ -22,6 +22,9 @@ library(data.table)
 DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
 
 ```
+#Load DAMMA library
+library(DAMMA)
+
 #Load DAMMA support data
 data(damma_data)
 
@@ -55,7 +58,7 @@ compounds_table <- aggregate_compounds(distilled_table,functions_table)
 
 The compounds data can be aggregated to the main functional levels using the aggregate_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
-functions_table <- aggregate_functions(compounds_table,functions_table)
+functions_table <- aggregate_functions(compounds_table,functions_table,normalise)
 ```
 
 ### Compound-level heatmap

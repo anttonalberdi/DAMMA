@@ -10,6 +10,8 @@
 
 aggregate_functions <- function(compounds_table,functions_table,normalise=FALSE){
 
+  functions_table <- as.data.frame(functions_table)
+
   #Create empty table
   aggregated_table <- c()
 
@@ -38,7 +40,7 @@ aggregate_functions <- function(compounds_table,functions_table,normalise=FALSE)
   #Aggregate dietary proteins
   compounds_table_sub <- t(t(compounds_table[,"Peptides"]))
   if(normalise == FALSE){
-    compounds_table_sub <- compounds_table_sub/length(compounds)
+    compounds_table_sub <- compounds_table_sub
   }else{
     compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
   }
@@ -120,7 +122,7 @@ aggregate_functions <- function(compounds_table,functions_table,normalise=FALSE)
     compounds_table_sub <- compounds_table_sub/max(compounds_table_sub)
   }
   aggregated_table <- cbind(aggregated_table,"Vitamin production"=compounds_table_sub)
-  
+
   return(aggregated_table)
 
 }
