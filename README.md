@@ -47,7 +47,7 @@ The damma() function requires specifying in which column(s) to find MAG identifi
 distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-### Aggregrate raw distillates into 73 compounds
+### Aggregrate raw distillates into 80 compounds
 
 The raw fullness data can be aggregated to the compound level using the damma_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
@@ -67,7 +67,7 @@ completeness_table <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb
 distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9,completeness=completeness_table)
 ```
 
-### Aggregrate compounds into 10 functions
+### Aggregrate compounds into 11 core functions
 
 The compounds data can be aggregated to the main functional levels using the damma_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
