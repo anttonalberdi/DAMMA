@@ -5,10 +5,10 @@
 #' @param normalise Whether to normalise the scale to the maximum values in the dataset. Default=FALSE
 #' @return A function table aggregated at the compound level
 #' @examples
-#' aggregate_functions(compound_table)
+#' dama_functions(compound_table)
 #' @export
 
-aggregate_functions <- function(compounds_table,functions_table,normalise=FALSE){
+dama_functions <- function(compounds_table,functions_table,normalise=FALSE){
 
   functions_table <- as.data.frame(functions_table)
 

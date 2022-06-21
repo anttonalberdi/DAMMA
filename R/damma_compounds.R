@@ -4,10 +4,10 @@
 #' @return A function table aggregated at the compound level
 #' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @examples
-#' aggregate_compounds(compound_table)
+#' damma_compounds(compound_table)
 #' @export
 
-aggregate_compounds <- function(distilled_table,functions){
+damma_compounds <- function(distilled_table,functions){
 
   #Create empty table
   aggregated_table <- c()
