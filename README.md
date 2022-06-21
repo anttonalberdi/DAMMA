@@ -64,7 +64,7 @@ distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0
 This conversion can account for the completeness of MAGs, and decrease the threshold when the completeness of the MAG is lower than 100%.
 ```
 completeness_table <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb2","bin_m1.mxb107_sub","bin_m1.vmb35","bin_m1.vmb46","bin_m9.vmb60"),completeness=c(100,98,85.8,94.5,97,100,70))
-distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9)
+distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9,completeness=completeness_table)
 ```
 
 ### Aggregrate compounds into 10 functions

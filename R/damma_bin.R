@@ -11,9 +11,7 @@
 #' @export
 
 damma_bin <- function(fullness_table,threshold=0.9,completeness){
-  if(missing(completeness)){
-
-  }
+  completeness[,2] <- as.numeric(completeness[,2])
 
   if(missing(completeness)){
     #IGNORING MAG COMPLETENESS
