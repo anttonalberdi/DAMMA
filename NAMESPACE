@@ -2,10 +2,10 @@
 
 export(compute_fullness)
 export(create_step_matrix)
-export(dama_functions)
 export(damma)
 export(damma_bin)
 export(damma_compounds)
+export(damma_functions)
 export(decompose_definition)
 export(distillate_definition)
 export(set_levels)

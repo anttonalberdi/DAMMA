@@ -8,7 +8,7 @@
 #' dama_functions(compound_table)
 #' @export
 
-dama_functions <- function(compounds_table,functions_table,normalise=FALSE){
+damma_functions <- function(compounds_table,functions_table,normalise=FALSE){
 
   functions_table <- as.data.frame(functions_table)
 
