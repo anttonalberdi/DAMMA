@@ -89,7 +89,7 @@ compounds_table_df <- melt(distilled_table_compounds)
 colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
 compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
-compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Dietary carbohydrate degradation","Dietary lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 
 #Plot heatmap
 ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Function))+
@@ -119,8 +119,7 @@ library(RColorBrewer)
 functions_table_df <- melt(distilled_table_functions)
 colnames(functions_table_df) <- c("MAGs","Functions","Index")
 functions_table_df$Function <- as.factor(functions_table_df$Function)
-functions_table_df$Function <- factor(functions_table_df$Function, levels=c("Dietary carbohydrate degradation","Dietary lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
-
+functions_table_df$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 #Plot heatmap
 ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
   geom_tile(colour="white", size=0.1)+
