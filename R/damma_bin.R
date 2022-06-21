@@ -11,7 +11,6 @@
 #' @export
 
 damma_bin <- function(fullness_table,threshold=0.9,completeness){
-  completeness[,2] <- as.numeric(completeness[,2])
 
   if(missing(completeness)){
     #IGNORING MAG COMPLETENESS
@@ -24,7 +23,7 @@ damma_bin <- function(fullness_table,threshold=0.9,completeness){
     #ACCOUNTING FOR MAG COMPLETENESS
 
     if(nrow(fullness_table) != nrow(completeness)) stop("Dimensions of function fullness and MAG completeness data do not match")
-
+    completeness[,2] <- as.numeric(completeness[,2])
     #Adjust thresholds to each MAG
     threshold_corrected <- completeness[,2]/100 * threshold
 
