@@ -51,14 +51,14 @@ distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,
 
 The raw fullness data can be aggregated to the compound level using the aggregate_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
-compounds_table <- aggregate_compounds(distilled_table,functions_table)
+distilled_table_compounds <- aggregate_compounds(distilled_table,functions_table)
 ```
 
 ### Aggregrate compounds into 10 functions
 
 The compounds data can be aggregated to the main functional levels using the aggregate_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
-functions_table <- aggregate_functions(compounds_table,functions_table,normalise)
+distilled_table_functions <- aggregate_functions(distilled_table_compounds,functions_table,normalise=TRUE)
 ```
 
 ### Compound-level heatmap
