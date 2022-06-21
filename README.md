@@ -103,6 +103,8 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Functi
   theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
 
+![Comparison of fullness and binary outcome of compound metabolism.](images/compound_fullness-binary.jpg)
+
 ### Function-level heatmap
 
 Functional data can be visualised as a heatmap using ggplot2.
