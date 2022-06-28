@@ -47,6 +47,13 @@ The damma() function requires specifying in which column(s) to find MAG identifi
 distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
+### Apply MAG completeness correction factor
+Functional attributes of MAGs are often not directly comparable due to different levels of completeness. A MAG with 70% of estimated completeness most likely misses genes that contribute to its functional repertoire, compared to another MAG with 100% completeness. Therefore, a direct comparison of these two MAGs is likely to yield distorted results. In an attempt to minimise the impact of MAG completeness in functional metagenomic analyses, DAMMA incorporates a completeness correction script, which models the relationship between function fullness and MAG completeness  across the entire dataset, to apply a correction factor to the raw module fullness values.
+
+```
+distilled_table_corrected <- damma(distilled_table,mag_completeness)
+```
+
 ### Aggregrate raw distillates into 80 compounds
 
 The raw fullness data can be aggregated to the compound level using the damma_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
