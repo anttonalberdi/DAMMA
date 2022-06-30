@@ -4,7 +4,7 @@
 \alias{distillate_definition}
 \title{Calculates the fullness of each hierarchical level of a metabolic pathway/module}
 \usage{
-distillate_definition(definition, def_table, level, expression_vector)
+distillate_definition(definition, def_table, level, present)
 }
 \arguments{
 \item{definition}{Definition string of a given metabolic pathway/module}
