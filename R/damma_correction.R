@@ -40,6 +40,14 @@ damma_correction <- function(fullness_table,mag_completeness){
   # If corrected fullness >1, convert it to 1.
   fullness_table_corrected[fullness_table_corrected>1] <- 1
 
+  #Outout correction statistics on screen
+  total <- nrow(fullness_table)*ncol(fullness_table)
+  changes <- c(fullness_table == fullness_table_corrected)
+  changes <- length(changes[!(changes)])
+  percentage <- round(changes / total * 100,1)
+  cat("\n",changes,"/",total," (",percentage,") fullness values were corrected\n")
+
+  #Output corrected table
   return(fullness_table_corrected)
 
 }

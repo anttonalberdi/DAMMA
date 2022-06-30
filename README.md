@@ -83,6 +83,7 @@ distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,
 Functional attributes of MAGs are often not directly comparable due to different levels of completeness. A MAG with 70% of estimated completeness most likely misses genes that contribute to its functional repertoire, compared to another MAG with 100% completeness. Therefore, a direct comparison of these two MAGs is likely to yield distorted results. In an attempt to minimise the impact of MAG completeness in functional metagenomic analyses, DAMMA incorporates a completeness correction script, which models the relationship between function fullness and MAG completeness  across the entire dataset, to apply a correction factor to the raw module fullness values.
 
 ```
+mag_completeness <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb2","bin_m1.mxb107_sub","bin_m1.vmb35","bin_m1.vmb46","bin_m9.vmb60"),completeness=c(100,98,85.8,94.5,97,100,70))
 distilled_table_corrected <- damma(distilled_table,mag_completeness)
 ```
 
