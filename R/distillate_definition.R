@@ -11,7 +11,7 @@
 #' @export
 
 #UNDER DEVELOPMENT
-distillate_definition <- function(definition, def_table, level, expression_vector){
+distillate_definition <- function(definition, def_table, level, present){
 
   #Under development
 
