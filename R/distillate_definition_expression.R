@@ -1,4 +1,4 @@
-#' Calculates the fullness of each hierarchical level of a metabolic pathway/module
+#' Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module
 #'
 #' @param definition Definition string of a given metabolic pathway/module
 #' @param def_table Decomposed hierarchy matrix produced by create_step_matrix.R
@@ -7,11 +7,11 @@
 #' @importFrom stringr str_sub
 #' @return A (partially) distilled definition string
 #' @examples
-#' distillate_definition(definition, def_table, level, present)
+#' distillate_definition_expression(definition, def_table, level, present)
 #' @export
 
 #UNDER DEVELOPMENT
-distillate_definition <- function(definition, def_table, level, expression_vector){
+distillate_definition_expression <- function(definition, def_table, level, expression_vector){
 
   #Under development
 

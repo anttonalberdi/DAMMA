@@ -1,5 +1,12 @@
-# DAMMA
-Distillation of Animal-associated Microorganisms' Metabolic Annotations
+# **DAMMA**: Distillation of Animal-associated Microorganisms' Metabolic Annotations
+DAMMA is an R package that provides a suite of functions to compute biologically meaningful functional capacity indices of microbial strains and communities from genome-resolved metagenomic and associated metatranscriptomic data.
+
+Functional pathways included in the package produce either the degradation or synthesis of biomolecular compounds that are known to be relevant for animal biology, thus providing an estimation of the biological contribution individual microbial strains and collective communities can make to their hosts.
+
+DAMMA incorporates scripts to produce meaningful functional profiles, but also to account for technical distortion factors, such as MAG completeness, which are known to affect functional characterisations and analyses of microbiome data.
+
+## Quick start
+DAMMA has been developed as an R package, thus basic knowledge of the R environment is required for an efficient use of the software.
 
 ### Install DAMMA
 DAMMA can be directly installed from this Github repository using install_github() function.
@@ -8,6 +15,31 @@ install.packages("devtools") #only if devtools is not installed
 library(devtools)
 install_github("anttonalberdi/DAMMA")
 ```
+
+### Load DAMMA
+Every time you want to use the package, you need to load the library, and the support data included.
+```
+library(DAMMA)
+data(damma_data)
+```
+
+### Uninstall DAMMA
+DAMMA can be uninstalled using the following commands.
+```
+detach_package(DAMMA)
+remove.packages("DAMMA")
+```
+
+### Updating DAMMA
+To ensure you are using the laters version of the software, we recommend to:
+1) Uninstall DAMMA (see instructions above)
+2) Restart R or Rstudio session (to avoid cache issues)
+3) Install DAMMA (see instructions above)
+
+## Acknowledgement and citation
+DAMMA is still under development, and we are working on the scientific publication that will describe the rationale and functionalities of the package. In the meanwhile, we encourage to provide the link to this repository whenever you need to acknowledge DAMMA.
+
+## Using DAMMA with metagenomic data
 
 ### Input data
 DAMMA only requires an annotations table containing MAG identifiers and annotations. Such tables are usually quite large, so using data.table is recommended for smooth processing of the data.
@@ -40,7 +72,7 @@ The damma() function requires specifying in which column(s) to find MAG identifi
 - magcol: number of column containing MAG identifies.
 - keggcol: index(es) of column(s) containing KO codes (eg: K00169).
 - eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15).
-- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H.
+- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H).
 
 ```
 #Using example data
@@ -138,3 +170,9 @@ ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
   theme_grey(base_size=8)+
   theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
+
+## Using DAMMA with metatranscriptomic data
+To be updated
+
+## Using DAMMA for community-level analysis
+DAMMA computes the community-level capacity to perform specific metabolic functions, by accounting for the individual and collective fullness of metabolic pathways. DAMMA applies penalisations to

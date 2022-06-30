@@ -4,7 +4,7 @@
 \alias{distillate_definition}
 \title{Calculates the fullness of each hierarchical level of a metabolic pathway/module}
 \usage{
-distillate_definition(definition, def_table, level, present)
+distillate_definition(definition, def_table, level, expression_vector)
 }
 \arguments{
 \item{definition}{Definition string of a given metabolic pathway/module}
@@ -13,7 +13,7 @@ distillate_definition(definition, def_table, level, present)
 
 \item{level}{Hierarchical level}
 
-\item{present}{Vector of functional units present in the genome}
+\item{expression_vector}{Vector of expression values of functional units present in the genome}
 }
 \value{
 A (partially) distilled definition string
