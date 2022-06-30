@@ -46,7 +46,7 @@ damma_correction <- function(fullness_table,mag_completeness,stats=TRUE){
   changes <- c(fullness_table == fullness_table_corrected)
   changes <- length(changes[!(changes)])
   percentage <- round(changes / total * 100,1)
-  cat(paste0("\n",changes," out of ",total," (",percentage"%) fullness values were corrected\n"))
+  cat(paste0("\n",changes," out of ",total," (",percentage,"%) fullness values were corrected\n"))
 
   if(stats == TRUE){
   #Outout overall correction statistics on screen
@@ -56,7 +56,7 @@ damma_correction <- function(fullness_table,mag_completeness,stats=TRUE){
       changes <- fullness_table[r,] == fullness_table_corrected[r,]
       changes <- length(changes[!(changes)])
       percentage <- round(changes / total * 100,1)
-      cat(paste0("\tMAG: ",r,"(",completeness,"%): ",changes," out of ",total," (",percentage"%) fullness values were corrected\n"))
+      cat(paste0("\tMAG: ",r,"(",completeness,"%): ",changes," out of ",total," (",percentage,"%) fullness values were corrected\n"))
   }
 
   #Output corrected table
