@@ -1,13 +1,14 @@
 #' Models the relationship between function fullness and MAG completeness and applies a correction factor
 #'
 #' @param fullness_table Table containing fullness scores of functions (X axis) per MAG (Y axis)
-#' @param mag_completeness A matrix containing MAG names (1st column) and completemess values ()
-#' @return A modified fullness table
+#' @param mag_completeness A matrix containing MAG names (1st column) and completemess values (2nd column)
+#' @param stats Whether to print correction statistics on screen or not. Default=TRUE
+#' @return A corrected fullness table
 #' @examples
 #' damma_correction(fullness_table, mag_completeness)
 #' @export
 
-damma_correction <- function(fullness_table,mag_completeness){
+damma_correction <- function(fullness_table,mag_completeness,stats=TRUE){
 
   #### UNDER DEVELOPMENT ####
   MAG_completeness <- as.numeric(mag_completeness[,2])
@@ -40,12 +41,23 @@ damma_correction <- function(fullness_table,mag_completeness){
   # If corrected fullness >1, convert it to 1.
   fullness_table_corrected[fullness_table_corrected>1] <- 1
 
-  #Outout correction statistics on screen
+  #Outout overall correction statistics on screen
   total <- nrow(fullness_table)*ncol(fullness_table)
   changes <- c(fullness_table == fullness_table_corrected)
   changes <- length(changes[!(changes)])
   percentage <- round(changes / total * 100,1)
-  cat("\n",changes,"/",total," (",percentage,") fullness values were corrected\n")
+  cat(paste0("\n",changes," out of ",total," (",percentage"%) fullness values were corrected\n"))
+
+  if(stats == TRUE){
+  #Outout overall correction statistics on screen
+  total <- ncol(fullness_table_corrected)
+  for(r in rownames(fullness_table_corrected)){
+      completeness <- round(as.numeric(mag_completeness[mag_completeness[,1] == r,2]),1)
+      changes <- fullness_table[r,] == fullness_table_corrected[r,]
+      changes <- length(changes[!(changes)])
+      percentage <- round(changes / total * 100,1)
+      cat(paste0("\tMAG: ",r,"(",completeness,"%): ",changes," out of ",total," (",percentage"%) fullness values were corrected\n"))
+  }
 
   #Output corrected table
   return(fullness_table_corrected)
