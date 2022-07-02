@@ -5,14 +5,15 @@
 \title{Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module}
 \usage{
 distillate_definition_expression(
-  definition,
+  sample,
+  definition_expression,
   def_table,
   level,
-  expression_vector
+  expression_table
 )
 }
 \arguments{
-\item{definition}{Definition string of a given metabolic pathway/module}
+\item{definition_expression}{Definition-expression string}
 
 \item{def_table}{Decomposed hierarchy matrix produced by create_step_matrix.R}
 
@@ -27,5 +28,5 @@ A (partially) distilled definition string
 Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module
 }
 \examples{
-distillate_definition_expression(definition, def_table, level, present)
+distillate_definition_expression(definition_expression, def_table, level, present)
 }

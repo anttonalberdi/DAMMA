@@ -97,9 +97,6 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
       expression_table <- rbind(expression_table,expression3)
     }
 
-    #Concatenate all annotations
-    present <- unique(c(kegg,EC,EC2,pep))
-
     #Compute completeness scores TO BE UPDATED
     #OUTPUT A LIST OF TABLES RATHER THAN A TABLE
     expression_fullness_vector <- c()
