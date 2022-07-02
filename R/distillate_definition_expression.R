@@ -1,19 +1,18 @@
 #' Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module
 #'
-#' @param definition Definition string of a given metabolic pathway/module
+#' @param definition_expression Definition-expression string
 #' @param def_table Decomposed hierarchy matrix produced by create_step_matrix.R
 #' @param level Hierarchical level
 #' @param expression_vector Vector of expression values of functional units present in the genome
 #' @importFrom stringr str_sub
 #' @return A (partially) distilled definition string
 #' @examples
-#' distillate_definition_expression(definition, def_table, level, present)
+#' distillate_definition_expression(definition_expression, def_table, level, present)
 #' @export
 
 #UNDER DEVELOPMENT
-distillate_definition_expression <- function(definition, def_table, level, expression_vector){
+distillate_definition_expression <- function(sample,definition_expression, def_table, level, expression_table){
 
-  #Under development
 
   if (level == "L5_group"){
     #L5
@@ -135,24 +134,27 @@ distillate_definition_expression <- function(definition, def_table, level, expre
       for (c in L1_clusters){
         subdef <- def_table[(def_table$L0_group == c) & (!is.na(def_table$L1_group)),"def_decomp"]
         if(" " %in% subdef | "+" %in% subdef){
-          subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
-          subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
-          subdef2 <- gsub("FALSE",0,subdef2)
-          subdef2 <- gsub("TRUE",1,subdef2)
-          value=round(mean(as.numeric(subdef2)),1)
+          subdef2 <- subdef[subdef != ","]
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2,sample]
+          if(length(subdef2_expression) > 0){
+            value <- mean(subdef2_expression)
+          }else{
+            value <- 0
+          }
         } else if("," %in% subdef){
           subdef2 <- subdef[subdef != ","]
-          subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
-          subdef2 <- gsub("FALSE",0,subdef2)
-          subdef2 <- gsub("TRUE",1,subdef2)
-          value=round(max(as.numeric(subdef2)),1)
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2,sample]
+          if(length(subdef2_expression) > 0){
+            value <- max(subdef2_expression)
+          }else{
+            value <- 0
+          }
         } else {
-          subdef2 <- subdef
-          subdef2 <- gsub("FALSE",0,subdef2)
-          subdef2 <- gsub("TRUE",1,subdef2)
-          value=round(max(as.numeric(subdef2)),1)
+          value <- 0
         }
-        definition <- gsub(paste(c("(",subdef,")"),collapse=""),value, definition, fixed = TRUE)
+        #Replace definition by value
+        definition <- gsub(paste(c("(",subdef,")"),collapse=""),value,definition, fixed = TRUE)
+
       }
     }
 
@@ -160,22 +162,23 @@ distillate_definition_expression <- function(definition, def_table, level, expre
       #L0
       subdef <- def_table[!is.na(def_table$L0_group),"def_decomp"]
       if(" " %in% subdef | "+" %in% subdef){
-        subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
-        subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
-        subdef2 <- gsub("FALSE",0,subdef2)
-        subdef2 <- gsub("TRUE",1,subdef2)
-        value=round(mean(as.numeric(subdef2)),1)
+        subdef2 <- subdef[subdef != ","]
+        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2,sample]
+        if(length(subdef2_expression) > 0){
+          value <- mean(subdef2_expression)
+        }else{
+          value <- 0
+        }
       } else if("," %in% subdef){
         subdef2 <- subdef[subdef != ","]
-        subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
-        subdef2 <- gsub("FALSE",0,subdef2)
-        subdef2 <- gsub("TRUE",1,subdef2)
-        value=round(max(as.numeric(subdef2)),1)
+        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2,sample]
+        if(length(subdef2_expression) > 0){
+          value <- max(subdef2_expression)
+        }else{
+          value <- 0
+        }
       } else {
-        subdef2 <- subdef
-        subdef2 <- gsub("FALSE",0,subdef2)
-        subdef2 <- gsub("TRUE",1,subdef2)
-        value=round(max(as.numeric(subdef2)),1)
+        value <- 0
       }
       definition <- gsub(paste(subdef,collapse=""),value,definition, fixed = TRUE)
     }

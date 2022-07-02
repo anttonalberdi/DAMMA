@@ -84,7 +84,7 @@ Functional attributes of MAGs are often not directly comparable due to different
 
 ```
 mag_completeness <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb2","bin_m1.mxb107_sub","bin_m1.vmb35","bin_m1.vmb46","bin_m9.vmb60"),completeness=c(100,98,85.8,94.5,97,100,70))
-distilled_table_corrected <- damma(distilled_table,mag_completeness)
+distilled_table_corrected <- damma_correction(distilled_table,mag_completeness)
 ```
 
 ### Aggregrate raw distillates into 80 compounds

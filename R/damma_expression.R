@@ -74,7 +74,7 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
     for(e in EC){
       genes1 <- annotations_MAG[(grep(e, annotations_MAG$E1)),"Genes"]$Genes
       genes2 <- annotations_MAG[(grep(e, annotations_MAG$E2)),"Genes"]$Genes
-      genes <- unique(rbind(genes1,genes2))
+      genes <- unique(c(genes1,genes2))
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
@@ -105,7 +105,7 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
     expression_fullness_vector <- c()
     for(f in c(1:nrow(functions))){
       definition=functions[f,"Definition"]
-      expression_fullness <- compute_fullness(definition,expression_table)
+      expression_fullness <- compute_fullness_expression(definition,expression_table)
       expression_fullness_vector <- c(expression_fullness,fullness)
     }
     expression_fullness_table <- rbind(fexpression_fullness_table,expression_fullness_vector)
@@ -117,25 +117,3 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
 
 
 }
-
-####
-# TESTS
-####
-
-#Load expression data
-#library(hilldiv)
-#expression <- read_tsv("data/gene_counts.txt")
-#colnames(expression) <- gsub(" Read Count","",colnames(expression))
-#expression <- as.data.frame(expression)
-#rownames(expression) <- expression[,1]
-#expression <- expression[,-1]
-#expression <- round(tss(expression)*1000000,0)
-
-#Load annotation data
-#annotations <- read_tsv("data/annotations_caecum.tsv") %>%
-#  rename("Contig" = 1, "MAG" = 2)
-#genecol=1
-#magcol=2
-#keggcol=9
-#eccol=c(10,19)
-#pepcol=12
