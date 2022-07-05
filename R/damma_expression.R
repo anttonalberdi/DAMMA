@@ -20,7 +20,7 @@
 #UNDER DEVELOPMENT
 damma_expression <- function(expression,annotations,functions,genecol,magcol,keggcol,eccol,pepcol){
 
-#### UNDER DEVELOPMENT ####
+  cat("STARTING dammaE ANALYSIS\n(Note this may take a while)...\n")
 
   #Simplify annotations table
   setDT(annotations)
@@ -39,28 +39,33 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
   #List MAGs
   MAGs <- unique(dplyr::pull(annotations3, MAGs))
 
-  #Calculate fullness values
-  expression_table <- c()
-  cat("Calculating fulness values for MAG:\n")
+  #Calculate expression values for each MAG
+  cat("Calculating function expression values for MAG:\n")
   m=0
+  expression_fullness_table_list <- list()
   for(MAG in MAGs){
     m=m+1
     cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
+    cat("\t\tProcessing KEGG annotations...\n", sep = "")
     #Fetch MAG annotations
     annotations_MAG <- annotations3[annotations3$MAGs == MAG]
     #K00000
+    annotations_MAG <- annotations_MAG[order(annotations_MAG$K1),]
     kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
-    kegg <- unique(kegg[!is.na(kegg)])
+    kegg <- sort(unique(kegg[!is.na(kegg)]))
     for(k in kegg){
       genes <- annotations_MAG[grep(k, annotations_MAG$K1),"Genes"]$Genes
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
         expression3 <- t(expression3)
+        rownames(expression3) <- k
+        expression_table <- rbind(expression_table,expression3)
       }
-      rownames(expression3) <- k
-      expression_table <- rbind(expression_table,expression3)
     }
+
+    cat("\t\tProcessing EC annotations...\n", sep = "")
+    annotations_MAG <- annotations_MAG[order(annotations_MAG$E1,annotations_MAG$E2),]
     #[EC:0.0.0.0]
     EC1 <- unlist(str_match_all(annotations_MAG$E1, "(?<=\\[EC:).+?(?=\\])"))
     EC1 <- unique(unlist(strsplit(EC1, " ")))
@@ -70,7 +75,7 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
     EC2 <- unique(unlist(strsplit(EC2, " ")))
     EC2 <- EC2[!grepl("-", EC2, fixed = TRUE)]
     EC <- unique(EC1,EC2)
-    EC <- EC[!is.na(EC)]
+    EC <- sort(EC[!is.na(EC)])
     for(e in EC){
       genes1 <- annotations_MAG[(grep(e, annotations_MAG$E1)),"Genes"]$Genes
       genes2 <- annotations_MAG[(grep(e, annotations_MAG$E2)),"Genes"]$Genes
@@ -79,39 +84,51 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
         expression3 <- t(expression3)
+        rownames(expression3) <- e
+        expression_table <- rbind(expression_table,expression3)
       }
-      rownames(expression3) <- e
-      expression_table <- rbind(expression_table,expression3)
     }
+
+    cat("\t\tProcessing peptidase annotations...\n", sep = "")
     #Peptidases
     pep <- unique(annotations_MAG$P1)
-    pep <- pep[pep != ""]
+    pep <- pep[(pep != "") & (!is.na(pep))]
+    annotations_MAG <- annotations_MAG[order(annotations_MAG$P1),]
     for(p in pep){
       genes <- annotations_MAG[grep(k, annotations_MAG$P1),"Genes"]$Genes
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
         expression3 <- t(expression3)
+        rownames(expression3) <- k
+        expression_table <- rbind(expression_table,expression3)
       }
-      rownames(expression3) <- k
-      expression_table <- rbind(expression_table,expression3)
     }
 
-    #Compute completeness scores TO BE UPDATED
-    #OUTPUT A LIST OF TABLES RATHER THAN A TABLE
+    #Compute expression scores
+    cat("\t\tCalculating expression metrics...\n")
     for(f in c(1:nrow(functions))){
       definition=functions[f,"Definition"]
-      cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
+      #cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
       expression_fullness <- compute_fullness_expression(definition,expression_table)
-      #Create list object if it is the first iteration
-      if(f == 1){expression_fullness_list <- expression_fullness}
-      expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
+      if(f == 1){
+        #Create list if it is the first function
+        expression_fullness_list <- expression_fullness
+      }else{
+        #Append to list if it is not the first function
+        expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
+      }
     }
-  }
-  rownames(fullness_table) <- MAGs
-  colnames(fullness_table) <- functions$Code
-  fullness_table[is.na(fullness_table)] <- 0
-  return(fullness_table)
 
+    #Convert sample list to matrix
+    expression_fullness_list <- lapply(expression_fullness_list,function(x) as.numeric(x))
+    expression_fullness_table<- do.call(rbind, expression_fullness_list)
+    colnames(expression_fullness_table) <- functions$Code
+
+    #Append to MAG list
+    expression_fullness_table_list[[MAG]] <- expression_fullness_table
+  }
+
+  return(expression_fullness_table_list)
 
 }
