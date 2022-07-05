@@ -10,12 +10,9 @@
 #UNDER DEVELOPMENT
 compute_fullness_expression <- function(definition,expression_table){
 
-  #TO BE UPDATED
-  #Expression * fullness of each hierarchical value
-
   #If using EC codes
   if (grepl(".", definition, fixed = TRUE)){
-    present <- gsub(".","_",present,fixed=TRUE)
+    rownames(expression_table) <- gsub(".","_",rownames(expression_table),fixed=TRUE)
     definition <- gsub(".","_",definition,fixed=TRUE)
   }
 

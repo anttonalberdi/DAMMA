@@ -1,0 +1,168 @@
+Code	Compound	Type	Function	Definition
+F1	Cellulose	Degradation	Polysaccharide degradation	(3.2.1.4,3.2.1.176,3.2.1.132,3.2.1.73) (3.2.1.176,3.2.1.4,3.2.1.14) (1.14.99.54,1.14.99.56,1.14.99.53) (1.14.99.54,1.14.99.53) 1.14.99.54 (1.14.99.54,1.14.99.56) (1.14.99.54,1.14.99.56,1.14.99.53) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.4,3.2.1.91) (3.2.1.4,3.2.1.176,3.2.1.132,3.2.1.73) (3.2.1.132,3.2.1.4,3.2.1.73,3.2.1.8,3.2.1.156) (3.2.1.4,3.2.1.6,3.2.1.21,3.2.1.73,3.2.1.74,3.2.1.91,3.2.1.151,3.2.1.165) (3.2.1.8,3.2.1.32,3.2.1.4) 3.2.1.4 (3.2.1.4,3.2.1.151,3.2.1.73,2.4.1.207) (3.2.1.4,3.2.1.151) (3.2.1.4,3.2.1.151,3.2.1.78) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.4,3.2.1.91) (3.2.1.4,3.2.1.176,3.2.1.132,3.2.1.73) (3.2.1.132,3.2.1.4,3.2.1.73,3.2.1.8,3.2.1.156) (3.2.1.4,3.2.1.6,3.2.1.21,3.2.1.73,3.2.1.74,3.2.1.91,3.2.1.151,3.2.1.165) (3.2.1.8,3.2.1.32,3.2.1.4) 3.2.1.4 (3.2.1.4,3.2.1.151,3.2.1.73,2.4.1.207) (3.2.1.4,3.2.1.151) (3.2.1.4,3.2.1.151,3.2.1.78)
+F2	Xyloglucan	Degradation	Polysaccharide degradation	(3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.4,3.2.1.6,3.2.1.21,3.2.1.73,3.2.1.74,3.2.1.91,3.2.1.151,3.2.1.165) (3.2.1.4,3.2.1.151,3.2.1.73,2.4.1.207) (2.4.1.207,3.2.1.103,3.2.1.39,3.2.1.6,3.2.1.73,3.2.1.81,3.2.1.83,3.2.1.151,3.2.1.181,3.2.1.178,3.2.1.35,3.2.1.181) (3.2.1.4,3.2.1.151) (3.2.1.4,3.2.1.151,3.2.1.78) (3.2.1.176,3.2.1.4,3.2.1.14) (3.2.1.4,3.2.1.150,3.2.1.151) (1.14.99.54,1.14.99.56) (3.2.1.20,3.2.1.22,3.2.1.24,3.2.1.84,3.2.1.48,3.2.1.10,3.2.1.177,4.2.2.13,2.4.1.161) (3.2.1.37,3.2.1.55,3.2.1.8,3.2.1.99,3.2.1.145,3.2.1.146) (3.2.1.8,3.2.1.32,3.2.1.4) (3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.55,3.2.1.152,3.2.1.165,3.2.1.37,3.2.1.146)
+F3	Starch	Degradation	Polysaccharide degradation	(3.2.1.1,3.2.1.41,2.4.1.19,3.2.1.54,3.2.1.93,3.2.1.10,3.2.1.133,3.2.1.135,3.2.1.20,3.2.1.60,3.2.1.68,3.2.1.70,3.2.1.98,3.2.1.116,2.4.1.18,5.4.99.16,2.4.1.25,2.4.1.4,2.4.1.7,3.2.1.141,5.4.99.11,5.4.99.15,3.2.1.33,2.4.99.16) 3.2.1.2 (3.2.1.1,3.2.1.22,3.2.1.41,3.2.1.54,2.4.1.18,2.4.1.25) 3.2.1.1 3.2.1.33 (3.2.1.3,3.2.1.70,3.2.1.28,2.4.1.2) (3.2.1.3,3.2.1.20,3.2.1.22)
+F4	Chitin	Degradation	Polysaccharide degradation	(3.2.1.14,3.2.1.17,3.2.1.96) (3.2.1.14,3.2.1.17) (3.2.1.17,4.2.2.n1,3.2.1.14) (3.2.1.17,3.2.1.96) (3.2.1.52,3.2.1.140) (3.2.1.21,3.2.1.37,3.2.1.45,3.2.1.52,3.2.1.55,3.2.1.58,3.2.1.74,3.2.1.120,3.2.1.126) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.52,3.2.1.35,3.2.1.169) (3.2.1.21,3.2.1.37,3.2.1.45,3.2.1.52) (1.14.99.54,1.14.99.56,1.14.99.53) (1.14.99.54,1.14.99.53) (3.1.1.72,3.5.1.41)
+F5	Pectin	Degradation	Polysaccharide degradation	(3.2.1.15,3.2.1.40,3.2.1.67,3.2.1.82,3.2.1.171,3.2.1.173) (4.2.2.2,4.2.2.9,4.2.2.10) (4.2.2.2,4.2.2.9) (4.2.2.2,4.2.2.9) 4.2.2.2 (4.2.2.23,4.2.2.24) 4.2.2.6 4.2.2.24 4.2.2.23 (3.2.1.40,3.2.1.174) 3.2.1.173 3.1.1.11 3.2.1.172 (3.2.1.122,3.2.1.20,3.2.1.22,3.2.1.86,3.2.1.139,3.2.1.67) 3.1.1.72 (3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.55,3.2.1.152,3.2.1.165,3.2.1.37,3.2.1.146)
+F6	Alpha galactan	Degradation	Polysaccharide degradation	3.2.1.49 (3.2.1.22,3.2.1.49,3.2.1.94,3.2.1.88) 3.2.1.22 (3.2.1.122,3.2.1.20,3.2.1.22,3.2.1.86,3.2.1.139,3.2.1.67) (3.2.1.20,3.2.1.22,3.2.1.24,3.2.1.84,3.2.1.48,3.2.1.10,3.2.1.177,4.2.2.13,2.4.1.161) (3.2.1.22,3.2.1.49,2.4.1.67,2.4.1.82) (3.2.1.3,3.2.1.20,3.2.1.22)
+F7	Beta-galactan	Degradation	Polysaccharide degradation	3.2.1.89 (3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.55,3.2.1.152,3.2.1.165,3.2.1.37,3.2.1.146) (3.2.1.23,3.2.1.165) 3.2.1.23 (3.2.1.21,3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.37,3.2.1.38,3.2.1.62,3.2.1.74,3.2.1.85,3.2.1.86,3.2.1.105,3.2.1.108,3.2.1.117,3.2.1.118,3.2.1.119,3.2.1.125,3.2.1.147,3.2.1.149,3.2.1.161,3.2.1.175,3.2.1.182) (3.2.1.23,3.2.1.46)
+F8	Mixed-Linkage glucans	Degradation	Polysaccharide degradation	3.2.1.71 (3.2.1.8,3.2.1.31,3.2.1.37,3.2.1.38,3.2.1.45,3.2.1.75,3.2.1.136) (3.2.1.39,3.2.1.58,3.2.1.73,3.2.1.175) (3.2.1.4,3.2.1.176,3.2.1.132,3.2.1.73) (3.2.1.132,3.2.1.4,3.2.1.73,3.2.1.8,3.2.1.156) (3.2.1.4,3.2.1.6,3.2.1.21,3.2.1.73,3.2.1.74,3.2.1.91,3.2.1.151,3.2.1.165) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.58,3.2.1.39) 3.2.1.39 (3.2.1.21,3.2.1.37,3.2.1.45,3.2.1.52,3.2.1.55,3.2.1.58,3.2.1.74,3.2.1.120,3.2.1.126) (2.4.1.207,3.2.1.103,3.2.1.39,3.2.1.6,3.2.1.73,3.2.1.81,3.2.1.83,3.2.1.151,3.2.1.181,3.2.1.178,3.2.1.35,3.2.1.181) (3.2.1.39,3.2.1.58,3.2.1.73,3.2.1.175) (3.2.1.58,3.2.1.39) (3.2.1.21,3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.37,3.2.1.38,3.2.1.62,3.2.1.74,3.2.1.85,3.2.1.86,3.2.1.105,3.2.1.108,3.2.1.117,3.2.1.118,3.2.1.119,3.2.1.125,3.2.1.147,3.2.1.149,3.2.1.161,3.2.1.175,3.2.1.182)
+F9	Xylans	Degradation	Polysaccharide degradation	(3.2.1.8,3.2.1.32,3.2.1.4) (3.2.1.78,3.2.1.100,3.2.1.32,3.2.1.73) (3.2.1.132,3.2.1.4,3.2.1.73,3.2.1.8,3.2.1.156) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.8,3.2.1.32) (3.2.1.8,3.2.1.31,3.2.1.37,3.2.1.38,3.2.1.45,3.2.1.75,3.2.1.136) (3.2.1.102,3.2.1.8,3.2.1.8) (3.2.1.51,3.2.1.8) (3.2.1.76,3.2.1.37) (3.2.1.21,3.2.1.37,3.2.1.45,3.2.1.52,3.2.1.55,3.2.1.58,3.2.1.74,3.2.1.120,3.2.1.126) (3.2.1.20,3.2.1.22,3.2.1.24,3.2.1.84,3.2.1.48,3.2.1.10,3.2.1.177,4.2.2.13,2.4.1.161) 3.2.1.37 (3.2.1.139,3.2.1.131)
+F10	Beta-mannan	Degradation	Polysaccharide degradation	3.2.1.78 (3.2.1.78,3.2.1.100,3.2.1.32,3.2.1.73) (3.2.1.4,3.2.1.8,3.2.1.21,3.2.1.25,3.2.1.45,3.2.1.58,3.2.1.73,3.2.1.74,3.2.1.75,3.2.1.78,3.2.1.91,3.2.1.104,3.2.1.123,3.2.1.132,3.2.1.149,3.2.1.151,3.2.1.164,3.2.1.168,3.2.1.73,3.2.1.39,3.2.1.52,3.2.1.132,3.2.1.146) (3.2.1.78,3.2.1.100,3.2.1.32,3.2.1.73) (2.4.1.281,2.4.1.319,2.4.1.320) 3.2.1.78 3.1.1.72 (3.2.1.23,3.2.1.25,3.2.1.31,3.2.1.55,3.2.1.152,3.2.1.165,3.2.1.37,3.2.1.146)
+F11	Alpha-mannan	Degradation	Polysaccharide degradation	3.2.1.130 (3.2.1.101,3.2.1.20) (3.2.1.101,3.2.1.20) (3.2.1.113,3.2.1.24) (3.2.1.24,3.2.1.113,3.2.1.114,3.2.1.170) (3.2.1.106,3.2.1.84,3.2.1.20,3.2.1.170,3.2.1.208) 3.2.1.113 (2.4.1.281,2.4.1.319,2.4.1.320)
+F12	Arabinan	Degradation	Polysaccharide degradation	(3.2.1.37,3.2.1.55,3.2.1.8,3.2.1.99,3.2.1.145,3.2.1.146) (3.2.1.11,3.2.1.57,3.2.1.95) (3.2.1.37,3.2.1.55,3.2.1.8,3.2.1.99,3.2.1.145,3.2.1.146) (3.2.1.4,3.2.1.8,3.2.1.37,3.2.1.55,3.2.1.73) (3.2.1.21,3.2.1.37,3.2.1.45,3.2.1.52,3.2.1.55,3.2.1.58,3.2.1.74,3.2.1.120,3.2.1.126) (3.2.1.55,3.2.1.37) 3.2.1.55
+F13	Lactose	Degradation	Sugar degradation	3.2.1.85 5.3.1.26 2.7.1.144 4.1.2.40
+F14	Lactose	Degradation	Sugar degradation	1.1.2.f 3.2.1.M31
+F15	Lactose	Degradation	Sugar degradation	3.2.1.108
+F16	Sucrose	Degradation	Sugar degradation	2.7.1.211 3.2.1.48 2.7.1.4
+F17	D-Apiose	Degradation	Sugar degradation	5.3.1.36 2.7.1.233 2.2.1.13
+F18	D-Apiose	Degradation	Sugar degradation	1.1.1.420 3.1.1.115
+F19	D-Arabinose	Degradation	Sugar degradation	5.3.1.3 2.7.1.47
+F20	D-Arabinose	Degradation	Sugar degradation	5.3.1.3 2.7.1.51 4.1.2.17 1.2.1.21
+F21	D-Arabinose	Degradation	Sugar degradation	1.1.1.427 3.1.1.30 4.2.1.5 4.2.1.141 1.2.1.26
+F22	D-Arabinose	Degradation	Sugar degradation	1.1.1.427 3.1.1.30 4.2.1.5 1.1.1.M68 3.7.1.26
+F23	D-Mannose	Degradation	Sugar degradation	2.7.1.191 5.3.1.8
+F24	D-Mannose	Degradation	Sugar degradation	2.7.1.7 5.3.1.8
+F25	D-Xylose	Degradation	Sugar degradation	5.3.1.5 2.7.1.17
+F26	D-Xylose	Degradation	Sugar degradation	1.1.1.et 1.1.1.9 2.7.1.17
+F27	D-Xylose	Degradation	Sugar degradation	1.1.1.424 3.1.1.68 4.2.1.82 4.2.1.141 1.2.1.26
+F28	D-Xylose	Degradation	Sugar degradation	1.1.1.359 3.1.1.110 4.2.1.82 4.1.2.28 1.1.1.26 2.3.3.9
+F29	D-Xylose	Degradation	Sugar degradation	1.1.1.175 3.1.1.110 4.2.1.82 4.2.1.1.141 1.2.1.26
+F30	D-Xylose	Degradation	Sugar degradation	1.1.1.424 3.1.1.58 4.2.1.82 1.1.1.M68 3.7.1.26
+F31	L-Fucose	Degradation	Sugar degradation	5.1.3.29 5.3.1.25 2.7.1.51 4.1.2.17
+F32	L-Fucose	Degradation	Sugar degradation	5.1.3.29 4.2.1.68 1.1.1.M68 3.7.1.26
+F33	L-Rhamnose	Degradation	Sugar degradation	5.1.3.32 5.3.1.14 2.7.1.5 4.1.2.19
+F34	L-Rhamnose	Degradation	Sugar degradation	(1.1.1.173,1.1.1.378) 3.1.1.65 4.2.1.90 4.1.2.53
+F35	L-Rhamnose	Degradation	Sugar degradation	(1.1.1.173,1.1.1.378) 3.1.1.65 4.2.1.90 1.1.1.401 3.7.1.26
+F36	Triglyceride	Degradation	Lipid degradation	(K01046,K12298,K16816,K13534,K14073,K14074,K14075,K14076,K22283,K14452,K22284,K14674,K14675,K17900) (K01054,K25824)
+F37	Fatty acid	Degradation	Lipid degradation	(K01897,K15013) (K00232,K00249,K00255,K06445,K09479) (((K01692,K07511,K13767) (K00022,K07516)),K01825,K01782,K07514,K07515,K10527) (K00632,K07508,K07509,K07513)
+F38	Peptides	Degradation	Protein degradation	C11A C110 C13 C25 C45 C55 C56 C66 C96 M04 M05 M06 M07 M08 M11 M34 M35 M50B M50A M64 M72 M73 M74 M75 N06 S13 S41B S41A S48 S59 S63 S68 S70 S72 T06 U72 A03B A03A A11B A11A A22B A22A C01B C01A C04 C06 C08 C09 C104 C105 C107 C14B C14A C16B C16A C18 C21 C23 C24 C27 C28 C31 C33 C37 C39 C42 C62 G02 M10C M10B M10A M12C M12B M12A M13 M16C M16B M16A M27 M41 M43B M43A M44 M48C M48B M48A M56 M60 M78 M79 N01 N02 N05 N07 N08 S01F S01E S01D S01C S01B S01A S03 S06 S07 S08C S08B S08A S21 S26C S26B S26A S31 S32 S50 S53 S54 S62 S69 S73 S74 S77 U40
+F39	Peptides	Degradation	Protein degradation	M38
+F40	Peptides	Degradation	Protein degradation	M02 C01B C01A
+F41	Peptides	Degradation	Protein degradation	C69 M18 M20E M20A M20D M20F M20B M20C M42 S33 T03
+F42	Peptides	Degradation	Protein degradation	M28F M28E M28D M28C M28B M28A M32 S13 S66 M14C M14D M14B M14A M15D M15C M15B M15A M20E M20A M20D M20F M20B M20C S11 S12
+F43	Peptides	Degradation	Protein degradation	S15
+F44	Peptides	Degradation	Protein degradation	M49 S41B S41A M20B M79 S53
+F45	Peptides	Degradation	Protein degradation	M15D M15C M15B M15A M20E M20A M20D M20F M20B M20C
+F46	Mucin	Degradation	Mucin degradation	3.2.1.97 (3.2.1.22,3.2.1.49,3.2.1.94,3.2.1.88) 3.2.1.49 (2.4.1.211,2.4.1.247) (3.2.1.20,3.2.1.22,3.2.1.24,3.2.1.84,3.2.1.48,3.2.1.10,3.2.1.177,4.2.2.13,2.4.1.161) (3.2.1.22,3.2.1.49,2.4.1.67,2.4.1.82)
+F47	GlcNAc	Degradation	Mucin degradation	2.7.1.59 3.5.1.25 3.5.99.6
+F48	Galactose	Degradation	Mucin degradation	K01785 K00849 K00965 K01784
+F49	NeuAc	Degradation	Mucin degradation	4.1.3.3 5.1.3.8
+F50	NeuAc	Degradation	Mucin degradation	4.1.3.3 2.7.1.60 5.1.3.9
+F51	Fucose	Degradation	Mucin degradation	3.2.1.212 3.2.1.38 (3.2.1.51,3.2.1.8) (3.2.1.111,3.2.1.63,3.2.1.127)
+F52	Acetate	Production	SCFA production	(K00625,K13788,K15024) K00925
+F53	Acetate	Production	SCFA production	K01905
+F54	Acetate	Production	SCFA production	K01067
+F55	Acetate	Production	SCFA production	5.4.3.2 5.4.3.3 1.4.1.11 2.3.1.247 1.3.1.109 2.8.3.9 (2.3.1.9,2.3.1.16) 2.3.1.8 (2.7.2.1,2.7.2.15)
+F56	Acetate	Production	SCFA production	(1.2.7.1,1.2.1.104) 2.3.1.8 (2.7.2.1,2.7.2.15)
+F57	Butyrate	Production	SCFA production	1.2.7.1 (2.3.1.9,2.3.1.16) 1.1.1.35 4.2.1.150 1.3.1.109 2.3.1.19 (2.7.2.7,2.7.2.14)
+F58	Butyrate	Production	SCFA production	2.3.1.8 (2.7.2.1,2.7.2.15) (2.8.3.1,2.8.3.8)
+F59	Butyrate	Production	SCFA production	(2.3.1.9,2.3.1.16) 1.1.1.36 4.2.1.55 1.3.1.109 (2.8.3.1,2.8.3.8)
+F60	Butyrate	Production	SCFA production	1.4.1.2 1.1.1.399 2.8.3.12 4.2.1.167 7.2.4.5 1.3.1.109 (2.8.3.1,2.8.3.8)
+F61	Butyrate	Production	SCFA production	5.4.3.2 5.4.3.3 1.4.1.11 2.3.1.247 1.3.1.109 2.8.3.9
+F62	Butyrate	Production	SCFA production	2.8.3.18 1.2.1.76 1.1.1.61 2.8.3.M6 4.2.1.120 1.3.1.109 (2.8.3.1,2.8.3.8)
+F63	Butyrate	Production	SCFA production	1.4.1.2 1.1.1.399 2.8.3.12 4.2.1.167 7.2.4.5 1.3.1.109 (2.8.3.1,2.8.3.8)
+F64	Propionate	Production	SCFA production	(4.2.1.28,1.1.1.1) 1.2.1.87 2.3.1.222 (2.7.2.1,2.7.2.7,2.7.2.14,2.7.2.15)
+F65	Propionate	Production	SCFA production	4.3.1.19 2.3.1.222 (2.7.2.1,2.7.2.7,2.7.2.14,2.7.2.15)
+F66	Propionate	Production	SCFA production	5.4.99.2 4.1.1.M5 2.8.3.27
+F67	Propionate	Production	SCFA production	2.1.3.1 1.1.1.37 4.2.1.2 1.3.5.1 2.8.3.27
+F68	Propionate	Production	SCFA production	2.8.3.1 4.2.1.54 1.3.1.95 2.8.3.1
+F69	L-lactate	Production	Organic anion production	1.1.1.27
+F70	L-lactate	Production	Organic anion production	1.1.1.22
+F71	D-lactate	Production	Organic anion production	1.1.1.28
+F72	Succinate	Production	Organic anion production	(K01647,K05942) (K01681,K01682) (K00031,K00030) ((((K00164+K00658),K01616)+K00382),(K00174+K00175)) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241),(K00244+K00245+K00246)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+F73	Succinate	Production	Organic anion production	((((K00164+K00658),K01616)+K00382),K00174) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241),(K00244+K00245+K00246)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+F74	Succinate	Production	Organic anion production	K01580 (K13524,K07250,K00823,K16871) (K00135,K00139,K17761)
+F75	Succinate	Production	Organic anion production	(K00169+K00170+K00171+K00172) K01007 K01595 K00024 (K01677+K01678) (K00239+K00240) (K01902+K01903) (K15038,K15017) K14465 (K14467,K18861) K14534 K15016 K00626
+F76	Succinate	Production	Organic anion production	(K02160+K01961+K01962+K01963) K14468 K14469 K15052 K05606 (K01847,(K01848+K01849)) (K14471+K14472) (K00239+K00240+K00241) K01679 K08691 K14449 K14470 K09709
+F77	Succinate	Production	Organic anion production	(K00169+K00170+K00171+K00172) (K01959+K01960) K00024 (K01677+K01678) (K18209+K18210) (K01902+K01903) (K00174+K00175+K00176+K00177)
+F78	Fumarate	Production	Organic anion production	(K01647,K05942) (K01681,K01682) (K00031,K00030) ((((K00164+K00658),K01616)+K00382),(K00174+K00175)) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241),(K00244+K00245+K00246)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+F79	Fumarate	Production	Organic anion production	((((K00164+K00658),K01616)+K00382),K00174) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241),(K00244+K00245+K00246)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+F80	Fumarate	Production	Organic anion production	K01948 K00611 K01940 (K01755,K14681) K01476
+F81	Fumarate	Production	Organic anion production	(K00815,K00838,K00832,K03334) K00457 K00451 K01800 (K01555,K16171)
+F82	Fumarate	Production	Organic anion production	K00241+(K00242,K18859,K18860)+K00239+K00240
+F83	Fumarate	Production	Organic anion production	K00244+K00245+K00246+K00247
+F84	Fumarate	Production	Organic anion production	((K00169+K00170+K00171+K00172),K03737) (((K01007,K01006) K01595),(K01959+K01960),K01958) K00024 (K01676,K01679,(K01677+K01678)) ((K00239+K00240),(K00244+K00245),(K18556+K18557+K18558+K18559+K18560)) (K01902+K01903) (K00174+K00175) K00031 (K01681,K01682) ((K15230+K15231),((K15232+K15233) K15234))
+F85	Fumarate	Production	Organic anion production	(K00169+K00170+K00171+K00172) K01007 K01595 K00024 (K01677+K01678) (K00239+K00240) (K01902+K01903) (K15038,K15017) K14465 (K14467,K18861) K14534 K15016 K00626
+F86	Fumarate	Production	Organic anion production	(K02160+K01961+K01962+K01963) K14468 K14469 K15052 K05606 (K01847,(K01848+K01849)) (K14471+K14472) (K00239+K00240+K00241) K01679 K08691 K14449 K14470 K09709
+F87	Fumarate	Production	Organic anion production	(K00169+K00170+K00171+K00172) (K01959+K01960) K00024 (K01677+K01678) (K18209+K18210) (K01902+K01903) (K00174+K00175+K00176+K00177)
+F88	Fumarate	Production	Organic anion production	(K18029+K18030) K14974 K18028 K15357 K13995 K01799
+F89	Fumarate	Production	Organic anion production	K00611 K01940 (K01755,K14681)
+F90	Fumarate	Production	Organic anion production	K22478 K00145 K00821 K09065 K01438 K01940 K01755
+F91	Citrate	Production	Organic anion production	(K01647,K05942) (K01681,K01682) (K00031,K00030) ((((K00164+K00658),K01616)+K00382),(K00174+K00175)) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241),(K00244+K00245+K00246)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+F92	Citrate	Production	Organic anion production	(K01647,K05942) (K01681,K01682) (K00031,K00030)
+F93	Citrate	Production	Organic anion production	K01647 (K01681,K01682) K01637 (K01638,K19282) (K00026,K00025,K00024)
+F94	Citrate	Production	Organic anion production	((K00169+K00170+K00171+K00172),K03737) (((K01007,K01006) K01595),(K01959+K01960),K01958) K00024 (K01676,K01679,(K01677+K01678)) ((K00239+K00240),(K00244+K00245),(K18556+K18557+K18558+K18559+K18560)) (K01902+K01903) (K00174+K00175) K00031 (K01681,K01682) ((K15230+K15231),((K15232+K15233) K15234))
+F95	Citrate	Production	Organic anion production	K01647 K01681 K00031 K00261 (K19268+K01846) K04835 K19280 K14449 K19281 K19282 K00024
+F96	UDCA	Production	Secondary bile acid production	1.1.1.159 1.1.1.201
+F97	DCA	Production	Secondary bile acid production	(3.5.1.24,3.5.1.74) 6.2.1.7 1.1.1.395 1.3.1.115 2.8.3.25 4.2.1.106 1.3.1.114 1.1.152
+F98	LCA	Production	Secondary bile acid production	(3.5.1.24,3.5.1.74) 6.2.1.7 1.1.1.395 1.3.1.115 2.8.3.25 4.2.1.106 1.3.1.114 1.1.152
+F99	Isodeoxycholate	Production	Secondary bile acid production	(3.5.1.24,3.5.1.74) 6.2.1.7 1.1.1.395 1.3.1.115 2.8.3.25 4.2.1.106 1.3.1.114 1.1.152 1.1.1.52 1.1.1.391
+F100	Isolithocholate	Production	Secondary bile acid production	(3.5.1.24,3.5.1.74) 6.2.1.7 1.1.1.395 1.3.1.115 2.8.3.25 4.2.1.106 1.3.1.114 1.1.152 1.1.1.52 1.1.1.391
+F101	Serine	Production	Amino acid production	K00058 K00831 (K01079,K02203,K22305,K25528)
+F102	Threonine	Production	Amino acid production	(K00928,K12524,K12525,K12526) K00133 (K00003,K12524,K12525) (K00872,K02204,K02203) K01733
+F103	Cysteine	Production	Amino acid production	(K00640,K23304) (K01738,K13034,K17069)
+F104	Cysteine	Production	Amino acid production	(K01697,K10150) K01758
+F105	Cysteine	Production	Amino acid production	K00789 K17462 K01243 K07173 K17216 K17217
+F106	Methionine	Production	Amino acid production	(K00928,K12524,K12525) K00133 (K00003,K12524,K12525) (K00651,K00641) K01739 (K01760,K14155) (K00548,K24042,K00549)
+F107	Valine	Production	Amino acid production	(K01652+(K01653,K11258)) K00053 K01687 K00826
+F108	Isoleucine	Production	Amino acid production	(K01703+K01704) K00052
+F109	Isoleucine	Production	Amino acid production	(K17989,K01754) (K01652+(K01653,K11258)) K00053 K01687 K00826
+F110	Leucine	Production	Amino acid production	K01649 (K01702,(K01703+K01704)) K00052
+F111	Lysine	Production	Amino acid production	(K00928,K12524,K12525,K12526) K00133 K01714 K00215 K00674 (K00821,K14267) K01439 K01778 (K01586,K12526)
+F112	Lysine	Production	Amino acid production	K00928 K00133 K01714 K00215 K05822 K00841 K05823 K01778 K01586
+F113	Lysine	Production	Amino acid production	(K00928,K12524,K12525,K12526) K00133 K01714 K00215 K03340 (K01586,K12526)
+F114	Lysine	Production	Amino acid production	(K00928,K12524,K12525,K12526) K00133 K01714 K00215 K10206 K01778 (K01586,K12526)
+F115	Lysine	Production	Amino acid production	K01655 ((K17450 K01705),(K16792+K16793)) K05824
+F116	Lysine	Production	Amino acid production	K05827 K05828 K05829 K05830 K05831
+F117	Arginine	Production	Amino acid production	K00611 K01940 (K01755,K14681)
+F118	Arginine	Production	Amino acid production	K22478 K00145 K00821 K09065 K01438 K01940 K01755
+F119	Proline	Production	Amino acid production	((K00931 K00147),K12657) K00286
+F120	Glutamate	Production	Amino acid production	K00673 K01484 K00840 K06447 K05526
+F121	Glutamate	Production	Amino acid production	K01745 K01712 K01468 (K01479,K00603,K13990,(K05603 K01458))
+F122	Histidine	Production	Amino acid production	K00765 ((K01523 K01496),K11755,K14152) (K01814,K24017) ((K02501+K02500),K01663) ((K01693 K00817 (K04486,K05602,K18649)),(K01089 K00817)) (K00013,K14152)
+F123	Tryptophan	Production	Amino acid production	((((K01657+K01658),K13503,K13501,K01656) K00766),K13497) (((K01817,K24017) (K01656,K01609)),K13498,K13501) ((K01695+(K01696,K06001)),K01694)
+F124	Phenylalanine	Production	Amino acid production	(((K01850,K04092,K14187,K04093,K04516,K06208,K06209) (K01713,K04518,K05359)),K14170) (K00832,K00838)
+F125	Phenylalanine	Production	Amino acid production	K01850 K15849 K05359
+F126	Tyrosine	Production	Amino acid production	(((K01850,K04092,K14170,K04093,K04516,K06208,K06209) (K04517,K00211)),K14187) (K00832,K00838)
+F127	Tyrosine	Production	Amino acid production	(K01850,K04092,K14170) (K00832,K15849) (K00220,K24018,K15227)
+F128	GABA	Production	Amino acid production	K09470 K09471 K09472 K09473
+F129	Beta-alanine	Production	Amino acid production	(K00207,(K17722+K17723)) K01464 (K01431,K06016)
+F130	Choline	Production	Amino acid derivative production	2.7.7.15 2.7.8.2 3.1.4.4
+F131	Betaine	Production	Amino acid derivative production	1.1.1.254 2.3.1.M85 3.1.2.M6
+F132	Ectoine	Production	Amino acid derivative production	K00928 K00133 K00836 K06718 K06720
+F133	Ethylene	Production	Amino acid derivative production	K00789 (K01762,K20772) K05933
+F134	Ornithine	Production	Amino acid derivative production	(K00618,K00619,K14681,K14682,K00620,K22477,K22478) (((K00930,K22478) K00145),K12659) (K00818,K00821) (K01438,K14677,K00620)
+F135	Ornithine	Production	Amino acid derivative production	K19412 K05828 K05829 K05830 K05831
+F136	Creatine	Production	Amino acid derivative production	K00613 K00542 K00933
+F137	Spermidine	Production	Amino acid derivative production	(K01583,K01584,K01585,K02626) K01480
+F138	Putrescine	Production	Amino acid derivative production	K01476 K01581
+F139	Inosinic acid (IMP)	Production	Amino acid derivative production	K00764 (K01945,K11787,K11788,K13713) (K00601,K11175,K08289,K11787,K01492) (K01952,(K23269+K23264+K23265),(K23270+K23265)) (K01933,K11787,(K11788 (K01587,K11808,(K01589 K01588)))) (K01923,K01587,K13713) K01756 (K00602,(K01492,(K06863 K11176)))
+F140	Uridylic acid (UMP)	Production	Amino acid derivative production	(K11540,((K11541 K01465),((K01954,(K01955+K01956)) ((K00609+K00610),K00608) K01465))) (K00226,K00254,K17828) (K13421,(K00762 K01591))
+F141	Thiamine (B1)	Production	Vitamin production	(((K03148+K03154) K03151),(K03150 K03149)) K03147 ((K00941 K00788),K14153,K21219) K00946
+F142	Thiamine (B1)	Production	Vitamin production	(((K03148+K03154) K03151),(K03153 K03149 K10810)) K03147 K00941 K00788 K00946
+F143	Thiamine (B1)	Production	Vitamin production	(K22699,K03147) ((K00941 (K00788,K21220)),K21219) K00946
+F144	Thiamine (B1)	Production	Vitamin production	(K00941 K00788),K14153,K21219
+F145	Riboflavin (B2)	Production	Vitamin production	(((K01497,K14652) ((K01498 K00082),K11752) (K22912,K20860,K20861,K20862,K21063,K21064)),(K02858,K14652)) K00794 K00793 ((K20884 K22949),K11753)
+F146	Niacin (B3)	Production	Vitamin production	3.6.1.22 (3.2.2.6,3.2.2.4) 3.4.1.19
+F147	Pantothenate (B5)	Production	Vitamin production	((K00826 K00606 K00077),K01579) (K01918,K13799)
+F148	Pantothenate (B5)	Production	Vitamin production	((K00606 K00077),(K13367 K00128)) K01918
+F149	Pyridoxal-P (B6)	Production	Vitamin production	K03472 K03473 K00831 K00097 K03474 K00275
+F150	Pyridoxal-P (B6)	Production	Vitamin production	K06215 K08681
+F151	Biotin (B7)	Production	Vitamin production	K00652 (((K00833,K19563) K01935),K19562) K01012
+F152	Biotin (B7)	Production	Vitamin production	K00652 K25570 K01935 K01012
+F153	Biotin (B7)	Production	Vitamin production	K16593 K00652 K19563 K01935 K01012
+F154	Biotin (B7)	Production	Vitamin production	K01906 K00652 (K00833,K19563) K01935 K01012
+F155	Tetrahydrofolate (B9)	Production	Vitamin production	(K01495,K09007,K22391) (K01077,K01113,(K08310,K19965)) ((K13939,((K13940,(K01633 K00950)) K00796)),(K01633 K13941)) (K11754,K20457) (K00287,K13998)
+F156	Tetrahydrofolate (B9)	Production	Vitamin production	K14652 K22100 K01633 K13941 K22099 K00287
+F157	Tetrahydrofolate (B9)	Production	Vitamin production	K01495 K22101 K13941 K11754 K13998
+F158	Cobalamin (B12)	Production	Vitamin production	(K02302,((K02303,K13542) (K02304,K24866))) (K02190,K03795,K22011) K03394 (K05934,K13541,K21479) K05936 (K02189,K13541) K02188 K05895 ((K02191 K03399),K00595) K06042 K02224
+F159	Cobalamin (B12)	Production	Vitamin production	(K02303,K13542) (K03394,K13540) K02229 (K05934,K13540,K13541) K05936 K02228 K05895 K00595 K06042 K02224 K02230+K09882+K09883
+F160	Cobalamin (B12)	Production	Vitamin production	(K00798,K19221) K02232 (K02225,K02227) K02231 K00768 (K02226,K22316) K02233
+F161	Tocopherol/tocotorienol (E)	Production	Vitamin production	K09833 (K12502,K18534) K09834 K05928
+F162	Phylloquinone (K1)	Production	Vitamin production	((K02552 K02551 K08680 K02549),K14759) (K01911,K14760) K01661 (K19222,K12073) K23094 K17872 K23095
+F163	Menaquinone (K2)	Production	Vitamin production	K02552 K02551 K08680 K02549 K01911 K01661 K19222 K02548 K03183
+F164	Menaquinone (K2)	Production	Vitamin production	K11782 K18285 (K18286,K20810) K11783 K11784 K11785
+F165	Menaquinone (K2)	Production	Vitamin production	K11782 K18285 K18284 K11784 K11785
+F166	Ubiquinone (Q10)	Production	Vitamin production	(K03181,K18240) K03179 (K03182+K03186) K18800 K00568 K03185 K03183 (K03184,K06134) K00568
+F167	Ubiquinone (Q10)	Production	Vitamin production	K06125 K06126 K00591 K06127 K06134 K00591

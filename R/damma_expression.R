@@ -99,13 +99,14 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
 
     #Compute completeness scores TO BE UPDATED
     #OUTPUT A LIST OF TABLES RATHER THAN A TABLE
-    expression_fullness_vector <- c()
     for(f in c(1:nrow(functions))){
       definition=functions[f,"Definition"]
+      cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
       expression_fullness <- compute_fullness_expression(definition,expression_table)
-      expression_fullness_vector <- c(expression_fullness,fullness)
+      #Create list object if it is the first iteration
+      if(f == 1){expression_fullness_list <- expression_fullness}
+      expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
     }
-    expression_fullness_table <- rbind(fexpression_fullness_table,expression_fullness_vector)
   }
   rownames(fullness_table) <- MAGs
   colnames(fullness_table) <- functions$Code
