@@ -4,7 +4,7 @@
 #' @param annotations Table containing gene and MAG identifiers, and annotation codes
 #' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @param genecol Column index (number) of the annotations table containing the gene identifiers
-#' @param magcol Column index (number) of the annotations table containing the MAG identifiers
+#' @param genomecol Column index (number) of the annotations table containing the MAG identifiers
 #' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
 #' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
@@ -13,18 +13,18 @@
 #' @importFrom dplyr pull
 #' @return A fullness matrix
 #' @examples
-#' damma(annotations,functions,magcol,keggcol,eccol,pepcol)
-#' damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+#' damma(annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
+#' damma(annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 #' @export
 
 #UNDER DEVELOPMENT
-damma_expression <- function(expression,annotations,functions,genecol,magcol,keggcol,eccol,pepcol){
+damma_expression <- function(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol){
 
   cat("STARTING dammaE ANALYSIS\n(Note this may take a while)...\n")
 
   #Simplify annotations table
   setDT(annotations)
-  annotations2 <- annotations[,c(genecol,magcol,keggcol,eccol,pepcol), with=FALSE]
+  annotations2 <- annotations[,c(genecol,genomecol,keggcol,eccol,pepcol), with=FALSE]
   colnames(annotations2) <- c("Genes","MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
 
   #Validate expression table

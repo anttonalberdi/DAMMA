@@ -47,8 +47,8 @@ DAMMA only requires an annotations table containing MAG identifiers and annotati
 ```
 #Load annotations
 library(data.table)
-#annotations_file="/mydir/annotations.tsv"
-#annotations <- fread(annotations_file)
+#annotations_file="/mydir/gene_annotations_file.tsv"
+#gene_annotations <- fread(annotations_file)
 ```
 
 DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
@@ -61,7 +61,7 @@ library(DAMMA)
 data(damma_data)
 
 #Visualise example annotations
-head(annotations_example)
+head(gene_annotations)
 
 #Visualise functions table
 head(functions_table)
@@ -76,15 +76,17 @@ The damma() function requires specifying in which column(s) to find MAG identifi
 
 ```
 #Using example data
-distilled_table <- damma(annotations_example,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_table <- damma(gene_annotations,functions_table,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Apply MAG completeness correction factor
 Functional attributes of MAGs are often not directly comparable due to different levels of completeness. A MAG with 70% of estimated completeness most likely misses genes that contribute to its functional repertoire, compared to another MAG with 100% completeness. Therefore, a direct comparison of these two MAGs is likely to yield distorted results. In an attempt to minimise the impact of MAG completeness in functional metagenomic analyses, DAMMA incorporates a completeness correction script, which models the relationship between function fullness and MAG completeness  across the entire dataset, to apply a correction factor to the raw module fullness values.
 
 ```
-mag_completeness <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb2","bin_m1.mxb107_sub","bin_m1.vmb35","bin_m1.vmb46","bin_m9.vmb60"),completeness=c(100,98,85.8,94.5,97,100,70))
-distilled_table_corrected <- damma_correction(distilled_table,mag_completeness)
+data(damma_data)
+head(genome_quality)
+completeness <- as.data.frame(genome_quality[,c(1:2)])
+distilled_table_corrected <- damma_correction(distilled_table,completeness)
 ```
 
 ### Aggregrate raw distillates into 80 compounds
@@ -103,8 +105,10 @@ distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0
 
 This conversion can account for the completeness of MAGs, and decrease the threshold when the completeness of the MAG is lower than 100%.
 ```
-completeness_table <- cbind(genome=c("bin_m1.cct123","bin_m1.mtb106","bin_m1.mtb2","bin_m1.mxb107_sub","bin_m1.vmb35","bin_m1.vmb46","bin_m9.vmb60"),completeness=c(100,98,85.8,94.5,97,100,70))
-distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9,completeness=completeness_table)
+data(damma_data)
+head(genome_quality)
+completeness <- as.data.frame(genome_quality[,c(1:2)])
+distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9,completeness=completeness)
 ```
 
 ### Aggregrate compounds into 11 core functions
@@ -173,7 +177,13 @@ ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
 ```
 
 ## Using DAMMA with metatranscriptomic data
-To be updated
+
+```
+data(damma_data)
+head(gene_expression)
+
+distilled_expression_table <- damma_expression(gene_expression,gene_annotations,functions_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+```
 
 ## Using DAMMA for community-level analysis
 DAMMA computes the community-level capacity to perform specific metabolic functions, by accounting for the individual and collective fullness of metabolic pathways. DAMMA applies penalisations to
