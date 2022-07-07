@@ -9,7 +9,7 @@ damma_expression(
   annotations,
   functions,
   genecol,
-  magcol,
+  genomecol,
   keggcol,
   eccol,
   pepcol
@@ -24,7 +24,7 @@ damma_expression(
 
 \item{genecol}{Column index (number) of the annotations table containing the gene identifiers}
 
-\item{magcol}{Column index (number) of the annotations table containing the MAG identifiers}
+\item{genomecol}{Column index (number) of the annotations table containing the MAG identifiers}
 
 \item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
 
@@ -33,12 +33,12 @@ damma_expression(
 \item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
 }
 \value{
-A fullness matrix
+A list of pathway-expression matrices (one table per genome)
 }
 \description{
 Generate the fullness table of metabolic pathways/modules from a MAG annotation table
 }
 \examples{
-damma(annotations,functions,magcol,keggcol,eccol,pepcol)
-damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+damma_expression(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
+damma_expression(expression,annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 }

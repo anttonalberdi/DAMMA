@@ -11,10 +11,10 @@
 #' @import data.table
 #' @importFrom stringr str_extract str_match_all
 #' @importFrom dplyr pull
-#' @return A fullness matrix
+#' @return A list of pathway-expression matrices (one table per genome)
 #' @examples
-#' damma(annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
-#' damma(annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+#' damma_expression(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
+#' damma_expression(expression,annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 #' @export
 
 #UNDER DEVELOPMENT

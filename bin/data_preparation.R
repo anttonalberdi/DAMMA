@@ -1,8 +1,7 @@
-library(data.table)
-gene_annotations <- fread("data/gene_annotations.tsv")
-gene_expression <- fread("data/gene_expression.tsv")
-genome_counts <- fread("data/genome_counts.tsv")
-genome_quality <- fread("data/genome_quality.tsv")
+gene_annotations <- read.table("data/gene_annotations.tsv",header=TRUE,sep="\t")
+gene_expression <- read.table("data/gene_expression.tsv",header=TRUE,sep="\t")
+genome_counts <- read.table("data/genome_counts.tsv",header=TRUE,sep="\t")
+genome_quality <- read.table("data/genome_quality.tsv",header=TRUE,sep="\t")
 
 functions_table_FD1 <- read.table("data/DAMMA_functions_FD1.tsv",header=TRUE,sep="\t")
 functions_table_FD2 <- read.table("data/DAMMA_functions_FD2.tsv",header=TRUE,sep="\t")
@@ -28,5 +27,5 @@ remove.packages("DAMMA")
 library(roxygen2)
 roxygenize()
 
-
+library(devtools)
 load_all('/Users/anttonalberdi/github/DAMMA')

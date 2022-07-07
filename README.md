@@ -185,6 +185,7 @@ rownames(gene_expression) <- gene_expression[,1]
 gene_expression <- gene_expression[,-1]
 
 distilled_expression_table <- damma_expression(gene_expression,gene_annotations,functions_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+
 ```
 
 ## Using DAMMA for community-level analysis
