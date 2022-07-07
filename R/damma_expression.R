@@ -48,6 +48,8 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
     cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
     cat("\t\tProcessing KEGG annotations...\n", sep = "")
     #Fetch MAG annotations
+
+    expression_table <- data.frame()
     annotations_MAG <- annotations3[annotations3$MAGs == MAG]
     #K00000
     annotations_MAG <- annotations_MAG[order(annotations_MAG$K1),]
@@ -105,6 +107,8 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
       }
     }
 
+    print(expression_table[c(1:6),c(5:8)])
+
     #Compute expression scores
     cat("\t\tCalculating expression metrics...\n")
     for(f in c(1:nrow(functions))){
@@ -122,7 +126,7 @@ damma_expression <- function(expression,annotations,functions,genecol,magcol,keg
 
     #Convert sample list to matrix
     expression_fullness_list <- lapply(expression_fullness_list,function(x) as.numeric(x))
-    expression_fullness_table<- do.call(rbind, expression_fullness_list)
+    expression_fullness_table <- do.call(rbind, expression_fullness_list)
     colnames(expression_fullness_table) <- functions$Code
 
     #Append to MAG list
