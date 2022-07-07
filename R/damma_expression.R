@@ -107,8 +107,6 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
       }
     }
 
-    print(expression_table[c(1:6),c(5:8)])
-
     #Compute expression scores
     cat("\t\tCalculating expression metrics...\n")
     for(f in c(1:nrow(functions))){
