@@ -13,8 +13,6 @@
 #UNDER DEVELOPMENT
 distillate_definition <- function(definition, def_table, level, present){
 
-  #Under development
-
   if (level == "L5_group"){
     #L5
     def_table_sub <- def_table[,c("L0_group","L1_group","L2_group","L3_group","L4_group","L5_group")][complete.cases(def_table[,c("L0_group","L1_group","L2_group","L3_group","L4_group","L5_group")]),]

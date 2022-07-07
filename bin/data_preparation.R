@@ -1,3 +1,4 @@
+library(data.table)
 gene_annotations <- fread("data/gene_annotations.tsv")
 gene_expression <- fread("data/gene_expression.tsv")
 genome_counts <- fread("data/genome_counts.tsv")
