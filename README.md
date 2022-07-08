@@ -185,9 +185,47 @@ rownames(gene_expression) <- gene_expression[,1]
 gene_expression <- gene_expression[,-1]
 
 distilled_expression_table <- damma_expression(gene_expression,gene_annotations,functions_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+```
 
+The output of damma_expression() is a list of tables containing functional expression values grouped by genome (one table with various samples per genome). Depending on the downstream analyses, researchers might need to organise the information differently.  Using the function sweep_matrix_list() it is possible to change the organisation of the information to a list of tables grouped by sample (one table with various genomes per sample).
+
+```
 distilled_expression_table2 <- sweep_matrix_list(distilled_expression_table)
+```
 
+Using lapply(), the damma_compounds() function can be applied to the list of expression tables.
+```
+distilled_expression_table2_compounds <- lapply(distilled_expression_table2,function(x) damma_compounds(x,functions_table))
+```
+
+A compound level heatmap can be ploted per sample or averaging all samples
+```
+library(data.table)
+library(ggplot2)
+library(RColorBrewer)
+
+#Prepare input table
+sample="CB20.13F1a"
+sample="CC20.13F1a"
+compounds_table_df <- melt(distilled_expression_table2_compounds[[sample]])
+colnames(compounds_table_df) <- c("MAGs","Compounds","Expression")
+compounds_table_df$Expression <- log(compounds_table_df$Expression)
+compounds_table_df$Expression[compounds_table_df$Expression == "-Inf"] <- 0
+compounds_table_df$Expression[compounds_table_df$Expression < 0] <- 0
+compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
+compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+
+#Plot heatmap
+ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Expression, group=Function))+
+  geom_tile(colour="white", size=0.1)+
+  scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
+  scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
+  #scale_fill_gradientn(limits = c(0,1), colours = rev(c("#781a25","#d53e4f", "#f46d43", "#fdae61", "#fee08b", "#e6f598", "#abdda4", "#ddf1da","#f1faf0","#f4f4f4")))+
+  scale_fill_gradientn(colours=brewer.pal(7, "YlGnBu"))+
+  facet_grid(Function ~ ., scales = "free", space = "free")+
+  theme_grey(base_size=8)+
+  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
 
 ## Using DAMMA for community-level analysis
