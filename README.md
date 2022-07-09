@@ -92,23 +92,15 @@ distilled_table_compounds <- damma_compounds(distilled_table,functions_table)
 
 DAMMA offers the possibility to convert the fullness table into a binary format by setting a cutoff threshold.
 ```
-distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9)
-```
-
-This conversion can account for the completeness of MAGs, and decrease the threshold when the completeness of the MAG is lower than 100%.
-```
-data(damma_data)
-head(genome_quality)
-completeness <- as.data.frame(genome_quality[,c(1:2)])
-distilled_table_compounds_bin <- damma_bin(distilled_table_compounds,threshold=0.9,completeness=completeness)
+distilled_table_compounds_bin <- damma_binary(distilled_table_compounds,threshold=0.9)
 ```
 
 ### Aggregrate compounds into 11 core functions
 
 The compounds data can be aggregated to the main functional levels using the damma_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
-distilled_table_functions <- damma_functions(distilled_table_compounds,functions_table,normalise=FALSE)
-distilled_table_functions_bin <- aggregate_functions(distilled_table_compounds_bin,functions_table,normalise=TRUE)
+distilled_table_functions <- damma_functions(distilled_table_compounds,functions_table,transform=FALSE)
+distilled_table_functions_bin <- damma_functions(distilled_table_compounds_bin,functions_table,transform=TRUE)
 
 ```
 

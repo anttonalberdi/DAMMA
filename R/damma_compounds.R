@@ -5,6 +5,7 @@
 #' @return A function table aggregated at the compound level
 #' @import tidyverse
 #' @import dplyr
+#' @import tibble
 #' @examples
 #' damma_compounds(compound_table)
 #' @export
