@@ -17,7 +17,7 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
 
   #Simplify annotations table
   annotations <- as.data.frame(annotations)
-  annotations2 <- annotations[,c(genomecol,keggcol,eccol,pepcol), with=FALSE]
+  annotations2 <- annotations[,c(genomecol,keggcol,eccol,pepcol)]
   colnames(annotations2) <- c("MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
 
   #List MAGs
@@ -31,7 +31,7 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
     m=m+1
     cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
     #Fetch MAG annotations
-    annotations_MAG <- annotations2[annotations2$MAGs == MAG]
+    annotations_MAG <- annotations2[annotations2$MAGs == MAG,]
     #K00000
     kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
     kegg <- unique(kegg[!is.na(kegg)])

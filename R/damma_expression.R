@@ -22,7 +22,7 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
 
   #Simplify annotations table
   annotations <- as.data.frame(annotations)
-  annotations2 <- annotations[,c(genecol,genomecol,keggcol,eccol,pepcol), with=FALSE]
+  annotations2 <- annotations[,c(genecol,genomecol,keggcol,eccol,pepcol)]
   colnames(annotations2) <- c("Genes","MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
 
   #Validate expression table
@@ -48,7 +48,7 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
     #Fetch MAG annotations
 
     expression_table <- data.frame()
-    annotations_MAG <- annotations3[annotations3$MAGs == MAG]
+    annotations_MAG <- annotations3[annotations3$MAGs == MAG,]
     #K00000
     annotations_MAG <- annotations_MAG[order(annotations_MAG$K1),]
     kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
