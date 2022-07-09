@@ -13,10 +13,9 @@ install_github("anttonalberdi/DAMMA")
 ```
 
 ### Load DAMMA
-Every time you want to use the package, you need to load the library, and the support data included.
+Every time you want to use the package, you need to load the library, which will load support data automatically.
 ```
 library(DAMMA)
-data(damma_data)
 ```
 
 ### Uninstall DAMMA
