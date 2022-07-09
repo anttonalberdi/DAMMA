@@ -15,7 +15,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     stringr,
-    dplyr,
+    tidyverse,
     data.table
 Suggests:
     data.table,
