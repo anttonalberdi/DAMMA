@@ -3,3 +3,6 @@ f
 
 # Source data
 data/source
+
+# Data preparation
+bin
