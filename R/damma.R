@@ -51,10 +51,12 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
     present <- unique(c(kegg,EC,EC2,pep))
     #Compute completeness scores
     fullness_vector <- c()
-    for(f in c(1:nrow(functions))){
-      definition=functions[f,"Definition"]
-      fullness <- compute_fullness(definition,present)
-      fullness_vector <- c(fullness_vector,fullness)
+    suppressWarnings(
+      for(f in c(1:nrow(functions))){
+        definition=functions[f,"Definition"]
+        fullness <- compute_fullness(definition,present)
+        fullness_vector <- c(fullness_vector,fullness)
+      }
     }
     fullness_table <- rbind(fullness_table,fullness_vector)
   }
