@@ -108,19 +108,20 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
 
     #Compute expression scores
     cat("\t\tCalculating expression metrics...\n")
-    for(f in c(1:nrow(functions))){
-      definition=functions[f,"Definition"]
-      #cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
-      expression_fullness <- compute_fullness_expression(definition,expression_table)
-      if(f == 1){
-        #Create list if it is the first function
-        expression_fullness_list <- expression_fullness
-      }else{
-        #Append to list if it is not the first function
-        expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
+    suppressWarnings(
+      for(f in c(1:nrow(functions))){
+        definition=functions[f,"Definition"]
+        #cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
+        expression_fullness <- compute_fullness_expression(definition,expression_table)
+        if(f == 1){
+          #Create list if it is the first function
+          expression_fullness_list <- expression_fullness
+        }else{
+          #Append to list if it is not the first function
+          expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
+        }
       }
-    }
-
+    )
     #Convert sample list to matrix
     expression_fullness_list <- lapply(expression_fullness_list,function(x) as.numeric(x))
     expression_fullness_table <- do.call(rbind, expression_fullness_list)
