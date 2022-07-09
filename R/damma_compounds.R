@@ -4,6 +4,7 @@
 #' @param functions_table Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @return A function table aggregated at the compound level
 #' @import tidyverse
+#' @import dplyr
 #' @examples
 #' damma_compounds(compound_table)
 #' @export

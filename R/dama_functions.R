@@ -3,6 +3,8 @@
 #' @param compound_table Compound table outputted by aggregate_compounds()
 #' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @param transform Whether to transform to 0-1 scale. Default=TRUE
+#' @import tidyverse
+#' @import dplyr
 #' @return A function table aggregated at the compound level
 #' @examples
 #' dama_functions(compound_table)
