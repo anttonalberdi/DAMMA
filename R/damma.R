@@ -57,7 +57,7 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
         fullness <- compute_fullness(definition,present)
         fullness_vector <- c(fullness_vector,fullness)
       }
-    }
+    )
     fullness_table <- rbind(fullness_table,fullness_vector)
   }
   rownames(fullness_table) <- MAGs
