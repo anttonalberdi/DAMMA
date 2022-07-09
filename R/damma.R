@@ -26,7 +26,7 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
 
   #Calculate fullness values
   fullness_table <- c()
-  cat("Calculating fullness values for MAG:\n")
+  cat("Calculating fullness values for Genome:\n")
   m=0
   for(MAG in MAGs){
     m=m+1
