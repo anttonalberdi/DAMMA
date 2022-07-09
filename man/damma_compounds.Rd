@@ -4,12 +4,12 @@
 \alias{damma_compounds}
 \title{Aggregates raw fullness values into meaningful indices at the compound level}
 \usage{
-damma_compounds(distilled_table, functions)
+damma_compounds(distilled_table, functions_table)
 }
 \arguments{
 \item{distilled_table}{Function distillation table outputted by damma()}
 
-\item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{functions_table}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 }
 \value{
 A function table aggregated at the compound level
