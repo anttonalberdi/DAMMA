@@ -4,6 +4,7 @@
 #' @param mag_completeness A matrix containing MAG names (1st column) and completemess values (2nd column)
 #' @param stats Whether to print correction statistics on screen or not. Default=TRUE
 #' @return A corrected fullness table
+#' @import tidyverse
 #' @examples
 #' damma_correction(fullness_table, mag_completeness)
 #' @export

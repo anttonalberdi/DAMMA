@@ -10,7 +10,6 @@
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
 #' @import data.table
 #' @importFrom stringr str_extract str_match_all
-#' @importFrom dplyr pull
 #' @return A list of pathway-expression matrices (one table per genome)
 #' @examples
 #' damma_expression(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
@@ -37,7 +36,7 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
   annotations3 <- annotations2[Genes %in% sharedgenes,]
 
   #List MAGs
-  MAGs <- unique(dplyr::pull(annotations3, MAGs))
+  MAGs <- unique(annotations3$MAGs)
 
   #Calculate expression values for each MAG
   cat("Calculating function expression values for MAG:\n")

@@ -8,7 +8,6 @@
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
 #' @import data.table
 #' @importFrom stringr str_extract str_match_all
-#' @importFrom dplyr pull
 #' @return A fullness matrix
 #' @examples
 #' damma(annotations,functions,genomecol,keggcol,eccol,pepcol)
@@ -23,7 +22,7 @@ damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
   colnames(annotations2) <- c("MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
 
   #List MAGs
-  MAGs <- unique(dplyr::pull(annotations2, MAGs))
+  MAGs <- unique(annotations2$MAGs)
 
   #Calculate fullness values
   fullness_table <- c()
