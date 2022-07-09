@@ -1,106 +1,22 @@
 #' Aggregates raw fullness values into meaningful indices at the compound level
 #'
 #' @param distilled_table Function distillation table outputted by damma()
+#' @param functions_table Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @return A function table aggregated at the compound level
-#' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @examples
 #' damma_compounds(compound_table)
 #' @export
 
-damma_compounds <- function(distilled_table,functions){
+damma_compounds <- function(distilled_table,functions_table){
 
-  #Create empty table
-  aggregated_table <- c()
+   compounds_table <- t(as.data.frame(t(distilled_table)) %>%
+     rownames_to_column('Code') %>%
+     left_join(functions_table[,c('Code', 'Compound')], by = 'Code') %>%
+     group_by(Compound) %>%
+     summarise(across(where(is.numeric), ~ max(.x, na.rm = TRUE))) %>%
+     arrange(factor(Compound, levels = unique(functions_table$Compound))) %>%
+     column_to_rownames('Compound'))
 
-  #Aggregate polysaccharides
-  codes <- functions[functions$Function == "Polysaccharide degradation","Code"]
-  compounds <- functions[functions$Function == "Polysaccharide degradation","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
+   return(compounds_table)
 
-  #Aggregate sugars
-  codes <- functions[functions$Function == "Sugar degradation","Code"]
-  compounds <- functions[functions$Function == "Sugar degradation","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate lipids
-  codes <- functions[functions$Function == "Lipid degradation","Code"]
-  compounds <- functions[functions$Function == "Lipid degradation","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate proteins
-  codes <- functions[functions$Function == "Protein degradation","Code"]
-  enzyme_groups <- functions[functions$Function == "Protein degradation","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  distilled_table_sub <- rowMeans(distilled_table_sub)
-  distilled_table_sub <- t(t(distilled_table_sub))
-  colnames(distilled_table_sub) <- "Peptides"
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate mucins
-  codes <- functions[functions$Function == "Mucin degradation","Code"]
-  compounds <- functions[functions$Function == "Mucin degradation","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate SCFAs
-  codes <- functions[functions$Function == "SCFA production","Code"]
-  compounds <- functions[functions$Function == "SCFA production","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  distilled_table_mer <- merge(t(distilled_table_sub),functions[functions$Function == "SCFA production",c("Code","Compound")],by.x="row.names",by.y="Code")
-  distilled_table_agg <- aggregate(subset(distilled_table_mer, select = -c(Row.names,Compound) ),by=list(distilled_table_mer$Compound),FUN=max)
-  rownames(distilled_table_agg) <- distilled_table_agg[,1]
-  distilled_table_agg <- t(distilled_table_agg[,-1])
-  aggregated_table <- cbind(aggregated_table,distilled_table_agg)
-
-  #Aggregate organic anions
-  codes <- functions[functions$Function == "Organic anion production","Code"]
-  distilled_table_sub <- distilled_table[,codes]
-  distilled_table_mer <- merge(t(distilled_table_sub),functions[functions$Function == "Organic anion production",c("Code","Compound")],by.x="row.names",by.y="Code")
-  distilled_table_agg <- aggregate(subset(distilled_table_mer, select = -c(Row.names,Compound) ),by=list(distilled_table_mer$Compound),FUN=max)
-  rownames(distilled_table_agg) <- distilled_table_agg[,1]
-  distilled_table_agg <- t(distilled_table_agg[,-1])
-  aggregated_table <- cbind(aggregated_table,distilled_table_agg)
-
-  #Aggregate secondary bile acids
-  codes <- functions[functions$Function == "Secondary bile acid production","Code"]
-  compounds <- functions[functions$Function == "Secondary bile acid production","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate amino acids
-  codes <- functions[functions$Function == "Amino acid production","Code"]
-  compounds <- functions[functions$Function == "Amino acid production","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  distilled_table_mer <- merge(t(distilled_table_sub),functions[functions$Function == "Amino acid production",c("Code","Compound")],by.x="row.names",by.y="Code")
-  distilled_table_agg <- aggregate(subset(distilled_table_mer, select = -c(Row.names,Compound) ),by=list(distilled_table_mer$Compound),FUN=max)
-  rownames(distilled_table_agg) <- distilled_table_agg[,1]
-  distilled_table_agg <- t(distilled_table_agg[,-1])
-  aggregated_table <- cbind(aggregated_table,distilled_table_agg)
-
-  #Aggregate amino acid derivatives
-  codes <- functions[functions$Function == "Amino acid derivative production","Code"]
-  compounds <- functions[functions$Function == "Amino acid derivative production","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  colnames(distilled_table_sub) <- compounds
-  aggregated_table <- cbind(aggregated_table,distilled_table_sub)
-
-  #Aggregate vitamins
-  codes <- functions[functions$Function == "Vitamin production","Code"]
-  compounds <- functions[functions$Function == "Vitamin production","Compound"]
-  distilled_table_sub <- distilled_table[,codes]
-  distilled_table_mer <- merge(t(distilled_table_sub),functions[functions$Function == "Vitamin production",c("Code","Compound")],by.x="row.names",by.y="Code")
-  distilled_table_agg <- aggregate(subset(distilled_table_mer, select = -c(Row.names,Compound) ),by=list(distilled_table_mer$Compound),FUN=max)
-  rownames(distilled_table_agg) <- distilled_table_agg[,1]
-  distilled_table_agg <- t(distilled_table_agg[,-1])
-  aggregated_table <- cbind(aggregated_table,distilled_table_agg)
-
-  return(aggregated_table)
 }

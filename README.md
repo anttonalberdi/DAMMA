@@ -198,7 +198,7 @@ Using lapply(), the damma_compounds() function can be applied to the list of exp
 distilled_expression_table2_compounds <- lapply(distilled_expression_table2,function(x) damma_compounds(x,functions_table))
 ```
 
-A compound level heatmap can be ploted per sample or averaging all samples
+A compound level heatmap can be plotted per sample or averaging all samples
 ```
 library(data.table)
 library(ggplot2)
