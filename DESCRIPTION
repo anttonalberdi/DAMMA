@@ -14,9 +14,4 @@ RoxygenNote: 7.2.0
 Depends:
     R (>= 3.5.0)
 Imports:
-    stringr,
-    tidyverse,
-    data.table
-Suggests:
-    data.table,
-    ggplot2
+    tidyverse
