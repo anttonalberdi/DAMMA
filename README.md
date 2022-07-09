@@ -2,7 +2,7 @@
 DAMMA is an R package that provides a suite of functions to compute biologically meaningful functional capacity indices of microbial strains and communities from genome-resolved metagenomic and associated metatranscriptomic data. Functional pathways included in the package produce either the degradation or synthesis of biomolecular compounds that are known to be relevant for animal biology, thus providing an estimation of the biological contribution individual microbial strains and collective communities can make to their hosts. DAMMA incorporates scripts to produce meaningful functional profiles, but also to account for technical distortion factors, such as MAG completeness, which are known to affect functional characterisations and analyses of microbiome data.
 
 ## Quick start
-DAMMA has been developed as an R package, thus basic knowledge of the R environment is required for an efficient use of the software.
+DAMMA has been developed as an R package, thus basic knowledge of the R environment is required for an efficient use of the software. The only dependency of DAMMA is the package suite [tidyverse](https://www.tidyverse.org/packages/).
 
 ### Install DAMMA
 DAMMA can be directly installed from this Github repository using install_github() function included in the [devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) package.
