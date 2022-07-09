@@ -1,17 +1,13 @@
 # **DAMMA**: Distillation of Animal-associated Microorganisms' Metabolic Annotations
-DAMMA is an R package that provides a suite of functions to compute biologically meaningful functional capacity indices of microbial strains and communities from genome-resolved metagenomic and associated metatranscriptomic data.
-
-Functional pathways included in the package produce either the degradation or synthesis of biomolecular compounds that are known to be relevant for animal biology, thus providing an estimation of the biological contribution individual microbial strains and collective communities can make to their hosts.
-
-DAMMA incorporates scripts to produce meaningful functional profiles, but also to account for technical distortion factors, such as MAG completeness, which are known to affect functional characterisations and analyses of microbiome data.
+DAMMA is an R package that provides a suite of functions to compute biologically meaningful functional capacity indices of microbial strains and communities from genome-resolved metagenomic and associated metatranscriptomic data. Functional pathways included in the package produce either the degradation or synthesis of biomolecular compounds that are known to be relevant for animal biology, thus providing an estimation of the biological contribution individual microbial strains and collective communities can make to their hosts. DAMMA incorporates scripts to produce meaningful functional profiles, but also to account for technical distortion factors, such as MAG completeness, which are known to affect functional characterisations and analyses of microbiome data.
 
 ## Quick start
 DAMMA has been developed as an R package, thus basic knowledge of the R environment is required for an efficient use of the software.
 
 ### Install DAMMA
-DAMMA can be directly installed from this Github repository using install_github() function.
+DAMMA can be directly installed from this Github repository using install_github() function included in the [devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) package.
 ```
-install.packages("devtools") #only if devtools is not installed
+install.packages("devtools") #only if devtools is not installed previously
 library(devtools)
 install_github("anttonalberdi/DAMMA")
 ```
@@ -51,14 +47,11 @@ library(data.table)
 #gene_annotations <- fread(annotations_file)
 ```
 
-DAMMA contains an example annotation table that can be loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
+DAMMA contains example data sets that are loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
 
 ```
-#Load DAMMA library
+#Load DAMMA library. Automatically loads support data and example data sets as well.
 library(DAMMA)
-
-#Load DAMMA support data
-data(damma_data)
 
 #Visualise example annotations
 head(gene_annotations)
@@ -68,8 +61,8 @@ head(functions_table)
 ```
 
 ### Run distillation
-The damma() function requires specifying in which column(s) to find MAG identifiers and annotation data.
-- magcol: number of column containing MAG identifies.
+The damma() function requires specifying in which column(s) to find Genome (MAG) identifiers and annotation data.
+- genomecol: number of column containing Genome (MAG) identifies.
 - keggcol: index(es) of column(s) containing KO codes (eg: K00169).
 - eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15).
 - pepcol: index(es) of column(s) containing peptidase codes (eg: C03H).
@@ -177,6 +170,12 @@ ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
 ```
 
 ## Using DAMMA with metatranscriptomic data
+The damma_expression() function requires specifying in which column(s) to find Gene identifiers, Genome (MAG) identifiers and annotation data.
+- genecol: number of column containing Gene identifies.
+- genomecol: number of column containing Genome (MAG) identifies.
+- keggcol: index(es) of column(s) containing KO codes (eg: K00169).
+- eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15).
+- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H).
 
 ```
 data(damma_data)
