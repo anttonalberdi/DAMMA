@@ -4,14 +4,14 @@
 \alias{damma}
 \title{Generate the fullness table of metabolic pathways/modules from a MAG annotation table}
 \usage{
-damma(annotations, functions, magcol, keggcol, eccol, pepcol)
+damma(annotations, functions, genomecol, keggcol, eccol, pepcol)
 }
 \arguments{
 \item{annotations}{Table containing MAG identifiers and annotation codes}
 
 \item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 
-\item{magcol}{Column index (number) of the annotations table containing the MAG identifiers}
+\item{genomecol}{Column index (number) of the annotations table containing the MAG identifiers}
 
 \item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
 
@@ -26,6 +26,6 @@ A fullness matrix
 Generate the fullness table of metabolic pathways/modules from a MAG annotation table
 }
 \examples{
-damma(annotations,functions,magcol,keggcol,eccol,pepcol)
-damma(annotations,functions,magcol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+damma(annotations,functions,genomecol,keggcol,eccol,pepcol)
+damma(annotations,functions,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 }
