@@ -147,7 +147,7 @@ library(RColorBrewer)
 functions_table_df <- melt(distilled_table_functions)
 colnames(functions_table_df) <- c("MAGs","Functions","Index")
 functions_table_df$Function <- as.factor(functions_table_df$Function)
-functions_table_df$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+functions_table_df$Function <- factor(functions_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 #Plot heatmap
 ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
   geom_tile(colour="white", size=0.1)+
@@ -219,4 +219,49 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Expression, group=Func
 ```
 
 ## Using DAMMA for community-level analysis
-DAMMA computes the community-level capacity to perform specific metabolic functions, by accounting for the individual and collective fullness of metabolic pathways. DAMMA applies penalisations to
+DAMMA computes the community-level capacity to perform specific metabolic functions, by accounting for the individual and collective fullness of metabolic pathways and, optionally, the relative abundances of Genomes in different samples.
+
+If no information on relative abundances is provided, the function yields community-level MCIs for each pathway.
+```
+community_fullness <- damma_community(annotations=gene_annotations,functions_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+```
+
+If a previously profuced fullness table is provided, the function skips the fullness calculation step done through the function damma().
+```
+community_fullness <- damma_community(annotations=gene_annotations,functions_table,fullness_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+```
+
+If a (relative) genome abundance table is provided, the function yields community-level MCIs for each pathway in each sample.
+```
+abundance_table <- genome_counts[,-1]
+rownames(abundance_table) <- genome_counts[,1]
+community_fullness <- damma_community(annotations=gene_annotations,functions_table,abundance_table=abundance_table,fullness_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+```
+
+The pathway fullness values can be further distilled using the damma_compounds() function.
+```
+community_fullness_compounds <- damma_compounds(community_fullness,functions_table)
+```
+
+And finally, the results can be visualised in a heatmap.
+```
+library(data.table)
+library(ggplot2)
+library(RColorBrewer)
+
+#Prepare input table
+functions_table_df <- melt(community_fullness_compounds)
+colnames(functions_table_df) <- c("Samples","Functions","Index")
+functions_table_df$Function <- as.factor(functions_table_df$Function)
+functions_table_df$Function <- factor(functions_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+#Plot heatmap
+ggplot(functions_table_df, aes(x=Samples, y=Functions, fill=Index))+
+  geom_tile(colour="white", size=0.1)+
+  scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
+  scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
+  #scale_fill_gradientn(limits = c(0,1), colours = rev(c("#781a25","#d53e4f", "#f46d43", "#fdae61", "#fee08b", "#e6f598", "#abdda4", "#ddf1da","#f1faf0","#f4f4f4")))+
+  scale_fill_gradientn(limits = c(0,1), colours=brewer.pal(7, "YlGnBu"))+
+  facet_grid(Function ~ ., scales = "free", space = "free")+
+  theme_grey(base_size=8)+
+  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
+```

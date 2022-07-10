@@ -2,16 +2,17 @@
 #'
 #' @param annotations Table containing Genome identifiers and annotation codes
 #' @param functions_table Table containing definitions and metadata of metabolic functions (included in DAMMA package)
-#' @param abundance_table (Relative) abundance table with samples in columns and Genomes in rows
+#' @param abundance_table (Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values
 #' @param fullness_table Pathway fullness table provided by damma() function
 #' @param genomecol Column index (number) of the annotations table containing the MAG identifiers
 #' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
 #' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
 #' @importFrom stringr str_extract str_match_all
-#' @return A fullness matrix
+#' @return A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 #' @examples
-#' damma_community(fullness_table,abundance_table,functions_table)
+#' damma_community(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
+#' damma_community(annotations,functions_table,genomecol,keggcol,eccol,pepcol)
 #' @export
 
 damma_community <- function(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol){
