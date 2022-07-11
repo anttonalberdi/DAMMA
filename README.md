@@ -250,12 +250,14 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-functions_table_df <- melt(community_fullness_compounds)
-colnames(functions_table_df) <- c("Samples","Functions","Index")
-functions_table_df$Function <- as.factor(functions_table_df$Function)
-functions_table_df$Function <- factor(functions_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+compounds_table_df <- melt(community_fullness_compounds)
+colnames(compounds_table_df) <- c("Samples","Compounds","MCI")
+compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
+compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+
 #Plot heatmap
-ggplot(functions_table_df, aes(x=Samples, y=Functions, fill=Index))+
+ggplot(compounds_table_df2, aes(x=Samples, y=Compounds, fill=MCI, group=Function))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
@@ -263,5 +265,5 @@ ggplot(functions_table_df, aes(x=Samples, y=Functions, fill=Index))+
   scale_fill_gradientn(limits = c(0,1), colours=brewer.pal(7, "YlGnBu"))+
   facet_grid(Function ~ ., scales = "free", space = "free")+
   theme_grey(base_size=8)+
-  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
+  theme(strip.text.y = element_text(angle = 0))
 ```
