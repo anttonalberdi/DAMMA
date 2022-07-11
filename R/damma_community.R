@@ -4,6 +4,7 @@
 #' @param functions_table Table containing definitions and metadata of metabolic functions (included in DAMMA package)
 #' @param abundance_table (Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values
 #' @param fullness_table Pathway fullness table provided by damma() function
+#' @param genomes_completeness Genome completeness table to correct MCIs for varying completeness values
 #' @param genomecol Column index (number) of the annotations table containing the MAG identifiers
 #' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
 #' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
@@ -15,7 +16,7 @@
 #' damma_community(annotations,functions_table,genomecol,keggcol,eccol,pepcol)
 #' @export
 
-damma_community <- function(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol){
+damma_community <- function(annotations,functions_table,abundance_table,fullness_table,genomes_completeness,genomecol,keggcol,eccol,pepcol){
 
   tss <- function(abund){sweep(abund, 2, colSums(abund), FUN="/")}
 
@@ -35,6 +36,9 @@ damma_community <- function(annotations,functions_table,abundance_table,fullness
     cat("\tNote: if you have already run DAMMA on this data set,\n")
     cat("\tyou can include the fullness table to avoid this step.\n")
     fullness_table2 <- damma(annotations,functions_table,genomecol,keggcol,eccol,pepcol)
+    if(!missing(genomes_completeness)){
+      fullness_table2 <- damma_correction(fullness_table2,genomes_completeness)
+    }
   }else{
     cat("Fullness table has been provided.\n")
     fullness_table2 <- as.data.frame(fullness_table)

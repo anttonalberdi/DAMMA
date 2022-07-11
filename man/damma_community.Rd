@@ -9,6 +9,7 @@ damma_community(
   functions_table,
   abundance_table,
   fullness_table,
+  genomes_completeness,
   genomecol,
   keggcol,
   eccol,
@@ -20,9 +21,11 @@ damma_community(
 
 \item{functions_table}{Table containing definitions and metadata of metabolic functions (included in DAMMA package)}
 
-\item{abundance_table}{(Relative) abundance table with samples in columns and Genomes in rows}
+\item{abundance_table}{(Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values}
 
 \item{fullness_table}{Pathway fullness table provided by damma() function}
+
+\item{genomes_completeness}{Genome completeness table to correct MCIs for varying completeness values}
 
 \item{genomecol}{Column index (number) of the annotations table containing the MAG identifiers}
 
@@ -33,11 +36,12 @@ damma_community(
 \item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
 }
 \value{
-A fullness matrix
+A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 }
 \description{
 Generate the fullness table of metabolic pathways/modules from a MAG annotation table
 }
 \examples{
-damma_community(fullness_table,abundance_table,functions_table)
+damma_community(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
+damma_community(annotations,functions_table,genomecol,keggcol,eccol,pepcol)
 }
