@@ -1,4 +1,4 @@
-#' Generate the fullness table of metabolic pathways/modules from a MAG annotation table
+#' Generate community-level MCIs from microbial relative abundance data
 #'
 #' @param annotations Table containing Genome identifiers and annotation codes
 #' @param functions_table Table containing definitions and metadata of metabolic functions (included in DAMMA package)
