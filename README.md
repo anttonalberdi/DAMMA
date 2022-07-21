@@ -267,3 +267,31 @@ ggplot(compounds_table_df2, aes(x=Samples, y=Compounds, fill=MCI, group=Function
   theme_grey(base_size=8)+
   theme(strip.text.y = element_text(angle = 0))
 ```
+
+## Using DAMMA outputs for statistical analyses
+MCIs can be used in downstream statistical analyses to test specific null hypotheses. The example data used here belongs to eight chicken individuals that were grown in two different trials, and the null hypothesis of no difference in function fullness between trials is tested with each compound. Given the fractional (values are bounded between 0 and 1) nature of the community-level fullness indices, we analyse the data with a binomial generalized linear model with logit link function and using robust standard errors (Papke and Wooldridge, 1996). Two tables are outputted with the functions that were significantly enriched in B trial and C trial, respectively.  
+​
+```
+library(sandwich)
+library(lmtest)
+Trial=factor(rep(c("B","C"),each=4))
+results_table <- data.frame(matrix(0,nrow = ncol(community_fullness_compounds),ncol = 4))
+rownames(results_table) <- colnames(community_fullness_compounds)
+colnames(results_table) <- c("Estimate","Std.Error","z-value","p-value")
+​
+for(i in 1:ncol(community_fullness_compounds)){
+model_glm <- glm(
+  community_fullness_compounds[,i] ~ Trial,
+  family = binomial
+)
+results_table[i,] <- coeftest(model_glm, vcov = vcovHC(model_glm, type="HC"))[2,]
+}
+# False Discovery Rate adjustment of p-values for multiple testing. In this example leads to no significantly changing compounds between trials.
+results_table$FDR <- p.adjust(results_table$'p-value',method="BH")
+results_table_sig <- results_table[results_table$'p-value'<0.05,]
+# Results are outputed based on unadjusted p-values.
+B_enriched <- results_table_sig[results_table_sig$Estimate<0,]
+C_enriched <- results_table_sig[results_table_sig$Estimate>0,]
+print(B_enriched)
+print(C_enriched)
+```

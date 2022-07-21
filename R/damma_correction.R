@@ -8,29 +8,29 @@
 #' @examples
 #' damma_correction(fullness_table, genome_completeness)
 #' @export
-
+​
 damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
-
+​
   #### UNDER DEVELOPMENT ####
   Genome_completeness <- as.numeric(genome_completeness[,2])
-
+​
   #Create corrected fullness matrix
   fullness_table_corrected <- matrix(0,nrow = nrow(fullness_table),ncol = ncol(fullness_table))
   colnames(fullness_table_corrected)=colnames(fullness_table)
   rownames(fullness_table_corrected)=rownames(fullness_table)
-
+​
   #Iterate modelling and correction for each function
   suppressWarnings(
     for(i in 1:ncol(fullness_table)){
       # Arbitrary number of 10 steps is used as weights
-      Model <- glm(fullness_table[,i]~Genome_completeness,family = "binomial",weights = rep(10,length(Genome_completeness)))
+      Model <- glm(fullness_table[,i]~Genome_completeness,family = "binomial")
       slope_coef <- coef(Model)[2]
       if(slope_coef > 0){
         for(j in 1:nrow(fullness_table)){
           # Model prediction of fullness if completeness was 100%
-          pred_100 <- round(predict(Model,newdata = data.frame(Genome_completeness=100,weights=10),type = "response"),1)
+          pred_100 <- round(predict(Model,newdata = data.frame(Genome_completeness=100),type = "response"),1)
           # Model prediction of fullness for actual completeness of the focal MAG
-          pred_focal <- round(predict(Model,newdata = data.frame(Genome_completeness=Genome_completeness[j],weights=10),type = "response"),1)
+          pred_focal <- round(predict(Model,newdata = data.frame(Genome_completeness=Genome_completeness[j]),type = "response"),1)
           # The expected change in function fullness if focal MAG was 100% complete
           pred_diff <- pred_100-pred_focal
           fullness_table_corrected[j,i] = fullness_table[j,i]+pred_diff
@@ -40,17 +40,17 @@ damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
       }
     }
   )
-
+​
   # If corrected fullness >1, convert it to 1.
   fullness_table_corrected[fullness_table_corrected>1] <- 1
-
+​
   #Outout overall correction statistics on screen
   total <- nrow(fullness_table)*ncol(fullness_table)
   changes <- c(fullness_table == fullness_table_corrected)
   changes <- length(changes[!(changes)])
   percentage <- round(changes / total * 100,1)
   cat(paste0(changes," out of ",total," (",percentage,"%) fullness values were corrected\n"))
-
+​
   if(stats == TRUE){
     #Outout overall correction statistics on screen
     total <- ncol(fullness_table_corrected)
@@ -62,8 +62,8 @@ damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
         cat(paste0("\t",r," (",completeness,"%): ",changes,"/",total," (",percentage,"%) fullness values were corrected\n"))
     }
   }
-
+​
   #Output corrected table
   return(fullness_table_corrected)
-
+​
 }
