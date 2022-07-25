@@ -2,7 +2,7 @@
 % Please edit documentation in R/damma_community.R
 \name{damma_community}
 \alias{damma_community}
-\title{Generate the fullness table of metabolic pathways/modules from a MAG annotation table}
+\title{Generate community-level MCIs from microbial relative abundance data}
 \usage{
 damma_community(
   annotations,
@@ -39,7 +39,7 @@ damma_community(
 A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 }
 \description{
-Generate the fullness table of metabolic pathways/modules from a MAG annotation table
+Generate community-level MCIs from microbial relative abundance data
 }
 \examples{
 damma_community(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)

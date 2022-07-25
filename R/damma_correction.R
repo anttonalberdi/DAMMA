@@ -8,17 +8,17 @@
 #' @examples
 #' damma_correction(fullness_table, genome_completeness)
 #' @export
-​
+
 damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
-​
+
   #### UNDER DEVELOPMENT ####
   Genome_completeness <- as.numeric(genome_completeness[,2])
-​
+
   #Create corrected fullness matrix
   fullness_table_corrected <- matrix(0,nrow = nrow(fullness_table),ncol = ncol(fullness_table))
   colnames(fullness_table_corrected)=colnames(fullness_table)
   rownames(fullness_table_corrected)=rownames(fullness_table)
-​
+
   #Iterate modelling and correction for each function
   suppressWarnings(
     for(i in 1:ncol(fullness_table)){
@@ -40,17 +40,17 @@ damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
       }
     }
   )
-​
+
   # If corrected fullness >1, convert it to 1.
   fullness_table_corrected[fullness_table_corrected>1] <- 1
-​
+
   #Outout overall correction statistics on screen
   total <- nrow(fullness_table)*ncol(fullness_table)
   changes <- c(fullness_table == fullness_table_corrected)
   changes <- length(changes[!(changes)])
   percentage <- round(changes / total * 100,1)
   cat(paste0(changes," out of ",total," (",percentage,"%) fullness values were corrected\n"))
-​
+
   if(stats == TRUE){
     #Outout overall correction statistics on screen
     total <- ncol(fullness_table_corrected)
@@ -62,8 +62,8 @@ damma_correction <- function(fullness_table,genome_completeness,stats=TRUE){
         cat(paste0("\t",r," (",completeness,"%): ",changes,"/",total," (",percentage,"%) fullness values were corrected\n"))
     }
   }
-​
+
   #Output corrected table
   return(fullness_table_corrected)
-​
+
 }
