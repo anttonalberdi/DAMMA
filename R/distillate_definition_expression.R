@@ -23,19 +23,34 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
         subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- mean(subdef2_expression)
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
+
       } else if("," %in% subdef){
         subdef2 <- subdef[subdef != ","]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- max(subdef2_expression)
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
@@ -57,19 +72,34 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
         subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- mean(subdef2_expression)
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
+
       } else if("," %in% subdef){
         subdef2 <- subdef[subdef != ","]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- max(subdef2_expression)
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
@@ -92,19 +122,34 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
           subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- mean(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
+
         } else if("," %in% subdef){
           subdef2 <- subdef[subdef != ","]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- max(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
@@ -126,19 +171,34 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
           subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- mean(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
+
         } else if("," %in% subdef){
           subdef2 <- subdef[subdef != ","]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- max(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
@@ -160,19 +220,34 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
           subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- mean(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
+
         } else if("," %in% subdef){
           subdef2 <- subdef[subdef != ","]
           subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
           subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-          if(length(subdef2_expression) > 0){
-            value <- max(subdef2_expression)
+          if(length(subdef2_code) > 0){
+            subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+            if(length(subdef2_expression) == 0){
+              subdef2_expression <- 0
+            }
+          }else{
+            subdef2_expression <- NA
+          }
+          if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+            value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
           }else{
             value <- 0
           }
@@ -192,9 +267,16 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
         subdef2 <- subdef[(subdef != " ") & (subdef != "+")]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- mean(c(subdef2_number,subdef2_expression))
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- mean(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
@@ -202,9 +284,16 @@ distillate_definition_expression <- function(sample,definition_expression, def_t
         subdef2 <- subdef[subdef != ","]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
-        subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
-        if(length(subdef2_expression) > 0){
-          value <- max(c(subdef2_number,subdef2_expression))
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
         }else{
           value <- 0
         }
