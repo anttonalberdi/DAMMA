@@ -50,11 +50,12 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
     expression_table <- data.frame()
     annotations_Genome <- annotations3[annotations3$Genomes == Genome,]
     #K00000
-    annotations_Genome <- annotations_Genome[order(annotations_Genome$K1),]
-    kegg <- str_extract(annotations_Genome$K1, "K[0-9]+")
+    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$K1),]
+    annotations_Genome2 <- annotations_Genome[annotations_Genome$K1 != "",]
+    kegg <- str_extract(annotations_Genome2$K1, "K[0-9]+")
     kegg <- sort(unique(kegg[!is.na(kegg)]))
     for(k in kegg){
-      genes <- annotations_Genome[grep(k, annotations_Genome$K1),"Genes"]
+      genes <- annotations_Genome2[grep(k, annotations_Genome2$K1),"Genes"]
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
@@ -65,20 +66,21 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
     }
 
     cat("\t\tProcessing EC annotations...\n", sep = "")
-    annotations_Genome <- annotations_Genome[order(annotations_Genome$E1,annotations_Genome$E2),]
+    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$E1,annotations_Genome$E2),]
+    annotations_Genome2 <- annotations_Genome2[(annotations_Genome2$E1 != "") | (annotations_Genome2$E2 != ""),]
     #[EC:0.0.0.0]
-    EC1 <- unlist(str_match_all(annotations_Genome$E1, "(?<=\\[EC:).+?(?=\\])"))
+    EC1 <- unlist(str_match_all(annotations_Genome2$E1, "(?<=\\[EC:).+?(?=\\])"))
     EC1 <- unique(unlist(strsplit(EC1, " ")))
     EC1 <- EC1[!grepl("-", EC1, fixed = TRUE)]
     #(EC 0.0.0.0)
-    EC2 <- unlist(str_match_all(annotations_Genome$E2, "(?<=\\(EC ).+?(?=\\))"))
+    EC2 <- unlist(str_match_all(annotations_Genome2$E2, "(?<=\\(EC ).+?(?=\\))"))
     EC2 <- unique(unlist(strsplit(EC2, " ")))
     EC2 <- EC2[!grepl("-", EC2, fixed = TRUE)]
     EC <- unique(EC1,EC2)
     EC <- sort(EC[!is.na(EC)])
     for(e in EC){
-      genes1 <- annotations_Genome[(grep(e, annotations_Genome$E1)),"Genes"]
-      genes2 <- annotations_Genome[(grep(e, annotations_Genome$E2)),"Genes"]
+      genes1 <- annotations_Genome2[(grep(e, annotations_Genome2$E1)),"Genes"]
+      genes2 <- annotations_Genome2[(grep(e, annotations_Genome2$E2)),"Genes"]
       genes <- unique(c(genes1,genes2))
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
@@ -93,14 +95,15 @@ damma_expression <- function(expression,annotations,functions,genecol,genomecol,
     #Peptidases
     pep <- unique(annotations_Genome$P1)
     pep <- pep[(pep != "") & (!is.na(pep))]
-    annotations_Genome <- annotations_Genome[order(annotations_Genome$P1),]
+    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$P1),]
+    annotations_Genome2 <- annotations_Genome2[annotations_Genome2$P1 != "",]
     for(p in pep){
-      genes <- annotations_Genome[grep(k, annotations_Genome$P1),"Genes"]
+      genes <- annotations_Genome2[grep(p, annotations_Genome2$P1),"Genes"]
       expression3 <- expression2[genes,]
       if(dim(expression3)[1]>1){
         expression3 <- colSums(expression3,na.rm=TRUE)
         expression3 <- t(expression3)
-        rownames(expression3) <- k
+        rownames(expression3) <- p
         expression_table <- rbind(expression_table,expression3)
       }
     }
