@@ -46,7 +46,7 @@ library(data.table)
 #gene_annotations <- fread(annotations_file)
 ```
 
-DAMMA contains example data sets that are loaded along with the functions table. These data are used in this documentation for showcasing DAMMA scripts.
+DAMMA contains example data sets that are loaded along with the pathway table. These data are used in this documentation for showcasing DAMMA scripts.
 
 ```
 #Load DAMMA library. Automatically loads support data and example data sets as well.
@@ -55,8 +55,8 @@ library(DAMMA)
 #Visualise example annotations
 head(gene_annotations)
 
-#Visualise functions table
-head(functions_table)
+#Visualise pathway table
+head(pathway_table)
 ```
 
 ### Run distillation
@@ -68,7 +68,7 @@ The damma() function requires specifying in which column(s) to find Genome (MAG)
 
 ```
 #Using example data
-distilled_table <- damma(gene_annotations,functions_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_table <- damma(gene_annotations,pathway_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Apply MAG completeness correction factor
@@ -85,7 +85,7 @@ distilled_table_corrected <- damma_correction(distilled_table,completeness)
 
 The raw fullness data can be aggregated to the compound level using the damma_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
-distilled_table_compounds <- damma_compounds(distilled_table,functions_table)
+distilled_table_compounds <- damma_compounds(distilled_table,pathway_table)
 ```
 
 ### Convert compounds into a binary table
@@ -99,8 +99,8 @@ distilled_table_compounds_bin <- damma_binary(distilled_table_compounds,threshol
 
 The compounds data can be aggregated to the main functional levels using the damma_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
-distilled_table_functions <- damma_functions(distilled_table_compounds,functions_table,transform=FALSE)
-distilled_table_functions_bin <- damma_functions(distilled_table_compounds_bin,functions_table,transform=TRUE)
+distilled_table_functions <- damma_functions(distilled_table_compounds,pathway_table,transform=FALSE)
+distilled_table_functions_bin <- damma_functions(distilled_table_compounds_bin,pathway_table,transform=TRUE)
 
 ```
 
@@ -115,7 +115,7 @@ library(RColorBrewer)
 #Prepare input table
 compounds_table_df <- melt(distilled_table_compounds)
 colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
-compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
 compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 
@@ -144,12 +144,12 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-functions_table_df <- melt(distilled_table_functions)
-colnames(functions_table_df) <- c("MAGs","Functions","Index")
-functions_table_df$Function <- as.factor(functions_table_df$Function)
-functions_table_df$Function <- factor(functions_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+pathway_table_df <- melt(distilled_table_functions)
+colnames(pathway_table_df) <- c("MAGs","Functions","Index")
+pathway_table_df$Function <- as.factor(pathway_table_df$Function)
+pathway_table_df$Function <- factor(pathway_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 #Plot heatmap
-ggplot(functions_table_df, aes(x=MAGs, y=Functions, fill=Index))+
+ggplot(pathway_table_df, aes(x=MAGs, y=Functions, fill=Index))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
@@ -174,7 +174,7 @@ head(gene_expression)
 rownames(gene_expression) <- gene_expression[,1]
 gene_expression <- gene_expression[,-1]
 
-distilled_expression_table <- damma_expression(gene_expression,gene_annotations,functions_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_expression_table <- damma_expression(gene_expression,gene_annotations,pathway_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The output of damma_expression() is a list of tables containing functional expression values grouped by genome (one table with various samples per genome). Depending on the downstream analyses, researchers might need to organise the information differently.  Using the function sweep_matrix_list() it is possible to change the organisation of the information to a list of tables grouped by sample (one table with various genomes per sample).
@@ -185,7 +185,7 @@ distilled_expression_table2 <- sweep_matrix_list(distilled_expression_table)
 
 Using lapply(), the damma_compounds() function can be applied to the list of expression tables.
 ```
-distilled_expression_table2_compounds <- lapply(distilled_expression_table2,function(x) damma_compounds(x,functions_table))
+distilled_expression_table2_compounds <- lapply(distilled_expression_table2,function(x) damma_compounds(x,pathway_table))
 ```
 
 A compound level heatmap can be plotted per sample or averaging all samples
@@ -202,7 +202,7 @@ colnames(compounds_table_df) <- c("MAGs","Compounds","Expression")
 compounds_table_df$Expression <- log(compounds_table_df$Expression)
 compounds_table_df$Expression[compounds_table_df$Expression == "-Inf"] <- 0
 compounds_table_df$Expression[compounds_table_df$Expression < 0] <- 0
-compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
 compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 
@@ -223,24 +223,24 @@ DAMMA computes the community-level capacity to perform specific metabolic functi
 
 If no information on relative abundances is provided, the function yields community-level MCIs for each pathway.
 ```
-community_fullness <- damma_community(annotations=gene_annotations,functions_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_MCI <- damma_community(gene_annotations,pathway_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-If a previously profuced fullness table is provided, the function skips the fullness calculation step done through the function damma().
+If a MCI table previously produced with damma() is provided, the function skips the MCI calculation step.
 ```
-community_fullness <- damma_community(annotations=gene_annotations,functions_table,fullness_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_MCI <- damma_community(gene_annotations,pathway_table,MCI_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 If a (relative) genome abundance table is provided, the function yields community-level MCIs for each pathway in each sample.
 ```
 abundance_table <- genome_counts[,-1]
 rownames(abundance_table) <- genome_counts[,1]
-community_fullness <- damma_community(annotations=gene_annotations,functions_table,abundance_table=abundance_table,fullness_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_fullness <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,MCI_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The pathway fullness values can be further distilled using the damma_compounds() function.
 ```
-community_fullness_compounds <- damma_compounds(community_fullness,functions_table)
+community_fullness_compounds <- damma_compounds(community_fullness,pathway_table)
 ```
 
 And finally, the results can be visualised in a heatmap.
@@ -252,7 +252,7 @@ library(RColorBrewer)
 #Prepare input table
 compounds_table_df <- melt(community_fullness_compounds)
 colnames(compounds_table_df) <- c("Samples","Compounds","MCI")
-compounds_table_df2 <- merge(compounds_table_df,functions_table,by.x="Compounds",by.y="Compound")
+compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
 compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 

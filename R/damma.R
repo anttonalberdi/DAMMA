@@ -1,66 +1,98 @@
-#' Generate the fullness table of metabolic pathways/modules from a MAG annotation table
+#' Generates a gene presence-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table
 #'
-#' @param annotations Table containing MAG identifiers and annotation codes
-#' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
-#' @param genomecol Column index (number) of the annotations table containing the MAG identifiers
-#' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
-#' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
-#' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
+#' @param annotation_table Table containing Genome identifiers and gene annotations
+#' @param pathway_table Table containing definitions and metadata of metabolic functions (provided by DAMMA)
+#' @param genomecol Column index (number) of the annotation_table containing the genome identifiers
+#' @param keggcol Column index(es) of the annotation_table in which to search for KEGG KO annotations
+#' @param eccol Column index(es) of the annotation_table in which to search for Enzyme Commision (EC) annotations
+#' @param pepcol Column index(es) of the annotation_table in which to search for Peptidase annotations
 #' @importFrom stringr str_extract str_match_all
 #' @return A fullness matrix
 #' @examples
-#' damma(annotations,functions,genomecol,keggcol,eccol,pepcol)
-#' damma(annotations,functions,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+#' damma(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
+#' damma(annotation_table,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 #' @export
 
-damma <- function(annotations,functions,genomecol,keggcol,eccol,pepcol){
+damma <- function(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol){
 
-  #Simplify annotations table
-  annotations <- as.data.frame(annotations)
-  annotations2 <- annotations[,c(genomecol,keggcol,eccol,pepcol)]
-  colnames(annotations2) <- c("MAGs",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
+  #Sanity check
+  if(missing(annotation_table)) stop("Genome annotation table is missing")
+  if(missing(pathway_table)) stop("Pathway table is missing")
+  if(missing(genomecol)) stop("Specify a column containing Genome identifiers")
+  if(length(genomecol)!=1) stop("The argument genomecol must be an integer indicating the number of the column containing the Genome identifiers in the annotations table")
+  if(missing(keggcol) & missing(eccol) & missing(pepcol)) stop("Specify at least one column containing functional annotations")
 
-  #List MAGs
-  MAGs <- unique(annotations2$MAGs)
+  #Convert annotation table to data frame
+  annotation_table <- as.data.frame(annotation_table)
 
-  #Calculate fullness values
-  fullness_table <- c()
-  cat("Calculating fullness values for Genome:\n")
+  #Convert pathway table to data frame
+  pathway_table <- as.data.frame(pathway_table)
+
+  #List Genomes
+  Genomes <- unique(annotation_table[,genomecol])
+
+  #Calculate MCI's for each Genome
+  MCI_table <- c()
+  cat("Calculating MCIs for Genome:\n")
   m=0
-  for(MAG in MAGs){
+  for(Genome in Genomes){
     m=m+1
-    cat("\t",MAG," (",m,"/",length(MAGs),")\n", sep = "")
-    #Fetch MAG annotations
-    annotations_MAG <- annotations2[annotations2$MAGs == MAG,]
+    cat("\t",Genome," (",m,"/",length(Genomes),")\n", sep = "")
+    #Fetch Genome annotations
+    annotations_Genome <- annotation_table[annotation_table[,genomecol] == Genome,]
+
+    #Declare vector of identifiers
+    Identifier_vector <- c()
+
+    #KEGG identifiers
     #K00000
-    kegg <- str_extract(annotations_MAG$K1, "K[0-9]+")
+    if(!missing(keggcol)){
+    kegg <- str_extract(c(unlist(c(annotations_Genome[,keggcol]))), "K[0-9]+")
     kegg <- unique(kegg[!is.na(kegg)])
+    }else{
+    kegg <- c()
+    }
+    Identifier_vector <- c(Identifier_vector,kegg)
+
+    #Enzyme Commission codes
     #[EC:0.0.0.0]
-    EC <- unlist(str_match_all(annotations_MAG$E1, "(?<=\\[EC:).+?(?=\\])"))
-    EC <- unique(unlist(strsplit(EC, " ")))
-    EC <- EC[!grepl("-", EC, fixed = TRUE)]
-    #(EC 0.0.0.0)
-    EC2 <- unlist(str_match_all(annotations_MAG$E2, "(?<=\\(EC ).+?(?=\\))"))
-    EC2 <- unique(unlist(strsplit(EC2, " ")))
-    EC2 <- EC2[!grepl("-", EC2, fixed = TRUE)]
+    if(!missing(eccol)){
+    EC <- unlist(str_match_all(c(unlist(c(annotations_Genome[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
+    EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
+    EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
+    EC <- EC[grepl(".", EC, fixed = TRUE)] #Remove NAs and inproperly formatted codes
+    }else{
+    EC <- c()
+    }
+    Identifier_vector <- c(Identifier_vector,EC)
+
     #Peptidases
-    pep <- unique(annotations_MAG$P1)
+    if(!missing(pepcol)){
+    pep <- unique(c(unlist(c(annotations_Genome[,pepcol]))))
     pep <- pep[pep != ""]
-    #Concatenate all annotations
-    present <- unique(c(kegg,EC,EC2,pep))
-    #Compute completeness scores
-    fullness_vector <- c()
+    }else{
+    pep <- c()
+    }
+    Identifier_vector <- c(Identifier_vector,pep)
+
+    #Calculate MCI's for each Pathway and append to vector
+    MCI_vector <- c()
     suppressWarnings(
-      for(f in c(1:nrow(functions))){
-        definition=functions[f,"Definition"]
-        fullness <- compute_fullness(definition,present)
-        fullness_vector <- c(fullness_vector,fullness)
+      for(f in c(1:nrow(pathway_table))){
+        definition=pathway_table[f,"Definition"]
+        MCI <- compute_fullness(definition,Identifier_vector)
+        MCI_vector <- c(MCI_vector,MCI)
       }
     )
-    fullness_table <- rbind(fullness_table,fullness_vector)
+    #Append MCI vector of the Genome to the MCI table containing MCI values of all Genomes
+    MCI_table <- rbind(MCI_table,MCI_vector)
   }
-  rownames(fullness_table) <- MAGs
-  colnames(fullness_table) <- functions$Code
-  fullness_table[is.na(fullness_table)] <- 0
-  return(fullness_table)
+
+  #Format output MCI table
+  rownames(MCI_table) <- Genomes
+  colnames(MCI_table) <- pathway_table$Code
+  MCI_table[is.na(MCI_table)] <- 0
+
+  #Output MCI table
+  return(MCI_table)
 }

@@ -1,138 +1,141 @@
-#' Generate the fullness table of metabolic pathways/modules from a Genome annotation table
+#' Generates a gene abundance/expression-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table and a related gene expression table
 #'
-#' @param expression Table containing normalised gene expression data with genes in rows and samples in columns
-#' @param annotations Table containing gene and genome identifiers, and annotation codes
-#' @param functions Table containing definitions and metadata of metabolic functions (provided by GAMMA)
+#' @param expression_table Table containing normalised gene expression data with gene identifiers in rows and sample identifiers in columns
+#' @param annotation_table Table containing gene and genome identifiers, and gene annotations
+#' @param pathway_table Table containing definitions and metadata of metabolic functions (provided by DAMMA)
 #' @param genecol Column index (number) of the annotations table containing the gene identifiers
-#' @param genomecol Column index (number) of the annotations table containing the genome identifiers
-#' @param keggcol Column index(es) of the annotations table in which to search for KEGG KO annotations
-#' @param eccol Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations
-#' @param pepcol Column index(es) of the annotations table in which to search for Peptidase annotations
+#' @param genomecol Column index (number) of annotation_table containing the genome identifiers
+#' @param keggcol Column index(es) of annotation_table in which to search for KEGG KO annotations
+#' @param eccol Column index(es) of annotation_table in which to search for Enzyme Commision (EC) annotations
+#' @param pepcol Column index(es) of annotation_table in which to search for Peptidase annotations
 #' @importFrom stringr str_extract str_match_all
 #' @return A list of pathway-expression matrices (one table per genome)
 #' @examples
-#' damma_expression(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
-#' damma_expression(expression,annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+#' damma_expression(expression_table,annotation_table,pathway_table,genecol,genomecol,keggcol,eccol,pepcol)
+#' damma_expression(expression_table,annotation_table,pathway_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 #' @export
 
 #UNDER DEVELOPMENT
-damma_expression <- function(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol){
+damma_expression <- function(expression_table,annotation_table,pathway_table,genecol,genomecol,keggcol,eccol,pepcol){
 
-  cat("STARTING dammaE ANALYSIS\n(Note this may take a while)...\n")
+  #Sanity check
+  if(missing(expression_table)) stop("Gene expression table is missing")
+  if(missing(annotation_table)) stop("Genome annotation table is missing")
+  if(missing(pathway_table)) stop("Pathway table is missing")
+  if(missing(genecol)) stop("Specify a column containing Gene identifiers")
+  if(missing(genomecol)) stop("Specify a column containing Genome identifiers")
+  if(length(genecol)!=1) stop("The argument genecol must be an integer indicating the number of the column containing the Gene identifiers in the annotations table")
+  if(length(genomecol)!=1) stop("The argument genomecol must be an integer indicating the number of the column containing the Genome identifiers in the annotations table")
+  if(missing(keggcol) & missing(eccol) & missing(pepcol)) stop("Specify at least one column containing functional annotations")
 
-  #Simplify annotations table
-  annotations <- as.data.frame(annotations)
-  annotations2 <- annotations[,c(genecol,genomecol,keggcol,eccol,pepcol)]
-  colnames(annotations2) <- c("Genes","Genomes",paste0("K",c(1:length(keggcol))),paste0("E",c(1:length(eccol))),paste0("P",c(1:length(pepcol))))
+  cat("Starting DAMMA expression analysis\n(Note this may take a while)...\n")
+
+  #Convert annotation table to data frame
+  annotation_table <- as.data.frame(annotation_table)
 
   #Validate expression table
-  sharedgenes <- intersect(rownames(expression),annotations2$Genes)
+  sharedgenes <- intersect(rownames(expression_table),annotation_table[,genecol])
 
   #Filter expression table
-  expression2 <- as.data.frame(expression[sharedgenes,])
+  expression_table <- as.data.frame(expression_table[sharedgenes,])
 
   #Filter annotations table
-  annotations3 <- annotations2[annotations2$Genes %in% sharedgenes,]
+  annotation_table <- annotation_table[annotation_table[,genecol] %in% sharedgenes,]
 
   #List Genomes
-  Genomes <- unique(annotations3$Genomes)
+  Genomes <- unique(annotation_table[,genomecol])
 
   #Calculate expression values for each Genome
-  cat("Calculating function expression values for Genome:\n")
+  cat("Calculating gene expression-based MCIs for Genome:\n")
   m=0
-  expression_fullness_table_list <- list()
+  expression_MCI_table_list <- list()
   for(Genome in Genomes){
     m=m+1
     cat("\t",Genome," (",m,"/",length(Genomes),")\n", sep = "")
-    cat("\t\tProcessing KEGG annotations...\n", sep = "")
-    #Fetch Genome annotations
 
-    expression_table <- data.frame()
-    annotations_Genome <- annotations3[annotations3$Genomes == Genome,]
-    #K00000
-    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$K1),]
-    annotations_Genome2 <- annotations_Genome[annotations_Genome$K1 != "",]
-    kegg <- str_extract(annotations_Genome2$K1, "K[0-9]+")
-    kegg <- sort(unique(kegg[!is.na(kegg)]))
-    for(k in kegg){
-      genes <- annotations_Genome2[grep(k, annotations_Genome2$K1),"Genes"]
-      expression3 <- expression2[genes,]
-      if(dim(expression3)[1]>1){
-        expression3 <- colSums(expression3,na.rm=TRUE)
-        expression3 <- t(expression3)
-        rownames(expression3) <- k
-        expression_table <- rbind(expression_table,expression3)
+    #Subset annotation data for the specific Genome
+    annotations_Genome <- annotation_table[annotation_table[,genomecol] == Genome,]
+
+    #Declare expression table
+    expression_MCI_table <- data.frame()
+
+    #KEGG identifiers
+    if(!missing(keggcol)){
+      cat("\t\tProcessing KEGG annotations...\n", sep = "")
+      kegg <- str_extract(c(unlist(c(annotations_Genome[,keggcol]))), "K[0-9]+")
+      kegg <- sort(unique(kegg[!is.na(kegg)]))
+      for(k in kegg){
+        genes <- annotations_Genome[grep(k, annotations_Genome[,c(keggcol)]),genecol]
+        expression_kegg <- expression_table[genes,]
+        if(dim(expression_kegg)[1]>1){
+          expression_kegg <- colSums(expression_kegg,na.rm=TRUE)
+          expression_kegg <- t(expression_kegg)
+          rownames(expression_kegg) <- k
+          expression_MCI_table <- rbind(expression_MCI_table,expression_kegg)
+        }
       }
     }
 
-    cat("\t\tProcessing EC annotations...\n", sep = "")
-    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$E1,annotations_Genome$E2),]
-    annotations_Genome2 <- annotations_Genome2[(annotations_Genome2$E1 != "") | (annotations_Genome2$E2 != ""),]
-    #[EC:0.0.0.0]
-    EC1 <- unlist(str_match_all(annotations_Genome2$E1, "(?<=\\[EC:).+?(?=\\])"))
-    EC1 <- unique(unlist(strsplit(EC1, " ")))
-    EC1 <- EC1[!grepl("-", EC1, fixed = TRUE)]
-    #(EC 0.0.0.0)
-    EC2 <- unlist(str_match_all(annotations_Genome2$E2, "(?<=\\(EC ).+?(?=\\))"))
-    EC2 <- unique(unlist(strsplit(EC2, " ")))
-    EC2 <- EC2[!grepl("-", EC2, fixed = TRUE)]
-    EC <- unique(EC1,EC2)
-    EC <- sort(EC[!is.na(EC)])
-    for(e in EC){
-      genes1 <- annotations_Genome2[(grep(e, annotations_Genome2$E1)),"Genes"]
-      genes2 <- annotations_Genome2[(grep(e, annotations_Genome2$E2)),"Genes"]
-      genes <- unique(c(genes1,genes2))
-      expression3 <- expression2[genes,]
-      if(dim(expression3)[1]>1){
-        expression3 <- colSums(expression3,na.rm=TRUE)
-        expression3 <- t(expression3)
-        rownames(expression3) <- e
-        expression_table <- rbind(expression_table,expression3)
+    #Enzyme Commission codes
+    if(!missing(eccol)){
+      cat("\t\tProcessing EC annotations...\n", sep = "")
+      EC <- unlist(str_match_all(c(unlist(c(annotations_Genome[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
+      EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
+      EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
+      EC <- sort(EC[grepl(".", EC, fixed = TRUE)]) #Remove NAs and inproperly formatted codes and sort codes
+      for(e in EC){
+        genes <- annotations_Genome[grep(e, annotations_Genome[,c(eccol)]),genecol]
+        expression_EC <- expression_table[genes,]
+        if(dim(expression_EC)[1]>1){
+          expression_EC <- colSums(expression_EC,na.rm=TRUE)
+          expression_EC <- t(expression_EC)
+          rownames(expression_EC) <- e
+          expression_MCI_table <- rbind(expression_MCI_table,expression_EC)
+        }
       }
     }
 
-    cat("\t\tProcessing peptidase annotations...\n", sep = "")
     #Peptidases
-    pep <- unique(annotations_Genome$P1)
-    pep <- pep[(pep != "") & (!is.na(pep))]
-    annotations_Genome2 <- annotations_Genome[order(annotations_Genome$P1),]
-    annotations_Genome2 <- annotations_Genome2[annotations_Genome2$P1 != "",]
-    for(p in pep){
-      genes <- annotations_Genome2[grep(p, annotations_Genome2$P1),"Genes"]
-      expression3 <- expression2[genes,]
-      if(dim(expression3)[1]>1){
-        expression3 <- colSums(expression3,na.rm=TRUE)
-        expression3 <- t(expression3)
-        rownames(expression3) <- p
-        expression_table <- rbind(expression_table,expression3)
+    if(!missing(pepcol)){
+      cat("\t\tProcessing peptidase annotations...\n", sep = "")
+      pep <- unique(c(unlist(c(annotations_Genome[,pepcol]))))
+      pep <- pep[pep != ""]
+      for(p in pep){
+        genes <- annotations_Genome[grep(p, annotations_Genome[,c(pepcol)]),genecol]
+        expression_pep <- expression_table[genes,]
+        if(dim(expression_pep)[1]>1){
+          expression_pep <- colSums(expression_pep,na.rm=TRUE)
+          expression_pep <- t(expression_pep)
+          rownames(expression_pep) <- p
+          expression_MCI_table <- rbind(expression_MCI_table,expression_pep)
+        }
       }
     }
 
     #Compute expression scores
-    cat("\t\tCalculating expression metrics...\n")
+    cat("\t\tCalculating gene expression-based MCIs...\n")
     suppressWarnings(
-      for(f in c(1:nrow(functions))){
-        definition=functions[f,"Definition"]
-        #cat("\tFunction ",paste0(f,"/",nrow(functions)),"\n")
-        expression_fullness <- compute_fullness_expression(definition,expression_table)
+      for(f in c(1:nrow(pathway_table))){
+        definition=pathway_table[f,"Definition"]
+        expression_MCI <- compute_fullness_expression(definition,expression_MCI_table)
         if(f == 1){
           #Create list if it is the first function
-          expression_fullness_list <- expression_fullness
+          expression_MCI_list <- expression_MCI
         }else{
           #Append to list if it is not the first function
-          expression_fullness_list <- Map(c, expression_fullness_list, expression_fullness)
+          expression_MCI_list <- Map(c, expression_MCI_list, expression_MCI)
         }
       }
     )
     #Convert sample list to matrix
-    expression_fullness_list <- lapply(expression_fullness_list,function(x) as.numeric(x))
-    expression_fullness_table <- do.call(rbind, expression_fullness_list)
-    colnames(expression_fullness_table) <- functions$Code
+    expression_MCI_list <- lapply(expression_MCI_list,function(x) as.numeric(x))
+    expression_MCI_table <- do.call(rbind, expression_MCI_list)
+    colnames(expression_MCI_table) <- pathway_table$Code
 
     #Append to Genome list
-    expression_fullness_table_list[[Genome]] <- expression_fullness_table
+    expression_MCI_table_list[[Genome]] <- expression_MCI_table
   }
 
-  return(expression_fullness_table_list)
+  return(expression_MCI_table_list)
 
 }
