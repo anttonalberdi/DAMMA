@@ -11,12 +11,13 @@
 
 damma_correction <- function(MCI_table,genome_completeness,stats=TRUE){
 
-  Genome_completeness <- as.numeric(genome_completeness[,2])
-
   #Sort Genomes and test matching
   MCI_table <- MCI_table[order(rownames(MCI_table)),]
   genome_completeness <- genome_completeness[order(genome_completeness[,1]),]
   if(all(as.character(rownames(MCI_table)) != as.character(genome_completeness[,1]))) stop("Pathway table is missing")
+
+  #Get completeness values
+  Genome_completeness <- as.numeric(genome_completeness[,2])
 
   #Create corrected fullness matrix
   MCI_table_corrected <- matrix(0,nrow = nrow(MCI_table),ncol = ncol(MCI_table))
