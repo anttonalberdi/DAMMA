@@ -68,7 +68,7 @@ The damma() function requires specifying in which column(s) to find Genome (MAG)
 
 ```
 #Using example data
-distilled_table <- damma(gene_annotations,pathway_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+distilled_table <- damma(gene_annotations,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Apply MAG completeness correction factor

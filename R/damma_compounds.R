@@ -1,6 +1,6 @@
 #' Aggregates raw fullness values into meaningful indices at the compound level
 #'
-#' @param distilled_table Function distillation table outputted by damma()
+#' @param distilled_table Function distillation table outputted by damma() or damma_correction
 #' @param functions_table Table containing definitions and metadata of metabolic functions (provided by GAMMA)
 #' @return A function table aggregated at the compound level
 #' @import tidyverse
