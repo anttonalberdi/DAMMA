@@ -171,6 +171,7 @@ distillate_definition <- function(definition, def_table, level, present){
         value=round(max(as.numeric(subdef2)),1)
       } else {
         subdef2 <- subdef
+        subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
         subdef2 <- gsub("FALSE",0,subdef2)
         subdef2 <- gsub("TRUE",1,subdef2)
         value=round(max(as.numeric(subdef2)),1)
