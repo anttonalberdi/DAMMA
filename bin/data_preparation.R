@@ -1,22 +1,24 @@
-gene_annotations <- read.table("data/gene_annotations.tsv",header=TRUE,sep="\t")
-gene_expression <- read.table("data/gene_expression.tsv",header=TRUE,sep="\t")
-genome_counts <- read.table("data/genome_counts.tsv",header=TRUE,sep="\t")
-genome_quality <- read.table("data/genome_quality.tsv",header=TRUE,sep="\t")
+gene_annotations <- read.table("data/source/gene_annotations.tsv",header=TRUE,sep="\t")
+gene_expression <- read.table("data/source/gene_expression.tsv",header=TRUE,sep="\t")
+genome_counts <- read.table("data/source/genome_counts.tsv",header=TRUE,sep="\t")
+genome_quality <- read.table("data/source/genome_quality.tsv",header=TRUE,sep="\t")
 
-pathway_table_FD1 <- read.table("data/DAMMA_db1.tsv",header=TRUE,sep="\t")
-pathway_table_FD2 <- read.table("data/DAMMA_db2.tsv",header=TRUE,sep="\t")
-pathway_table_FD3 <- read.table("data/DAMMA_db3.tsv",header=TRUE,sep="\t")
-pathway_table_FD4 <- read.table("data/DAMMA_db4.tsv",header=TRUE,sep="\t")
-pathway_table_FD5 <- read.table("data/DAMMA_db5.tsv",header=TRUE,sep="\t")
+pathway_table_FD1 <- read.table("data/source/DAMMA_db1.tsv",header=TRUE,sep="\t")
+pathway_table_FD2 <- read.table("data/source/DAMMA_db2.tsv",header=TRUE,sep="\t")
+pathway_table_FD3 <- read.table("data/source/DAMMA_db3.tsv",header=TRUE,sep="\t")
+pathway_table_FD4 <- read.table("data/source/DAMMA_db4.tsv",header=TRUE,sep="\t")
+pathway_table_FD5 <- read.table("data/source/DAMMA_db5.tsv",header=TRUE,sep="\t")
+pathway_table_FD6 <- read.table("data/source/DAMMA_db6.tsv",header=TRUE,sep="\t")
 
 #Use latest version as default
-pathway_table <- pathway_table_FD5
+pathway_table <- pathway_table_FD6
 save(pathway_table,gene_annotations,gene_expression,genome_counts,genome_quality,
   pathway_table_FD1,
   pathway_table_FD2,
   pathway_table_FD3,
   pathway_table_FD4,
   pathway_table_FD5,
+  pathway_table_FD6,
   file="data/damma_data.RData")
 
 #Remove and update DAMMA
