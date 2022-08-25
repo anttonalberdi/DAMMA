@@ -65,7 +65,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   #KEGG identifiers
   #K00000
   if(!missing(keggcol)){
-  kegg <- str_extract(c(unlist(c(annotations_Genome[,keggcol]))), "K[0-9]+")
+  kegg <- str_extract(c(unlist(c(annotation_table[,keggcol]))), "K[0-9]+")
   kegg <- unique(kegg[!is.na(kegg)])
   }else{
   kegg <- c()
@@ -75,7 +75,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   #Enzyme Commission codes
   #[EC:0.0.0.0]
   if(!missing(eccol)){
-  EC <- unlist(str_match_all(c(unlist(c(annotations_Genome[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
+  EC <- unlist(str_match_all(c(unlist(c(annotation_table[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
   EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
   EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
   EC <- EC[grepl(".", EC, fixed = TRUE)] #Remove NAs and inproperly formatted codes
@@ -86,7 +86,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 
   #Peptidases
   if(!missing(pepcol)){
-  pep <- unique(c(unlist(c(annotations_Genome[,pepcol]))))
+  pep <- unique(c(unlist(c(annotation_table[,pepcol]))))
   pep <- pep[pep != ""]
   }else{
   pep <- c()
