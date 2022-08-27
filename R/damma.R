@@ -7,7 +7,7 @@
 #' @param eccol Column index(es) of the annotation_table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of the annotation_table in which to search for Peptidase annotations
 #' @importFrom stringr str_extract str_match_all
-#' @return A fullness matrix
+#' @return A pathway-level MCI table
 #' @examples
 #' damma(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
 #' damma(annotation_table,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)

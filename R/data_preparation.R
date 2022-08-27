@@ -22,7 +22,7 @@ save(pathway_table,gene_annotations,gene_expression,genome_counts,genome_quality
   file="data/damma_data.RData")
 
 #Remove and update DAMMA
-#detach_package(DAMMA)
+detach_package(DAMMA)
 remove.packages("DAMMA")
 
 #
