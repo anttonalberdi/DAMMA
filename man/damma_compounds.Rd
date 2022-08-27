@@ -2,21 +2,21 @@
 % Please edit documentation in R/damma_compounds.R
 \name{damma_compounds}
 \alias{damma_compounds}
-\title{Aggregates raw fullness values into meaningful indices at the compound level}
+\title{Aggregates pathway-level MCIs into compound-level MCIs}
 \usage{
-damma_compounds(distilled_table, functions_table)
+damma_compounds(MCI_table, pathway_table)
 }
 \arguments{
-\item{distilled_table}{Function distillation table outputted by damma()}
+\item{MCI_table}{Function distillation table outputted by damma() or damma_correction}
 
-\item{functions_table}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{pathway_table}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 }
 \value{
-A function table aggregated at the compound level
+A MCI table aggregated at the compound level
 }
 \description{
-Aggregates raw fullness values into meaningful indices at the compound level
+Aggregates pathway-level MCIs into compound-level MCIs
 }
 \examples{
-damma_compounds(compound_table)
+damma_compounds(compound_table,pathway_table)
 }

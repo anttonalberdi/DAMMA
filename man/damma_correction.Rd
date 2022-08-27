@@ -4,10 +4,10 @@
 \alias{damma_correction}
 \title{Models the relationship between function fullness and MAG completeness and applies a correction factor}
 \usage{
-damma_correction(fullness_table, genome_completeness, stats = TRUE)
+damma_correction(MCI_table, genome_completeness, stats = TRUE)
 }
 \arguments{
-\item{fullness_table}{Table containing fullness scores of functions (X axis) per MAG (Y axis)}
+\item{MCI_table}{Table containing MCI scores outputed by damma()}
 
 \item{genome_completeness}{A matrix containing MAG names (1st column) and completemess values (2nd column)}
 
@@ -20,5 +20,5 @@ A corrected fullness table
 Models the relationship between function fullness and MAG completeness and applies a correction factor
 }
 \examples{
-damma_correction(fullness_table, genome_completeness)
+damma_correction(MCI_table, genome_completeness)
 }

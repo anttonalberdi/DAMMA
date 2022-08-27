@@ -2,30 +2,30 @@
 % Please edit documentation in R/damma.R
 \name{damma}
 \alias{damma}
-\title{Generate the fullness table of metabolic pathways/modules from a MAG annotation table}
+\title{Generates a gene presence-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table}
 \usage{
-damma(annotations, functions, genomecol, keggcol, eccol, pepcol)
+damma(annotation_table, pathway_table, genomecol, keggcol, eccol, pepcol)
 }
 \arguments{
-\item{annotations}{Table containing MAG identifiers and annotation codes}
+\item{annotation_table}{Table containing Genome identifiers and gene annotations}
 
-\item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{pathway_table}{Table containing definitions and metadata of metabolic functions (provided by DAMMA)}
 
-\item{genomecol}{Column index (number) of the annotations table containing the MAG identifiers}
+\item{genomecol}{Column index (number) of the annotation_table containing the genome identifiers}
 
-\item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
+\item{keggcol}{Column index(es) of the annotation_table in which to search for KEGG KO annotations}
 
-\item{eccol}{Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations}
+\item{eccol}{Column index(es) of the annotation_table in which to search for Enzyme Commision (EC) annotations}
 
-\item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
+\item{pepcol}{Column index(es) of the annotation_table in which to search for Peptidase annotations}
 }
 \value{
-A fullness matrix
+A pathway-level MCI table
 }
 \description{
-Generate the fullness table of metabolic pathways/modules from a MAG annotation table
+Generates a gene presence-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table
 }
 \examples{
-damma(annotations,functions,genomecol,keggcol,eccol,pepcol)
-damma(annotations,functions,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+damma(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
+damma(annotation_table,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 }

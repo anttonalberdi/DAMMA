@@ -2,14 +2,14 @@
 % Please edit documentation in R/damma_community.R
 \name{damma_community}
 \alias{damma_community}
-\title{Generate community-level MCIs from microbial relative abundance data}
+\title{Generate community-level MCIs from set of genomes, optionally accounting for relative abundance of each genome}
 \usage{
 damma_community(
-  annotations,
-  functions_table,
+  annotation_table,
+  pathway_table,
   abundance_table,
-  fullness_table,
-  genomes_completeness,
+  MCI_table,
+  completeness_table,
   genomecol,
   keggcol,
   eccol,
@@ -17,31 +17,31 @@ damma_community(
 )
 }
 \arguments{
-\item{annotations}{Table containing Genome identifiers and annotation codes}
+\item{annotation_table}{Table containing Genome identifiers and annotation codes}
 
-\item{functions_table}{Table containing definitions and metadata of metabolic functions (included in DAMMA package)}
+\item{pathway_table}{Table containing definitions and metadata of metabolic functions (included in DAMMA package)}
 
 \item{abundance_table}{(Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values}
 
-\item{fullness_table}{Pathway fullness table provided by damma() function}
+\item{MCI_table}{Gene presence-based MCI table provided by damma() function}
 
-\item{genomes_completeness}{Genome completeness table to correct MCIs for varying completeness values}
+\item{completeness_table}{Genome completeness table to correct MCIs for varying completeness values}
 
-\item{genomecol}{Column index (number) of the annotations table containing the MAG identifiers}
+\item{genomecol}{Column index (number) of annotation_table containing the MAG identifiers}
 
-\item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
+\item{keggcol}{Column index(es) of annotation_table in which to search for KEGG KO annotations}
 
-\item{eccol}{Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations}
+\item{eccol}{Column index(es) of annotation_table in which to search for Enzyme Commision (EC) annotations}
 
-\item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
+\item{pepcol}{Column index(es) of annotation_table in which to search for Peptidase annotations}
 }
 \value{
 A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 }
 \description{
-Generate community-level MCIs from microbial relative abundance data
+Generate community-level MCIs from set of genomes, optionally accounting for relative abundance of each genome
 }
 \examples{
-damma_community(annotations,functions_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
-damma_community(annotations,functions_table,genomecol,keggcol,eccol,pepcol)
+damma_community(annotation_table,pathway_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
+damma_community(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
 }

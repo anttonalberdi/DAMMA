@@ -2,12 +2,12 @@
 % Please edit documentation in R/damma_expression.R
 \name{damma_expression}
 \alias{damma_expression}
-\title{Generate the fullness table of metabolic pathways/modules from a Genome annotation table}
+\title{Generates a gene abundance/expression-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table and a related gene expression table}
 \usage{
 damma_expression(
-  expression,
-  annotations,
-  functions,
+  expression_table,
+  annotation_table,
+  pathway_table,
   genecol,
   genomecol,
   keggcol,
@@ -16,29 +16,29 @@ damma_expression(
 )
 }
 \arguments{
-\item{expression}{Table containing normalised gene expression data with genes in rows and samples in columns}
+\item{expression_table}{Table containing normalised gene expression data with gene identifiers in rows and sample identifiers in columns}
 
-\item{annotations}{Table containing gene and genome identifiers, and annotation codes}
+\item{annotation_table}{Table containing gene and genome identifiers, and gene annotations}
 
-\item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+\item{pathway_table}{Table containing definitions and metadata of metabolic functions (provided by DAMMA)}
 
 \item{genecol}{Column index (number) of the annotations table containing the gene identifiers}
 
-\item{genomecol}{Column index (number) of the annotations table containing the genome identifiers}
+\item{genomecol}{Column index (number) of annotation_table containing the genome identifiers}
 
-\item{keggcol}{Column index(es) of the annotations table in which to search for KEGG KO annotations}
+\item{keggcol}{Column index(es) of annotation_table in which to search for KEGG KO annotations}
 
-\item{eccol}{Column index(es) of the annotations table in which to search for Enzyme Commision (EC) annotations}
+\item{eccol}{Column index(es) of annotation_table in which to search for Enzyme Commision (EC) annotations}
 
-\item{pepcol}{Column index(es) of the annotations table in which to search for Peptidase annotations}
+\item{pepcol}{Column index(es) of annotation_table in which to search for Peptidase annotations}
 }
 \value{
 A list of pathway-expression matrices (one table per genome)
 }
 \description{
-Generate the fullness table of metabolic pathways/modules from a Genome annotation table
+Generates a gene abundance/expression-based Metabolic Capacity Index (MCI) table from a bacterial genome annotation table and a related gene expression table
 }
 \examples{
-damma_expression(expression,annotations,functions,genecol,genomecol,keggcol,eccol,pepcol)
-damma_expression(expression,annotations,functions,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+damma_expression(expression_table,annotation_table,pathway_table,genecol,genomecol,keggcol,eccol,pepcol)
+damma_expression(expression_table,annotation_table,pathway_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 }

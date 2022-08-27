@@ -2,22 +2,22 @@
 % Please edit documentation in R/dama_functions.R
 \name{damma_functions}
 \alias{damma_functions}
-\title{Aggregates compound values into indices at the function level}
+\title{Aggregates compound-level MCIs into function-level MCIs}
 \usage{
-damma_functions(compounds_table, functions_table, transform = TRUE)
+damma_functions(compounds_table, pathway_table, transform = TRUE)
 }
 \arguments{
+\item{compounds_table}{Compound table outputted by aggregate_compounds()}
+
+\item{pathway_table}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
+
 \item{transform}{Whether to transform to 0-1 scale. Default=TRUE}
-
-\item{compound_table}{Compound table outputted by aggregate_compounds()}
-
-\item{functions}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 }
 \value{
-A function table aggregated at the compound level
+A MCI table aggregated at the compound level
 }
 \description{
-Aggregates compound values into indices at the function level
+Aggregates compound-level MCIs into function-level MCIs
 }
 \examples{
 dama_functions(compound_table)
