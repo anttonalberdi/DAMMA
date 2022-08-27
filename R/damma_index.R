@@ -15,8 +15,8 @@ damma_index <- function(MCI_table,pathway_table){
 
   #Detect input type
   if(any(colnames(MCI_table) %in% pathway_table$Code)){level="P"}
-  if(any(colnames(MCI_table) %in% pathway_table$Compounds)){level="C"}
-  if(any(colnames(MCI_table) %in% pathway_table$Functions)){level="F"}
+  if(any(colnames(MCI_table) %in% pathway_table$Compound)){level="C"}
+  if(any(colnames(MCI_table) %in% pathway_table$Function)){level="F"}
 
   if(level == "P"){
     MCI_table <- damma_functions(damma_compounds(MCI_table,pathway_table),pathway_table)
