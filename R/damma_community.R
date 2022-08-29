@@ -93,7 +93,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   }
   Identifier_vector <- c(Identifier_vector,pep)
 
-  #Compute fullness scores
+  #Compute MCIs
   cat("\tCalculatting MCIs...\n")
   community_MCI_vector <- c()
   suppressWarnings(
@@ -107,7 +107,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   community_MCI_vector[is.na(community_MCI_vector)] <- 0
 
   #####
-  # Apply community-level pathway chuckness penalties with or without accounting for relative abundance data
+  # Apply community-level pathway chunckness penalties with or without accounting for relative abundance data
   #####
 
   if(!missing(abundance_table)){
