@@ -120,7 +120,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
     for(s in samples){
       relabun <- abundance_table[,s]
       weighedMCI <- sweep(MCI_table, 1, relabun, FUN = "*")
-      community_row <- colSums(weighedMCI) * community_MCI_vector
+      community_row <- mean(c(colSums(weighedMCI),community_MCI_vector))
       community_MCI_table <- rbind(community_MCI_table,community_row)
     }
     rownames(community_MCI_table) <- samples
@@ -130,7 +130,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
     cat("\tInput a Genome abundance table to calculate sample-specific MCIs\n")
     cat("\tthat account for the relative abundances of each Genome in each sample.\n")
 
-    community_MCI_table <- colMeans(MCI_table) * community_MCI_vector
+    community_MCI_table <- mean(c(colMeans(MCI_table),community_MCI_vector))
 
   }
 

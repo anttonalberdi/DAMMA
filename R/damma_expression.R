@@ -113,7 +113,8 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     }
 
     #Compute expression scores
-    cat("\t\tCalculating gene expression-based MCIs...\n")
+    cat("\t\tCalculating gene expression-based MCIs for\n")
+    cat("\t\t",nrow(pathway_table),"pathways in",ncol(expression_MCI_table),"samples...\n")
     suppressWarnings(
       for(f in c(1:nrow(pathway_table))){
         definition=pathway_table[f,"Definition"]
