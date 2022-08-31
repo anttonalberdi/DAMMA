@@ -25,6 +25,8 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   if(length(genomecol)!=1) stop("The argument genomecol must be an integer indicating the number of the column containing the Genome identifiers in the annotations table")
   if(missing(keggcol) & missing(eccol) & missing(pepcol)) stop("Specify at least one column containing functional annotations")
 
+  cat("Starting DAMMA commmunity analysis\n(Note this may take a while)...\n")
+
   #Declare TSS function
   tss <- function(abund){sweep(abund, 2, colSums(abund), FUN="/")}
 
@@ -49,6 +51,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   }
 
   #Merge annotations and relative abundance information
+  cat("\tMerging annotations and relative abundance data...\n")
   annotation_abundance_table <- merge(annotation_table,tss(abundance_table),by.x=genomecol,by.y="row.names")
 
   #Declare index (column numbers) of the relative abundance data
@@ -56,21 +59,6 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 
   #Filter annotations of 0 abundance genomes
   annotation_abundance_table <- annotation_abundance_table[rowSums(annotation_abundance_table[,relabun_index]) != 0,]
-
-  #KEGG identifiers
-  #K00000
-  if(!missing(keggcol)){
-    kegg <- str_extract(c(unlist(c(annotation_abundance_table[,keggcol]))), "K[0-9]+")
-    kegg <- sort(unique(kegg[!is.na(kegg)]))
-    kegg_relabun <- c()
-    for(id in kegg){
-      cat(id,"\n")
-      row <- unique(annotation_abundance_table[grepl(id,annotation_abundance_table[,keggcol],fixed=TRUE), c(1,relabun_index)])
-      row2 <- colSums(row[,c(3:ncol(row))])
-      kegg_relabun <- rbind(kegg_relabun,row2)
-    }
-    rownames(kegg_relabun) <- kegg
-  }
 
 ####
 # Prepare relative abundance table
@@ -82,7 +70,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   #KEGG identifiers
   #K00000
   if(!missing(keggcol)){
-    cat("\tExtracting relative abundance data for KEGG identifiers\n")
+    cat("\t\tExtracting relative abundance data for KEGG identifiers...\n")
     for(col in keggcol){
       column <- annotation_abundance_table[,col]
       kegg_detect <- str_detect(column, "K[0-9]+")
@@ -102,7 +90,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   #Enzyme Commission codes
   #[EC:0.0.0.0]
   if(!missing(eccol)){
-    cat("\tExtracting relative abundance data for EC identifiers\n")
+    cat("\t\tExtracting relative abundance data for EC identifiers...\n")
     for(col in eccol){
       column <- annotation_abundance_table[,col]
       EC_detect <- str_detect(column, "(?<=\\[EC:).+?(?=\\])")
@@ -127,7 +115,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   #Peptidases
   #[EC:0.0.0.0]
   if(!missing(pepcol)){
-    cat("\tExtracting relative abundance data for EC identifiers\n")
+    cat("\t\tExtracting relative abundance data for peptidase family identifiers...\n")
     for(col in pepcol){
       column <- annotation_abundance_table[,col]
       pep_codes <- unique(c(unlist(c(annotation_abundance_table[,col]))))
@@ -162,11 +150,13 @@ id_relabun_table_filtered <- as.data.frame(id_relabun_table_filtered)
 ####
 # Generate community-specific MCIs
 ####
+cat("\tCalculating community-level MCIs for community:\n")
 
 MCI_table <- c()
-
+m=0
 for(community in communities){
-
+  m=m+1
+  cat("\t\t",community," (",m,"/",length(communities),")\n", sep = "")
   comm_abun <- id_relabun_table_filtered[,community]
   names(comm_abun) <- rownames(id_relabun_table_filtered)
 
