@@ -1,4 +1,4 @@
-#' Calculates the overall fullness-expression of a metabolic pathway/module
+#' Calculates the gene expression/abundance-based MCI of a metabolic pathway
 #'
 #' @param definition Definition string of a given metabolic pathway/module
 #' @param expression_table Table containing expression data per functon

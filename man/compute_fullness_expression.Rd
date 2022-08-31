@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_fullness_expression.R
 \name{compute_fullness_expression}
 \alias{compute_fullness_expression}
-\title{Calculates the overall fullness-expression of a metabolic pathway/module}
+\title{Calculates the gene expression/abundance-based MCI of a metabolic pathway}
 \usage{
 compute_fullness_expression(definition, expression_table)
 }
@@ -15,7 +15,7 @@ compute_fullness_expression(definition, expression_table)
 A list of fullness-expression values
 }
 \description{
-Calculates the overall fullness-expression of a metabolic pathway/module
+Calculates the gene expression/abundance-based MCI of a metabolic pathway
 }
 \examples{
 compute_fullness_expression(definition,expression_table)

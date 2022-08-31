@@ -2,7 +2,7 @@
 % Please edit documentation in R/distillate_definition.R
 \name{distillate_definition}
 \alias{distillate_definition}
-\title{Calculates the fullness of each hierarchical level of a metabolic pathway/module}
+\title{Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene presence-based MCIs}
 \usage{
 distillate_definition(definition, def_table, level, present)
 }
@@ -13,13 +13,13 @@ distillate_definition(definition, def_table, level, present)
 
 \item{level}{Hierarchical level}
 
-\item{expression_vector}{Vector of expression values of functional units present in the genome}
+\item{present}{Vector of gene identifiers present in the genome}
 }
 \value{
 A (partially) distilled definition string
 }
 \description{
-Calculates the fullness of each hierarchical level of a metabolic pathway/module
+Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene presence-based MCIs
 }
 \examples{
 distillate_definition(definition, def_table, level, present)

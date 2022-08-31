@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_fullness.R
 \name{compute_fullness}
 \alias{compute_fullness}
-\title{Calculates the overall fullness of a metabolic pathway/module}
+\title{Calculates the gene presence-based MCI of a metabolic pathway}
 \usage{
 compute_fullness(definition, present)
 }
@@ -15,7 +15,7 @@ compute_fullness(definition, present)
 A fullness value
 }
 \description{
-Calculates the overall fullness of a metabolic pathway/module
+Calculates the gene presence-based MCI of a metabolic pathway
 }
 \examples{
 compute_fullness(definition,present)

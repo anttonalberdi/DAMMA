@@ -34,105 +34,160 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   if(!missing(abundance_table)){abundance_table <- as.data.frame(abundance_table)}
   if(!missing(completeness_table)){completeness_table <- as.data.frame(completeness_table)}
 
-  #####
-  # Generate Genome- and Community-level MCIs
-  #####
+  if(missing(abundance_table)){
+    #If abundance table does not exist, create a mock abundance table of a single even community
+    abundance_table <- rep(1/length(unique(annotation_table[,genomecol])),length(unique(annotation_table[,genomecol])))
+    names(abundance_table) <- unique(annotation_table[,genomecol])
+    abundance_table <- t(t(abundance_table))
+    colnames(abundance_table) <- "Community"
 
-  #Create MCI table if it is not provided
-  if(missing(MCI_table)){
-    # If fullness table is not provided, run damma() function to create it
-    cat("Running DAMMA script for creating the fullness table...\n")
-    cat("\tNote: if you have already run DAMMA on this data set,\n")
-    cat("\tyou can include the fullness table to avoid this step.\n")
-    MCI_table <- damma(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
-    #Apply correction factor if completeness_table is provided
-
-    if(!missing(completeness_table)){
-      MCI_table <- damma_correction(MCI_table,completeness_table)
-    }
+    #Declare single community
+    communities <- "Community"
   }else{
-    cat("Fullness table has been provided.\n")
-    MCI_table <- as.data.frame(MCI_table)
+    #Declare communities from abundance table
+    communities <- colnames(abundance_table)
   }
 
-  #Compute overall community-level MCI table
-  cat("Computing overall community-level MCIs...\n")
-  cat("\tExtracting annotations...\n")
+  #Merge annotations and relative abundance information
+  annotation_abundance_table <- merge(annotation_table,tss(abundance_table),by.x=genomecol,by.y="row.names")
 
-  #Declare vector of identifiers
-  Identifier_vector <- c()
+  #Declare index (column numbers) of the relative abundance data
+  relabun_index <- grep(paste(communities,collapse="|"), colnames(annotation_abundance_table))
+
+  #Filter annotations of 0 abundance genomes
+  annotation_abundance_table <- annotation_abundance_table[rowSums(annotation_abundance_table[,relabun_index]) != 0,]
 
   #KEGG identifiers
   #K00000
   if(!missing(keggcol)){
-  kegg <- str_extract(c(unlist(c(annotation_table[,keggcol]))), "K[0-9]+")
-  kegg <- unique(kegg[!is.na(kegg)])
-  }else{
-  kegg <- c()
+    kegg <- str_extract(c(unlist(c(annotation_abundance_table[,keggcol]))), "K[0-9]+")
+    kegg <- sort(unique(kegg[!is.na(kegg)]))
+    kegg_relabun <- c()
+    for(id in kegg){
+      cat(id,"\n")
+      row <- unique(annotation_abundance_table[grepl(id,annotation_abundance_table[,keggcol],fixed=TRUE), c(1,relabun_index)])
+      row2 <- colSums(row[,c(3:ncol(row))])
+      kegg_relabun <- rbind(kegg_relabun,row2)
+    }
+    rownames(kegg_relabun) <- kegg
   }
-  Identifier_vector <- c(Identifier_vector,kegg)
+
+####
+# Prepare relative abundance table
+####
+
+  id_relabun_table <- c()
+  identifier_vector <- c()
+
+  #KEGG identifiers
+  #K00000
+  if(!missing(keggcol)){
+    cat("\tExtracting relative abundance data for KEGG identifiers\n")
+    for(col in keggcol){
+      column <- annotation_abundance_table[,col]
+      kegg_detect <- str_detect(column, "K[0-9]+")
+      kegg_detect[is.na(kegg_detect)] <- FALSE
+      column_sub <- column[kegg_detect]
+      kegg_codes <- unlist(str_match_all(column_sub, "K[0-9]+"))
+        identifier_vector <- c(identifier_vector,kegg_codes)
+      annotation_abundance_table_sub <- annotation_abundance_table[kegg_detect,c(col,1,relabun_index)]
+      annotation_abundance_table_sub[,1] <- kegg_codes
+      colnames(annotation_abundance_table_sub)[1] <- "ID"
+      if(nrow(annotation_abundance_table_sub)>0){
+        id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
+      }
+    }
+  }
 
   #Enzyme Commission codes
   #[EC:0.0.0.0]
   if(!missing(eccol)){
-  EC <- unlist(str_match_all(c(unlist(c(annotation_table[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
-  EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
-  EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
-  EC <- EC[grepl(".", EC, fixed = TRUE)] #Remove NAs and inproperly formatted codes
-  }else{
-  EC <- c()
+    cat("\tExtracting relative abundance data for EC identifiers\n")
+    for(col in eccol){
+      column <- annotation_abundance_table[,col]
+      EC_detect <- str_detect(column, "(?<=\\[EC:).+?(?=\\])")
+      EC_detect[is.na(EC_detect)] <- FALSE
+      column_sub <- column[EC_detect]
+      EC_codes <- unlist(str_match_all(column_sub, "(?<=\\[EC:).+?(?=\\])"))
+      annotation_abundance_table_sub <- annotation_abundance_table[EC_detect,c(col,1,relabun_index)]
+      annotation_abundance_table_sub[,1] <- EC_codes
+      colnames(annotation_abundance_table_sub)[1] <- "ID"
+      if(nrow(annotation_abundance_table_sub)>0){
+        id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
+      }
+    }
+    #Get EC list
+    EC <- unlist(str_match_all(c(unlist(c(annotation_abundance_table[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
+    EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
+    EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
+    EC <- EC[grepl(".", EC, fixed = TRUE)] #Remove NAs and inproperly formatted codes
+    identifier_vector <- c(identifier_vector,EC)
   }
-  Identifier_vector <- c(Identifier_vector,EC)
 
   #Peptidases
+  #[EC:0.0.0.0]
   if(!missing(pepcol)){
-  pep <- unique(c(unlist(c(annotation_table[,pepcol]))))
-  pep <- pep[pep != ""]
-  }else{
-  pep <- c()
+    cat("\tExtracting relative abundance data for EC identifiers\n")
+    for(col in pepcol){
+      column <- annotation_abundance_table[,col]
+      pep_codes <- unique(c(unlist(c(annotation_abundance_table[,col]))))
+      pep_codes <- pep_codes[!is.na(pep_codes)]
+        identifier_vector <- c(identifier_vector,pep_codes)
+      annotation_abundance_table_sub <- annotation_abundance_table[annotation_abundance_table[,col] %in% pep_codes, c(col,1,relabun_index)]
+      colnames(annotation_abundance_table_sub)[1] <- "ID"
+      if(nrow(annotation_abundance_table_sub)>0){
+        id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
+      }
+    }
+    #Get pep list
+    pep <- pep_codes
   }
-  Identifier_vector <- c(Identifier_vector,pep)
 
-  #Compute MCIs
-  cat("\tCalculatting MCIs...\n")
-  community_MCI_vector <- c()
+####
+# Filter ambiguities and duplications
+####
+
+cat("\tComputing community-weighed identifier values...\n")
+identifier_vector <- sort(unique(identifier_vector))
+
+id_relabun_table_filtered <- c()
+for(id in identifier_vector){
+  row <- unique(id_relabun_table[grepl(paste0("\\<",gsub(".","\\.",id,fixed = TRUE),"\\>"),id_relabun_table[,1]),-1])
+  row2 <- colSums(row[,c(2:ncol(row))])
+  id_relabun_table_filtered <- rbind(id_relabun_table_filtered,row2)
+}
+rownames(id_relabun_table_filtered) <- identifier_vector
+id_relabun_table_filtered <- as.data.frame(id_relabun_table_filtered)
+
+####
+# Generate community-specific MCIs
+####
+
+MCI_table <- c()
+
+for(community in communities){
+
+  comm_abun <- id_relabun_table_filtered[,community]
+  names(comm_abun) <- rownames(id_relabun_table_filtered)
+
+  MCI_vector <- c()
   suppressWarnings(
     for(f in c(1:nrow(pathway_table))){
       definition=pathway_table[f,"Definition"]
-      MCI <- compute_fullness(definition,Identifier_vector)
-      community_MCI_vector <- c(community_MCI_vector,MCI)
+      MCI <- compute_fullness_community(definition,comm_abun)
+      MCI_vector <- c(MCI_vector,MCI)
     }
   )
-  names(community_MCI_vector) <- pathway_table$Code
-  community_MCI_vector[is.na(community_MCI_vector)] <- 0
+  #Append MCI vector of the Genome to the MCI table containing MCI values of all Genomes
+  MCI_table <- rbind(MCI_table,MCI_vector)
+}
 
-  #####
-  # Apply community-level pathway chunckness penalties with or without accounting for relative abundance data
-  #####
+  #Format output MCI table
+  rownames(MCI_table) <- communities
+  colnames(MCI_table) <- pathway_table$Code
+  MCI_table[is.na(MCI_table)] <- 0
 
-  if(!missing(abundance_table)){
-    cat("Weighing MCIs by relative abundances...\n")
-    abundance_table <- tss(as.data.frame(abundance_table))
+  #Output MCI table
+  return(MCI_table)
 
-    samples <- colnames(abundance_table)
-
-    community_MCI_table <- c()
-    for(s in samples){
-      relabun <- abundance_table[,s]
-      weighedMCI <- sweep(MCI_table, 1, relabun, FUN = "*")
-      community_row <- mean(c(colSums(weighedMCI),community_MCI_vector))
-      community_MCI_table <- rbind(community_MCI_table,community_row)
-    }
-    rownames(community_MCI_table) <- samples
-
-  }else{
-    cat("Only the overall MCI of the Genome catalogue has been calculated.\n")
-    cat("\tInput a Genome abundance table to calculate sample-specific MCIs\n")
-    cat("\tthat account for the relative abundances of each Genome in each sample.\n")
-
-    community_MCI_table <- mean(c(colMeans(MCI_table),community_MCI_vector))
-
-  }
-
-  return(community_MCI_table)
 }

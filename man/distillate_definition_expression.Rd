@@ -2,7 +2,7 @@
 % Please edit documentation in R/distillate_definition_expression.R
 \name{distillate_definition_expression}
 \alias{distillate_definition_expression}
-\title{Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module}
+\title{Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene expression/abundance-based MCIs}
 \usage{
 distillate_definition_expression(
   sample,
@@ -13,19 +13,21 @@ distillate_definition_expression(
 )
 }
 \arguments{
+\item{sample}{Code of the sample to be analysed}
+
 \item{definition_expression}{Definition-expression string}
 
 \item{def_table}{Decomposed hierarchy matrix produced by create_step_matrix.R}
 
-\item{level}{Hierarchical level}
+\item{level}{Hierarchical level of the pathway definition}
 
-\item{expression_vector}{Vector of expression values of functional units present in the genome}
+\item{expression_table}{Table of expression values of functional units present in the genome}
 }
 \value{
 A (partially) distilled definition string
 }
 \description{
-Calculates the expression-fullness of each hierarchical level of a metabolic pathway/module
+Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene expression/abundance-based MCIs
 }
 \examples{
 distillate_definition_expression(definition_expression, def_table, level, present)

@@ -4,10 +4,10 @@
 \alias{damma_functions}
 \title{Aggregates compound-level MCIs into function-level MCIs}
 \usage{
-damma_functions(compounds_table, pathway_table, transform = TRUE)
+damma_functions(MCI_table, pathway_table)
 }
 \arguments{
-\item{compounds_table}{Compound table outputted by aggregate_compounds()}
+\item{MCI_table}{Function distillation table outputted by damma() or damma_correction}
 
 \item{pathway_table}{Table containing definitions and metadata of metabolic functions (provided by GAMMA)}
 

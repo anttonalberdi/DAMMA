@@ -1,9 +1,9 @@
-#' Calculates the fullness of each hierarchical level of a metabolic pathway/module
+#' Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene presence-based MCIs
 #'
 #' @param definition Definition string of a given metabolic pathway/module
 #' @param def_table Decomposed hierarchy matrix produced by create_step_matrix.R
 #' @param level Hierarchical level
-#' @param expression_vector Vector of expression values of functional units present in the genome
+#' @param present Vector of gene identifiers present in the genome
 #' @importFrom stringr str_sub
 #' @return A (partially) distilled definition string
 #' @examples

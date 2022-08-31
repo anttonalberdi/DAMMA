@@ -6,3 +6,7 @@ data/source
 
 # Data preparation
 bin
+
+# Old scripts
+R/damma_community_old.R
+man/damma_community_old.Rd
