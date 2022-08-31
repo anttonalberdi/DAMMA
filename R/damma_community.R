@@ -9,7 +9,7 @@
 #' @param keggcol Column index(es) of annotation_table in which to search for KEGG KO annotations
 #' @param eccol Column index(es) of annotation_table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of annotation_table in which to search for Peptidase annotations
-#' @importFrom stringr str_extract str_match_all
+#' @importFrom stringr str_extract str_match_all str_detect
 #' @return A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 #' @examples
 #' damma_community(annotation_table,pathway_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
@@ -77,7 +77,6 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       kegg_detect[is.na(kegg_detect)] <- FALSE
       column_sub <- column[kegg_detect]
       kegg_codes <- unlist(str_match_all(column_sub, "K[0-9]+"))
-        identifier_vector <- c(identifier_vector,kegg_codes)
       annotation_abundance_table_sub <- annotation_abundance_table[kegg_detect,c(col,1,relabun_index)]
       annotation_abundance_table_sub[,1] <- kegg_codes
       colnames(annotation_abundance_table_sub)[1] <- "ID"
@@ -104,12 +103,6 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
         id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
       }
     }
-    #Get EC list
-    EC <- unlist(str_match_all(c(unlist(c(annotation_abundance_table[,eccol]))), "(?<=\\[EC:).+?(?=\\])")) #Extract ECs
-    EC <- unique(unlist(strsplit(EC, " "))) #Dereplicate
-    EC <- EC[!grepl("-", EC, fixed = TRUE)] #Remove ambiguous codes
-    EC <- EC[grepl(".", EC, fixed = TRUE)] #Remove NAs and inproperly formatted codes
-    identifier_vector <- c(identifier_vector,EC)
   }
 
   #Peptidases
@@ -120,32 +113,54 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       column <- annotation_abundance_table[,col]
       pep_codes <- unique(c(unlist(c(annotation_abundance_table[,col]))))
       pep_codes <- pep_codes[!is.na(pep_codes)]
-        identifier_vector <- c(identifier_vector,pep_codes)
+      pep_codes <- pep_codes[pep_codes != ""]
       annotation_abundance_table_sub <- annotation_abundance_table[annotation_abundance_table[,col] %in% pep_codes, c(col,1,relabun_index)]
       colnames(annotation_abundance_table_sub)[1] <- "ID"
       if(nrow(annotation_abundance_table_sub)>0){
         id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
       }
     }
-    #Get pep list
-    pep <- pep_codes
   }
 
 ####
-# Filter ambiguities and duplications
+# Resolve ambiguities and duplications
 ####
 
-cat("\tComputing community-weighed identifier values...\n")
-identifier_vector <- sort(unique(identifier_vector))
+cat("\tResolving ambiguities and redundancy...\n")
 
-id_relabun_table_filtered <- c()
-for(id in identifier_vector){
-  row <- unique(id_relabun_table[grepl(paste0("\\<",gsub(".","\\.",id,fixed = TRUE),"\\>"),id_relabun_table[,1]),-1])
-  row2 <- colSums(row[,c(2:ncol(row))])
-  id_relabun_table_filtered <- rbind(id_relabun_table_filtered,row2)
+#Remove redundancy
+id_relabun_table <- unique(id_relabun_table)
+
+#Split ambiguous rows
+ambiguities <- id_relabun_table[grepl(" ", id_relabun_table$ID),"ID"]
+for(a in ambiguities){
+  elements <- unlist(strsplit(a, " "))
+  rows <- id_relabun_table[id_relabun_table$ID == a,]
+  if(nrow(rows)>0){
+    rows1 <- rows
+    rows1$ID <- elements[1]
+    #Rename original rows
+    id_relabun_table[id_relabun_table$ID == a,] <- rows1
+    #Create new rows
+    for(e in c(2:length(elements))){
+      rows2 <- rows
+      rows2$ID <- elements[e]
+      id_relabun_table <- rbind(id_relabun_table,rows2)
+    }
+  }
 }
-rownames(id_relabun_table_filtered) <- identifier_vector
-id_relabun_table_filtered <- as.data.frame(id_relabun_table_filtered)
+
+#Remove redundancy (again)
+id_relabun_table <- unique(id_relabun_table)
+
+#Remove ambiguous ECs
+id_relabun_table <- id_relabun_table[!grepl("-", id_relabun_table$ID),]
+
+cat("\tCalculating community-weighed gene representation values...\n")
+#Remove redundancy
+id_relabun_table_agg <- aggregate(id_relabun_table[,c(3:ncol(id_relabun_table))],by=list(id_relabun_table[,"ID"]),FUN=sum)
+rownames(id_relabun_table_agg) <- id_relabun_table_agg[,1]
+id_relabun_table_agg <- id_relabun_table_agg[,-1]
 
 ####
 # Generate community-specific MCIs
@@ -157,8 +172,8 @@ m=0
 for(community in communities){
   m=m+1
   cat("\t\t",community," (",m,"/",length(communities),")\n", sep = "")
-  comm_abun <- id_relabun_table_filtered[,community]
-  names(comm_abun) <- rownames(id_relabun_table_filtered)
+  comm_abun <- id_relabun_table_agg[,community]
+  names(comm_abun) <- rownames(id_relabun_table_agg)
 
   MCI_vector <- c()
   suppressWarnings(
