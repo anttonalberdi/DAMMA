@@ -33,7 +33,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
         subdef2 <- subdef
         subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
         subdef2[is.na(subdef2)] <- 0
-        value=round(max(as.numeric(subdef3)),2)
+        value=round(max(as.numeric(subdef2)),2)
       }
       definition <- gsub(paste(c("(",subdef,")"),collapse=""),value,definition, fixed = TRUE)
     }
@@ -59,7 +59,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
         subdef2 <- subdef
         subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
         subdef2[is.na(subdef2)] <- 0
-        value=round(max(as.numeric(subdef3)),2)
+        value=round(max(as.numeric(subdef2)),2)
       }
       definition <- gsub(paste(c("(",subdef,")"),collapse=""),value,definition, fixed = TRUE)
     }
@@ -86,7 +86,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
           subdef2 <- subdef
           subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
           subdef2[is.na(subdef2)] <- 0
-          value=round(max(as.numeric(subdef3)),2)
+          value=round(max(as.numeric(subdef2)),2)
         }
         definition <- gsub(paste(c("(",subdef,")"),collapse=""),value,definition, fixed = TRUE)
       }
@@ -112,7 +112,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
           subdef2 <- subdef
           subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
           subdef2[is.na(subdef2)] <- 0
-          value=round(max(as.numeric(subdef3)),2)
+          value=round(max(as.numeric(subdef2)),2)
         }
         definition <- gsub(paste(c("(",subdef,")"),collapse=""),value,definition, fixed = TRUE)
       }
@@ -138,7 +138,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
           subdef2 <- subdef
           subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
           subdef2[is.na(subdef2)] <- 0
-          value=round(max(as.numeric(subdef3)),2)
+          value=round(max(as.numeric(subdef2)),2)
         }
         definition <- gsub(paste(c("(",subdef,")"),collapse=""),value, definition, fixed = TRUE)
       }
@@ -161,7 +161,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
         subdef2 <- subdef
         subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- abundance_vector[match(subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)], names(abundance_vector))]
         subdef2[is.na(subdef2)] <- 0
-        value=round(max(as.numeric(subdef3)),2)
+        value=round(max(as.numeric(subdef2)),2)
       }
       definition <- gsub(paste(subdef,collapse=""),value,definition, fixed = TRUE)
     }

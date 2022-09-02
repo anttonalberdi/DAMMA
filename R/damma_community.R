@@ -65,7 +65,6 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 ####
 
   id_relabun_table <- c()
-  identifier_vector <- c()
 
   #KEGG identifiers
   #K00000
@@ -80,6 +79,25 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       annotation_abundance_table_sub <- annotation_abundance_table[kegg_detect,c(col,1,relabun_index)]
       annotation_abundance_table_sub[,1] <- kegg_codes
       colnames(annotation_abundance_table_sub)[1] <- "ID"
+
+      #Disambiguation
+      annotation_abundance_table_sub$ambiguity <- str_count(annotation_abundance_table_sub[,1], "\\S+")
+      if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
+        for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
+  	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
+          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+          	origin[,1] <- identifiers[,1]
+          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+  	        #Modify origin rows
+  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+            #Append extra rows
+            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+        }
+      }
+      #Remove duplicates
+      annotation_abundance_table_sub <- unique(annotation_abundance_table_sub)
+
       if(nrow(annotation_abundance_table_sub)>0){
         id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
       }
@@ -99,6 +117,41 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       annotation_abundance_table_sub <- annotation_abundance_table[EC_detect,c(col,1,relabun_index)]
       annotation_abundance_table_sub[,1] <- EC_codes
       colnames(annotation_abundance_table_sub)[1] <- "ID"
+
+      #Disambiguation
+      annotation_abundance_table_sub$ambiguity <- str_count(annotation_abundance_table_sub[,1], "\\S+")
+      if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
+        for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
+  	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
+          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+          	origin[,1] <- identifiers[,1]
+          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+  	        #Modify origin rows
+  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+            #Append extra rows
+            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+        }
+      }
+      #Disambiguation
+      annotation_abundance_table_sub$ambiguity <- str_count(annotation_abundance_table_sub[,1], "\\S+")
+      if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
+        for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
+  	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
+          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+          	origin[,1] <- identifiers[,1]
+          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+  	        #Modify origin rows
+  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+            #Append extra rows
+            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+        }
+      }
+      #Remove low-resolution annotations
+      annotation_abundance_table_sub <- annotation_abundance_table_sub[!grepl("-", annotation_abundance_table_sub$ID),]
+      #Remove duplicates
+      annotation_abundance_table_sub <- unique(annotation_abundance_table_sub)
       if(nrow(annotation_abundance_table_sub)>0){
         id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
       }
@@ -116,45 +169,37 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       pep_codes <- pep_codes[pep_codes != ""]
       annotation_abundance_table_sub <- annotation_abundance_table[annotation_abundance_table[,col] %in% pep_codes, c(col,1,relabun_index)]
       colnames(annotation_abundance_table_sub)[1] <- "ID"
+
+      #Disambiguation
+      annotation_abundance_table_sub$ambiguity <- str_count(annotation_abundance_table_sub[,1], "\\S+")
+      if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
+        for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
+  	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
+          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+          	origin[,1] <- identifiers[,1]
+          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+  	        #Modify origin rows
+  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+            #Append extra rows
+            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+        }
+      }
+      #Remove duplicates
+      annotation_abundance_table_sub <- unique(annotation_abundance_table_sub)
+
       if(nrow(annotation_abundance_table_sub)>0){
         id_relabun_table <- rbind(id_relabun_table,annotation_abundance_table_sub)
       }
     }
   }
 
+  #Remove ambiguity column
+  id_relabun_table <- id_relabun_table[,-ncol(id_relabun_table)]
+
 ####
 # Resolve ambiguities and duplications
 ####
-
-cat("\tResolving ambiguities and redundancy...\n")
-
-#Remove redundancy
-id_relabun_table <- unique(id_relabun_table)
-
-#Split ambiguous rows
-ambiguities <- id_relabun_table[grepl(" ", id_relabun_table$ID),"ID"]
-for(a in ambiguities){
-  elements <- unlist(strsplit(a, " "))
-  rows <- id_relabun_table[id_relabun_table$ID == a,]
-  if(nrow(rows)>0){
-    rows1 <- rows
-    rows1$ID <- elements[1]
-    #Rename original rows
-    id_relabun_table[id_relabun_table$ID == a,] <- rows1
-    #Create new rows
-    for(e in c(2:length(elements))){
-      rows2 <- rows
-      rows2$ID <- elements[e]
-      id_relabun_table <- rbind(id_relabun_table,rows2)
-    }
-  }
-}
-
-#Remove redundancy (again)
-id_relabun_table <- unique(id_relabun_table)
-
-#Remove ambiguous ECs
-id_relabun_table <- id_relabun_table[!grepl("-", id_relabun_table$ID),]
 
 cat("\tCalculating community-weighed gene representation values...\n")
 #Remove redundancy
