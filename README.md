@@ -19,7 +19,7 @@ library(DAMMA)
 ```
 
 ### Uninstall DAMMA
-DAMMA can be uninstalled using the following commands.
+DAMMA can be uninstalled using the following commands:
 ```
 detach_package(DAMMA)
 remove.packages("DAMMA")
@@ -32,12 +32,12 @@ To ensure you are using the laters version of the software, we recommend to:
 3) Install DAMMA (see instructions above)
 
 ## Acknowledgement and citation
-DAMMA is still under development, and we are working on the scientific publication that will describe the rationale and functionalities of the package. In the meanwhile, we encourage to provide the link to this repository whenever you need to acknowledge DAMMA.
+DAMMA is still under development, and we are working on the scientific publication that will describe the rationale and functionalities of the package. In the meanwhile, we encourage users to provide the link to this repository whenever DAMMA needs to be acknowledged.
 
 ## Using DAMMA with metagenomic data
 
 ### Input data
-DAMMA only requires an annotations table containing MAG identifiers and annotations. Such tables are usually quite large, so using data.table is recommended for smooth processing of the data.
+DAMMA only requires an annotations table containing genome (or metagenome-assembled genome, MAG) identifiers and annotations. Such tables are usually quite large, so using the R package data.table is recommended for smooth processing of the data.
 
 ```
 #Load annotations
@@ -62,9 +62,9 @@ head(pathway_table)
 ### Run distillation
 The damma() function requires specifying in which column(s) to find Genome (MAG) identifiers and annotation data.
 - genomecol: number of column containing Genome (MAG) identifies.
-- keggcol: index(es) of column(s) containing KO codes (eg: K00169).
-- eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15).
-- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H).
+- keggcol: index(es) of column(s) containing KO codes (eg: K00169). The script parses any annotation with the pattern "K*****"" in the indicated column.
+- eccol: index(es) of column(s) containing EC codes (eg: EC:3.2.4.15). The script parses any annotation with the pattern "EC:*.*.*.*" in the indicated column.
+- pepcol: index(es) of column(s) containing peptidase codes (eg: C03H). The script requires the peptidase families to be without any surroundig texts, because the code layout is not specific enough for efficient parsing.
 
 ```
 #Using example data
@@ -75,7 +75,6 @@ distilled_table <- damma(gene_annotations,pathway_table,genomecol=2,keggcol=9,ec
 Functional attributes of MAGs are often not directly comparable due to different levels of completeness. A MAG with 70% of estimated completeness most likely misses genes that contribute to its functional repertoire, compared to another MAG with 100% completeness. Therefore, a direct comparison of these two MAGs is likely to yield distorted results. In an attempt to minimise the impact of MAG completeness in functional metagenomic analyses, DAMMA incorporates a completeness correction script, which models the relationship between function fullness and MAG completeness  across the entire dataset, to apply a correction factor to the raw module fullness values.
 
 ```
-data(damma_data)
 head(genome_quality)
 completeness <- as.data.frame(genome_quality[,c(1:2)])
 distilled_table_corrected <- damma_correction(distilled_table,completeness)
@@ -219,19 +218,14 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Expression, group=Func
 ```
 
 ## Using DAMMA for community-level analysis
-DAMMA computes the community-level capacity to perform specific metabolic functions, by accounting for the individual and collective fullness of metabolic pathways and, optionally, the relative abundances of Genomes in different samples.
+DAMMA can also compute community-level capacities to perform specific metabolic functions through computing MCIs based on the community-weighed average representations of genes. When working with large annotation files and hundreds of samples, R can run out of memory and yield an error like "Error: vector memory exhausted (limit reached?)". In such cases, allocate more virtual memory to your R environment.
 
-If no information on relative abundances is provided, the function yields community-level MCIs for each pathway.
+If no information on relative abundances is provided, the function yields community-level MCIs assuming all Genomes have the same weight in the community.
 ```
 community_MCI <- damma_community(gene_annotations,pathway_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-If a MCI table previously produced with damma() is provided, the function skips the MCI calculation step.
-```
-community_MCI <- damma_community(gene_annotations,pathway_table,MCI_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
-```
-
-If a (relative) genome abundance table is provided, the function yields community-level MCIs for each pathway in each sample. When working with large annotation files and hundreds of samples, R can run out of memory and yield an error like "Error: vector memory exhausted (limit reached?)". In such cases, allocate more virtual memory to your R environment. 
+If a (relative) genome abundance table is provided, the function yields community-level MCIs adjusted to the relative representation of each Genome in the community.
 
 ```
 abundance_table <- genome_counts[,-1]
