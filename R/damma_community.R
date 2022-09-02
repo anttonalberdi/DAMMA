@@ -27,6 +27,8 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 
   cat("Starting DAMMA commmunity analysis\n(Note this may take a while)...\n")
 
+  suppressWarnings(
+
   #Declare TSS function
   tss <- function(abund){sweep(abund, 2, colSums(abund), FUN="/")}
 
@@ -239,5 +241,7 @@ for(community in communities){
 
   #Output MCI table
   return(MCI_table)
+
+)
 
 }
