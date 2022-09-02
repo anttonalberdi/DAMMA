@@ -231,11 +231,12 @@ If a MCI table previously produced with damma() is provided, the function skips 
 community_MCI <- damma_community(gene_annotations,pathway_table,MCI_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
-If a (relative) genome abundance table is provided, the function yields community-level MCIs for each pathway in each sample.
+If a (relative) genome abundance table is provided, the function yields community-level MCIs for each pathway in each sample. When working with large annotation files and hundreds of samples, R can run out of memory and yield an error like "Error: vector memory exhausted (limit reached?)". In such cases, allocate more virtual memory to your R environment. 
+
 ```
 abundance_table <- genome_counts[,-1]
 rownames(abundance_table) <- genome_counts[,1]
-community_fullness <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,MCI_table=distilled_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_fullness <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The pathway fullness values can be further distilled using the damma_compounds() function.
