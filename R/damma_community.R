@@ -10,6 +10,7 @@
 #' @param eccol Column index(es) of annotation_table in which to search for Enzyme Commision (EC) annotations
 #' @param pepcol Column index(es) of annotation_table in which to search for Peptidase annotations
 #' @importFrom stringr str_extract str_match_all str_detect str_count
+#' @importFrom reshape2 colsplit
 #' @return A pathway fullness vector (if no abundance data are provided) or matrix (if abundance data are provided)
 #' @examples
 #' damma_community(annotation_table,pathway_table,abundance_table,fullness_table,genomecol,keggcol,eccol,pepcol)
