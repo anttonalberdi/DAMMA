@@ -86,14 +86,16 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
         for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
   	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
-          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
-          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
-          	origin[,1] <- identifiers[,1]
-          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
-  	        #Modify origin rows
-  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
-            #Append extra rows
-            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            if(nrow(origin)>0){
+            	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+            	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+            	origin[,1] <- identifiers[,1]
+            	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+    	        #Modify origin rows
+    	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+              #Append extra rows
+              annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            }
         }
       }
       #Remove duplicates
@@ -124,29 +126,16 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
         for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
   	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
-          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
-          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
-          	origin[,1] <- identifiers[,1]
-          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
-  	        #Modify origin rows
-  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
-            #Append extra rows
-            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
-        }
-      }
-      #Disambiguation
-      annotation_abundance_table_sub$ambiguity <- str_count(annotation_abundance_table_sub[,1], "\\S+")
-      if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
-        for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
-  	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
-          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
-          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
-          	origin[,1] <- identifiers[,1]
-          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
-  	        #Modify origin rows
-  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
-            #Append extra rows
-            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            if(nrow(origin)>0){
+            	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+            	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+            	origin[,1] <- identifiers[,1]
+            	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+    	        #Modify origin rows
+    	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+              #Append extra rows
+              annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            }
         }
       }
       #Remove low-resolution annotations
@@ -160,7 +149,6 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   }
 
   #Peptidases
-  #[EC:0.0.0.0]
   if(!missing(pepcol)){
     cat("\t\tExtracting relative abundance data for peptidase family identifiers...\n")
     for(col in pepcol){
@@ -176,14 +164,16 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
       if(max(annotation_abundance_table_sub$ambiguity,na.rm=T) > 1){
         for(a in c(2:max(annotation_abundance_table_sub$ambiguity,na.rm=T))){
   	        origin <- annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,]
-          	disambiguation <- origin[rep(1:nrow(origin),a-1),]
-          	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
-          	origin[,1] <- identifiers[,1]
-          	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
-  	        #Modify origin rows
-  	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
-            #Append extra rows
-            annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            if(nrow(origin)>0){
+            	disambiguation <- origin[rep(1:nrow(origin),a-1),]
+            	identifiers <- colsplit(string=origin[,1], pattern=" ",names=c(1:a))
+            	origin[,1] <- identifiers[,1]
+            	disambiguation[,1] <- unlist(identifiers[,c(2:a)])
+    	        #Modify origin rows
+    	        annotation_abundance_table_sub[annotation_abundance_table_sub$ambiguity == a,] <- origin
+              #Append extra rows
+              annotation_abundance_table_sub <- rbind(annotation_abundance_table_sub,disambiguation)
+            }
         }
       }
       #Remove duplicates

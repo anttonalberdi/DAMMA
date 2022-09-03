@@ -9,3 +9,5 @@ bin
 # Old scripts
 R/damma_community_old.R
 man/damma_community_old.Rd
+R/damma_expression_old.R
+man/damma_expression_old.Rd
