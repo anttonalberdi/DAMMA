@@ -34,8 +34,7 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
   annotation_table <- as.data.frame(annotation_table[annotation_table[,genecol] %in% rownames(expression_table),])
   expression_table <- as.data.frame(expression_table[rownames(expression_table) %in% unique(annotation_table[,genecol]),])
 
-  #Merge annotations and relative abundance information
-  cat("\tMerging annotations and relative abundance data...\n")
+  #Merge annotations and expression information
   annotation_expression_table <- merge(annotation_table,expression_table,by.x=genecol,by.y="row.names",all=FALSE)
 
   #List Genomes
@@ -61,7 +60,6 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     #KEGG identifiers
     #K00000
     if(!missing(keggcol)){
-      cat("\t\tExtracting relative abundance data for KEGG identifiers...\n")
       for(col in keggcol){
         column <- annotations_expression_Genome[,col]
         kegg_detect <- str_detect(column, "K[0-9]+")
@@ -91,8 +89,12 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
         }
 
         #Aggregate IDs
-        annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
-        colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        if(nrow(annotations_expression_Genome_sub)>0){
+          annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
+          colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        }else{
+          annotations_expression_Genome_agg <- annotations_expression_Genome_sub
+        }
 
         if(nrow(annotations_expression_Genome_agg)>0){
           expression_MCI_table <- rbind(expression_MCI_table,annotations_expression_Genome_agg)
@@ -102,7 +104,6 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
 
 
     if(!missing(eccol)){
-      cat("\t\tExtracting relative abundance data for EC identifiers...\n")
       for(col in eccol){
         column <- annotations_expression_Genome[,col]
         EC_detect <- str_detect(column, "(?<=\\[EC:).+?(?=\\])")
@@ -131,8 +132,13 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
           }
         }
         #Aggregate IDs
-        annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
-        colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        if(nrow(annotations_expression_Genome_sub)>0){
+          annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
+          colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        }else{
+          annotations_expression_Genome_agg <- annotations_expression_Genome_sub
+        }
+
 
         if(nrow(annotations_expression_Genome_agg)>0){
           expression_MCI_table <- rbind(expression_MCI_table,annotations_expression_Genome_agg)
@@ -141,7 +147,6 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     }
 
     if(!missing(pepcol)){
-      cat("\t\tExtracting relative abundance data for Peptidase identifiers...\n")
       for(col in pepcol){
         column <- annotations_expression_Genome[,col]
         pep_codes <- unique(c(unlist(c(annotations_expression_Genome[,col]))))
@@ -168,8 +173,12 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
           }
         }
         #Aggregate IDs
-        annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
-        colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        if(nrow(annotations_expression_Genome_sub)>0){
+          annotations_expression_Genome_agg <- aggregate(annotations_expression_Genome_sub[,c(3:(ncol(annotations_expression_Genome_sub)-1))],by=list(annotations_expression_Genome_sub[,1]),FUN=sum)
+          colnames(annotations_expression_Genome_agg)[1] <- "ID"
+        }else{
+          annotations_expression_Genome_agg <- annotations_expression_Genome_sub
+        }
 
         if(nrow(annotations_expression_Genome_agg)>0){
           expression_MCI_table <- rbind(expression_MCI_table,annotations_expression_Genome_agg)
@@ -181,8 +190,8 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     expression_MCI_table <- expression_MCI_table[,-1]
 
     #Compute expression scores
-    cat("\t\tCalculating gene expression-based MCIs for\n")
-    cat("\t\t",nrow(pathway_table),"pathways in",ncol(expression_MCI_table),"samples...\n")
+    #cat("\t\tCalculating gene expression-based MCIs for\n")
+    #cat("\t\t",nrow(pathway_table),"pathways in",ncol(expression_MCI_table),"samples...\n")
     suppressWarnings(
       for(f in c(1:nrow(pathway_table))){
         definition=pathway_table[f,"Definition"]
