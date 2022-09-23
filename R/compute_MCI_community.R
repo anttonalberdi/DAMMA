@@ -25,7 +25,7 @@ compute_MCI_community <- function(definition,abundance_vector){
   for(level in rev(levels)){
     definition <- distillate_definition_community(definition, def_table, level, abundance_vector)
     if(level != "L0_group"){
-      def_decomp <- decompose_definition(definition)
+      def_decomp <- unlist(strsplit(definition, "(?=[ ( ),]+)", perl=TRUE))
       def_level <- set_levels(def_decomp)
       def_table <- create_step_matrix(def_decomp,def_level)
     }
