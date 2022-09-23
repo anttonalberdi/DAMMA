@@ -5,7 +5,7 @@
 #' @param level Hierarchical level
 #' @param present Vector of gene identifiers present in the genome
 #' @importFrom stringr str_sub
-#' @import dplyr
+#' @importFrom tidyr unite
 #' @return A (partially) distilled definition string
 #' @examples
 #' distillate_definition(definition, def_table, level, present)

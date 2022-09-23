@@ -6,7 +6,7 @@
 #' @param level Hierarchical level of the pathway definition
 #' @param expression_table Table of expression values of functional units present in the genome
 #' @importFrom stringr str_sub
-#' @import dplyr
+#' @importFrom tidyr unite
 #' @return A (partially) distilled definition string
 #' @examples
 #' distillate_definition_expression(definition_expression, def_table, level, expression_table)
