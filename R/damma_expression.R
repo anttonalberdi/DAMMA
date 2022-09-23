@@ -195,7 +195,7 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     suppressWarnings(
       for(f in c(1:nrow(pathway_table))){
         definition=pathway_table[f,"Definition"]
-        expression_MCI <- compute_fullness_expression(definition,expression_MCI_table)
+        expression_MCI <- compute_MCI_expression(definition,expression_MCI_table)
         if(f == 1){
           #Create list if it is the first function
           expression_MCI_list <- expression_MCI

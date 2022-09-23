@@ -30,5 +30,5 @@ A (partially) distilled definition string
 Generates the scores of each hierarchical level of a metabolic pathway required to calculate gene expression/abundance-based MCIs
 }
 \examples{
-distillate_definition_expression(definition_expression, def_table, level, present)
+distillate_definition_expression(definition_expression, def_table, level, expression_table)
 }

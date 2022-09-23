@@ -4,11 +4,10 @@
 #' @param abundance_vector Vector containing relative abundance data per identifier
 #' @return A MCI value
 #' @examples
-#' compute_fullness(definition,present)
-#' compute_fullness("K01580 (K13524,K07250,K00823,K16871) (K00135,K00139,K17761)",c("K01580","K00823","K16871"))
+#' compute_MCI_community(definition,abundance_vector)
 #' @export
 
-compute_fullness_community <- function(definition,abundance_vector){
+compute_MCI_community <- function(definition,abundance_vector){
   #If using EC codes
   if (grepl(".", definition, fixed = TRUE)){
     names(abundance_vector) <- gsub(".","_",names(abundance_vector),fixed=TRUE)
@@ -20,8 +19,8 @@ compute_fullness_community <- function(definition,abundance_vector){
   def_level <- set_levels(def_decomp)
   #Definition-level table
   def_table <- create_step_matrix(def_decomp,def_level)
-  #Calculate number of levels
-  levels <- names(colSums(def_table[,c(3:8)],na.rm=TRUE)[colSums(def_table[,c(3:8)],na.rm=TRUE)>0])
+  #List levels
+  levels <- colnames(def_table[,c(3:ncol(def_table))])
   #Iterate calculation across levels
   for(level in rev(levels)){
     definition <- distillate_definition_community(definition, def_table, level, abundance_vector)

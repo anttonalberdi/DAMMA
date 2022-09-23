@@ -222,7 +222,7 @@ DAMMA can also compute community-level capacities to perform specific metabolic 
 
 If no information on relative abundances is provided, the function yields community-level MCIs assuming all Genomes have the same weight in the community.
 ```
-community_MCI <- damma_community(gene_annotations,pathway_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_MCI <- damma_community(gene_annotations,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 If a (relative) genome abundance table is provided, the function yields community-level MCIs adjusted to the relative representation of each Genome in the community.
@@ -230,12 +230,12 @@ If a (relative) genome abundance table is provided, the function yields communit
 ```
 abundance_table <- genome_counts[,-1]
 rownames(abundance_table) <- genome_counts[,1]
-community_fullness <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,genome=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_MCI <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The pathway fullness values can be further distilled using the damma_compounds() function.
 ```
-community_fullness_compounds <- damma_compounds(community_fullness,pathway_table)
+community_MCI_compounds <- damma_compounds(community_MCI,pathway_table)
 ```
 
 And finally, the results can be visualised in a heatmap.
@@ -245,7 +245,7 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-compounds_table_df <- melt(community_fullness_compounds)
+compounds_table_df <- melt(community_MCI_compounds)
 colnames(compounds_table_df) <- c("Samples","Compounds","MCI")
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)

@@ -39,6 +39,7 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 
   if(missing(abundance_table)){
     #If abundance table does not exist, create a mock abundance table of a single even community
+    cat("\tAs no relative abundance information was provided DAMMA will weigh genomes evenly\n")
     abundance_table <- rep(1/length(unique(annotation_table[,genomecol])),length(unique(annotation_table[,genomecol])))
     names(abundance_table) <- unique(annotation_table[,genomecol])
     abundance_table <- t(t(abundance_table))
@@ -59,7 +60,11 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
   relabun_index <- grep(paste(communities,collapse="|"), colnames(annotation_abundance_table))
 
   #Filter annotations of 0 abundance genomes
-  annotation_abundance_table <- annotation_abundance_table[rowSums(annotation_abundance_table[,relabun_index]) != 0,]
+  if(length(communities) == 1){
+    annotation_abundance_table <- annotation_abundance_table[annotation_abundance_table[,relabun_index] != 0,]
+  }else{
+    annotation_abundance_table <- annotation_abundance_table[rowSums(annotation_abundance_table[,relabun_index]) != 0,]
+  }
 
 ####
 # Prepare relative abundance table
@@ -195,8 +200,16 @@ damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_t
 cat("\tCalculating community-weighed gene representation values...\n")
 #Remove redundancy
 id_relabun_table_agg <- aggregate(id_relabun_table[,c(3:ncol(id_relabun_table))],by=list(id_relabun_table[,"ID"]),FUN=sum)
-rownames(id_relabun_table_agg) <- id_relabun_table_agg[,1]
-id_relabun_table_agg <- id_relabun_table_agg[,-1]
+if(ncol(id_relabun_table_agg) == 2){
+  rownames(id_relabun_table_agg) <- id_relabun_table_agg[,1]
+  idnames <- rownames(id_relabun_table_agg)
+  id_relabun_table_agg <- id_relabun_table_agg[,-1]
+  names(id_relabun_table_agg) <- idnames
+}else{
+  rownames(id_relabun_table_agg) <- id_relabun_table_agg[,1]
+  id_relabun_table_agg <- id_relabun_table_agg[,-1]
+}
+
 
 ####
 # Generate community-specific MCIs
@@ -208,14 +221,20 @@ m=0
 for(community in communities){
   m=m+1
   cat("\t\t",community," (",m,"/",length(communities),")\n", sep = "")
-  comm_abun <- id_relabun_table_agg[,community]
-  names(comm_abun) <- rownames(id_relabun_table_agg)
+  if(length(communities) == 1){
+    comm_abun <- id_relabun_table_agg
+    names(comm_abun) <- names(id_relabun_table_agg)
+  }else{
+    comm_abun <- id_relabun_table_agg[,community]
+    names(comm_abun) <- rownames(id_relabun_table_agg)
+  }
+
 
   MCI_vector <- c()
   suppressWarnings(
     for(f in c(1:nrow(pathway_table))){
       definition=pathway_table[f,"Definition"]
-      MCI <- compute_fullness_community(definition,comm_abun)
+      MCI <- compute_MCI_community(definition,comm_abun)
       MCI_vector <- c(MCI_vector,MCI)
     }
   )

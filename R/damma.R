@@ -80,7 +80,7 @@ damma <- function(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
     suppressWarnings(
       for(f in c(1:nrow(pathway_table))){
         definition=pathway_table[f,"Definition"]
-        MCI <- compute_fullness(definition,Identifier_vector)
+        MCI <- compute_MCI(definition,Identifier_vector)
         MCI_vector <- c(MCI_vector,MCI)
       }
     )

@@ -2,13 +2,13 @@
 #'
 #' @param definition Definition string of a given metabolic pathway/module
 #' @param expression_table Table containing expression data per functon
-#' @return A list of fullness-expression values
+#' @return A list of expression/abundance-based MCI values
 #' @examples
-#' compute_fullness_expression(definition,expression_table)
+#' compute_MCI_expression(definition,expression_table)
 #' @export
 
 #UNDER DEVELOPMENT
-compute_fullness_expression <- function(definition,expression_table){
+compute_MCI_expression <- function(definition,expression_table){
 
   #If using EC codes
   if (grepl(".", definition, fixed = TRUE)){
@@ -34,7 +34,7 @@ compute_fullness_expression <- function(definition,expression_table){
   }
 
   #Calculate number of levels
-  levels_list <- lapply(def_table_list, function(x) names(colSums(x[,c(3:8)],na.rm=TRUE)[colSums(x[,c(3:8)],na.rm=TRUE)>0]))
+  levels_list <- lapply(def_table_list, function(x) colnames(x[,c(3:ncol(x))]))
 
   #Iterate calculation across levels and samples
   for(level in rev(levels_list[[1]])){
