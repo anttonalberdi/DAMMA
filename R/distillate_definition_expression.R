@@ -6,7 +6,6 @@
 #' @param level Hierarchical level of the pathway definition
 #' @param expression_table Table of expression values of functional units present in the genome
 #' @importFrom stringr str_sub
-#' @importFrom tidyr unite
 #' @return A (partially) distilled definition string
 #' @examples
 #' distillate_definition_expression(definition_expression, def_table, level, expression_table)
@@ -24,7 +23,7 @@ distillate_definition_expression <- function(sample, definition_expression, def_
     def_table_sub <- def_table[complete.cases(def_table[,level]),]
     clusters <- unique(def_table_sub$clusters)
   }else{
-    def_table$clusters <- unite(def_table[,c(3:(ncol(def_table)-1))],col='clusters',colnames(def_table[,c(3:(ncol(def_table)-1))]), sep='-')
+    def_table$clusters <- do.call(paste, c(def_table[,c(3:(ncol(def_table)-1))], sep="-"))
     def_table_sub <- def_table[complete.cases(def_table[,level]),]
     clusters <- unique(def_table_sub$clusters)[,1]
   }

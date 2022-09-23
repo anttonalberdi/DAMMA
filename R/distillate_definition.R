@@ -5,7 +5,6 @@
 #' @param level Hierarchical level
 #' @param present Vector of gene identifiers present in the genome
 #' @importFrom stringr str_sub
-#' @importFrom tidyr unite
 #' @return A (partially) distilled definition string
 #' @examples
 #' distillate_definition(definition, def_table, level, present)
@@ -23,7 +22,7 @@ distillate_definition <- function(definition, def_table, level, present){
     def_table_sub <- def_table[complete.cases(def_table[,level]),]
     clusters <- unique(def_table_sub$clusters)
   }else{
-    def_table$clusters <- unite(def_table[,c(3:(ncol(def_table)-1))],col='clusters',colnames(def_table[,c(3:(ncol(def_table)-1))]), sep='-')
+    def_table$clusters <- do.call(paste, c(def_table[,c(3:(ncol(def_table)-1))], sep="-"))
     def_table_sub <- def_table[complete.cases(def_table[,level]),]
     clusters <- unique(def_table_sub$clusters)[,1]
   }
