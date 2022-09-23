@@ -26,7 +26,7 @@ compute_MCI <- function(definition,present){
   for(level in rev(levels)){
     definition <- distillate_definition(definition, def_table, level, present)
     if(level != "L0_group"){
-      def_decomp <- decompose_definition(definition)
+      def_decomp <- unlist(strsplit(definition, "(?=[ ( ),]+)", perl=TRUE))
       def_level <- set_levels(def_decomp)
       def_table <- create_step_matrix(def_decomp,def_level)
     }
