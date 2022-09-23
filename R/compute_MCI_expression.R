@@ -21,7 +21,7 @@ compute_MCI_expression <- function(definition,expression_table){
   names(definition_expression_list) <- colnames(expression_table)
 
   #Decompose definition
-  def_decomp_list <- lapply(definition_expression_list, function(x) unlist(strsplit(x, "(?=[ ( ),]+)", perl=TRUE)))
+  def_decomp_list <- lapply(definition_expression_list, function(x) unlist(strsplit(x, "(?=[ ( ),+]+)", perl=TRUE)))
 
   #Set levels
   def_level_list <- lapply(def_decomp_list, function(x) set_levels(x))
@@ -41,7 +41,7 @@ compute_MCI_expression <- function(definition,expression_table){
     for(s in names(definition_expression_list)){
       definition_expression_list[[s]] <- distillate_definition_expression(sample=s,definition_expression_list[[s]], def_table_list[[s]], level, expression_table)
       if(level != "L0_group"){
-        def_decomp_list[[s]] <- unlist(strsplit(definition_expression_list[[s]], "(?=[ ( ),]+)", perl=TRUE))
+        def_decomp_list[[s]] <- unlist(strsplit(definition_expression_list[[s]], "(?=[ ( ),+]+)", perl=TRUE))
         def_level_list[[s]] <- set_levels(def_decomp_list[[s]])
         def_table_list[[s]] <- create_step_matrix(def_decomp_list[[s]],def_level_list[[s]])
       }
