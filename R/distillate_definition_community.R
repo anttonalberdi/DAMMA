@@ -24,7 +24,7 @@ distillate_definition_community <- function(definition, def_table, level, abunda
   }else{
     def_table$clusters <- do.call(paste, c(def_table[,c(3:(ncol(def_table)-1))], sep="-"))
     def_table_sub <- def_table[complete.cases(def_table[,level]),]
-    clusters <- unique(def_table_sub$clusters)[,1]
+    clusters <- unique(def_table_sub$clusters)
   }
 
   for (c in clusters){
