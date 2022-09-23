@@ -21,7 +21,7 @@ compute_MCI_expression <- function(definition,expression_table){
   names(definition_expression_list) <- colnames(expression_table)
 
   #Decompose definition
-  def_decomp_list <- lapply(definition_expression_list, function(x) decompose_definition(x))
+  def_decomp_list <- lapply(definition_expression_list, function(x) unlist(strsplit(x, "(?=[ ( ),]+)", perl=TRUE)))
 
   #Set levels
   def_level_list <- lapply(def_decomp_list, function(x) set_levels(x))

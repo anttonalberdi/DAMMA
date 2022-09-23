@@ -15,7 +15,7 @@ compute_MCI <- function(definition,present){
     definition <- gsub(".","_",definition,fixed=TRUE)
   }
   #Decompose definition
-  def_decomp <- decompose_definition(definition)
+  def_decomp <- unlist(strsplit(definition, "(?=[ ( ),]+)", perl=TRUE))
   #Set levels
   def_level <- set_levels(def_decomp)
   #Definition-level table
