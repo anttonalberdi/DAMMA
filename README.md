@@ -222,9 +222,7 @@ community_MCI <- damma_community(gene_annotations,pathway_table,genomecol=2,kegg
 If a (relative) genome abundance table is provided, the function yields community-level MCIs adjusted to the relative representation of each Genome in the community.
 
 ```
-abundance_table <- genome_counts[,-1]
-rownames(abundance_table) <- genome_counts[,1]
-community_MCI <- damma_community(gene_annotations,pathway_table,abundance_table=abundance_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+community_MCI <- damma_community(gene_annotations,pathway_table,abundance_table=genome_counts,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The pathway fullness values can be further distilled using the damma_compounds() function.
@@ -258,19 +256,19 @@ ggplot(compounds_table_df2, aes(x=Samples, y=Compounds, fill=MCI, group=Function
 ```
 
 ## Using DAMMA outputs for statistical analyses
-MCIs can be used in downstream statistical analyses to test specific null hypotheses. The example data used here belongs to eight chicken individuals that were grown in two different trials, and the null hypothesis of no difference in function fullness between trials is tested with each compound. Given the fractional (values are bounded between 0 and 1) nature of the community-level fullness indices, we analyse the data with a binomial generalized linear model with logit link function and using robust standard errors (Papke and Wooldridge, 1996). Two tables are outputted with the functions that were significantly enriched in B trial and C trial, respectively.  
+MCIs can be used in downstream statistical analyses to test specific null hypotheses. The example data used here belongs to eight chicken individuals that were grown in two different trials, and the null hypothesis of no difference in function fullness between trials is tested with each compound. Given the fractional (values are bounded between 0 and 1) nature of the community-level fullness indices, we analyse the data with a binomial generalized linear model with logit link function and using robust standard errors (Papke and Wooldridge, 1996). Two tables are outputted with the functions that were significantly enriched in treatments TR1 and TR2, respectively.  
 ​
 ```
 library(sandwich)
 library(lmtest)
-Trial=factor(rep(c("B","C"),each=4))
-results_table <- data.frame(matrix(0,nrow = ncol(community_fullness_compounds),ncol = 4))
-rownames(results_table) <- colnames(community_fullness_compounds)
+Treatment=factor(rep(c("TR1","TR2"),each=4))
+results_table <- data.frame(matrix(0,nrow = ncol(community_MCI_compounds),ncol = 4))
+rownames(results_table) <- colnames(community_MCI_compounds)
 colnames(results_table) <- c("Estimate","Std.Error","z-value","p-value")
 ​
-for(i in 1:ncol(community_fullness_compounds)){
+for(i in 1:ncol(community_MCI_compounds)){
 model_glm <- glm(
-  community_fullness_compounds[,i] ~ Trial,
+  community_MCI_compounds[,i] ~ Treatment,
   family = binomial
 )
 results_table[i,] <- coeftest(model_glm, vcov = vcovHC(model_glm, type="HC"))[2,]
@@ -279,8 +277,8 @@ results_table[i,] <- coeftest(model_glm, vcov = vcovHC(model_glm, type="HC"))[2,
 results_table$FDR <- p.adjust(results_table$'p-value',method="BH")
 results_table_sig <- results_table[results_table$'p-value'<0.05,]
 # Results are outputed based on unadjusted p-values.
-B_enriched <- results_table_sig[results_table_sig$Estimate<0,]
-C_enriched <- results_table_sig[results_table_sig$Estimate>0,]
-print(B_enriched)
-print(C_enriched)
+TR1_enriched <- results_table_sig[results_table_sig$Estimate<0,]
+TR2_enriched <- results_table_sig[results_table_sig$Estimate>0,]
+print(TR1_enriched)
+print(TR2_enriched)
 ```
