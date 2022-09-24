@@ -68,7 +68,7 @@ The damma() function requires specifying in which column(s) to find Genome (MAG)
 
 ```
 #Using example data
-distilled_table <- damma(gene_annotations,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+MCI_table <- damma(gene_annotations,pathway_table,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 ### Apply MAG completeness correction factor
@@ -76,31 +76,29 @@ Functional attributes of MAGs are often not directly comparable due to different
 
 ```
 head(genome_quality)
-completeness <- as.data.frame(genome_quality[,c(1:2)])
-distilled_table_corrected <- damma_correction(distilled_table,completeness)
+MCI_table_corrected <- damma_correction(distilled_table,genome_completeness=genome_quality[,c(1:2)])
 ```
 
 ### Aggregrate raw distillates into 80 compounds
 
 The raw fullness data can be aggregated to the compound level using the damma_compounds() function. These data are useful to obtain high-resolution functional information for statistical analyses that enable a large number of features.
 ```
-distilled_table_compounds <- damma_compounds(distilled_table,pathway_table)
+MCI_table_compounds <- damma_compounds(MCI_table,pathway_table)
 ```
 
 ### Convert compounds into a binary table
 
 DAMMA offers the possibility to convert the fullness table into a binary format by setting a cutoff threshold.
 ```
-distilled_table_compounds_bin <- damma_binary(distilled_table_compounds,threshold=0.9)
+MCI_table_compounds_bin <- damma_binary(MCI_table_compounds,threshold=0.9)
 ```
 
 ### Aggregrate compounds into 11 core functions
 
 The compounds data can be aggregated to the main functional levels using the damma_functions() function. These data are useful to obtain overall functional information for statistical analyses that required a reduced number of features.
 ```
-distilled_table_functions <- damma_functions(distilled_table_compounds,pathway_table,transform=FALSE)
-distilled_table_functions_bin <- damma_functions(distilled_table_compounds_bin,pathway_table,transform=TRUE)
-
+MCI_table_functions <- damma_functions(MCI_table_compounds,pathway_table)
+MCI_table_functions_bin <- damma_functions(MCI_table_compounds_bin,pathway_table)
 ```
 
 ### Compound-level heatmap
@@ -112,7 +110,7 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-compounds_table_df <- melt(distilled_table_compounds)
+compounds_table_df <- melt(MCI_table_compounds)
 colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
