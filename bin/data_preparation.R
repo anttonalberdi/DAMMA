@@ -1,6 +1,6 @@
-gene_annotations <- read.table("data/source/gene_annotations.tsv",header=TRUE,sep="\t")
-gene_expression <- read.table("data/source/gene_expression.tsv",header=TRUE,sep="\t")
-genome_counts <- read.table("data/source/genome_counts.tsv",header=TRUE,sep="\t")
+gene_annotations <- read.table("data/source/gene_annotations.tsv",header=TRUE,sep="\t",fill=TRUE)
+gene_expression <- read.table("data/source/gene_expression.tsv",header=TRUE,sep="\t",row.names=1)
+genome_counts <- read.table("data/source/genome_counts.tsv",header=TRUE,sep="\t",row.names=1)
 genome_quality <- read.table("data/source/genome_quality.tsv",header=TRUE,sep="\t")
 
 pathway_table_FD1 <- read.table("data/source/DAMMA_db1.tsv",header=TRUE,sep="\t")
