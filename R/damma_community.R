@@ -3,7 +3,6 @@
 #' @param annotation_table Table containing Genome identifiers and annotation codes
 #' @param pathway_table Table containing definitions and metadata of metabolic functions (included in DAMMA package)
 #' @param abundance_table (Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values
-#' @param MCI_table Gene presence-based MCI table provided by damma() function
 #' @param completeness_table Genome completeness table to correct MCIs for varying completeness values
 #' @param genomecol Column index (number) of annotation_table containing the MAG identifiers
 #' @param keggcol Column index(es) of annotation_table in which to search for KEGG KO annotations
@@ -17,7 +16,7 @@
 #' damma_community(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
 #' @export
 
-damma_community <- function(annotation_table,pathway_table,abundance_table,MCI_table,completeness_table,genomecol,keggcol,eccol,pepcol){
+damma_community <- function(annotation_table,pathway_table,abundance_table,completeness_table,genomecol,keggcol,eccol,pepcol){
 
   #Sanity check
   if(missing(annotation_table)) stop("Genome annotation table is missing")

@@ -111,13 +111,13 @@ library(RColorBrewer)
 
 #Prepare input table
 compounds_table_df <- melt(MCI_table_compounds)
-colnames(compounds_table_df) <- c("MAGs","Compounds","Fullness")
+colnames(compounds_table_df) <- c("MAGs","Compounds","MCI")
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
 compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 
 #Plot heatmap
-ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Function))+
+ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=MCI, group=Function))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
@@ -125,7 +125,7 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Fullness, group=Functi
   scale_fill_gradientn(limits = c(0,1), colours=brewer.pal(7, "YlGnBu"))+
   facet_grid(Function ~ ., scales = "free", space = "free")+
   theme_grey(base_size=8)+
-  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
+  theme(strip.text.y = element_text(angle = 0),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
 Combining DAMMA with ggplot2, it is possible to produce visual representations of both continuous fullness values as well as binary versions of it.
@@ -141,12 +141,12 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-pathway_table_df <- melt(distilled_table_functions)
-colnames(pathway_table_df) <- c("MAGs","Functions","Index")
+pathway_table_df <- melt(MCI_table_functions)
+colnames(pathway_table_df) <- c("MAGs","Functions","MCI")
 pathway_table_df$Function <- as.factor(pathway_table_df$Function)
 pathway_table_df$Function <- factor(pathway_table_df$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
 #Plot heatmap
-ggplot(pathway_table_df, aes(x=MAGs, y=Functions, fill=Index))+
+ggplot(pathway_table_df, aes(x=MAGs, y=Functions, fill=MCI))+
   geom_tile(colour="white", size=0.1)+
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
@@ -154,7 +154,7 @@ ggplot(pathway_table_df, aes(x=MAGs, y=Functions, fill=Index))+
   scale_fill_gradientn(limits = c(0,1), colours=brewer.pal(7, "YlGnBu"))+
   facet_grid(Function ~ ., scales = "free", space = "free")+
   theme_grey(base_size=8)+
-  theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
+  theme(strip.text.y = element_text(angle = 0),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
 ## Using DAMMA with metatranscriptomic data
@@ -168,37 +168,33 @@ The damma_expression() function requires specifying in which column(s) to find G
 ```
 data(damma_data)
 head(gene_expression)
-rownames(gene_expression) <- gene_expression[,1]
-gene_expression <- gene_expression[,-1]
 
-distilled_expression_table <- damma_expression(gene_expression,gene_annotations,pathway_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
+MCI_expression_table <- damma_expression(gene_expression,gene_annotations,pathway_table,genecol=1,genomecol=2,keggcol=9,eccol=c(10,19),pepcol=12)
 ```
 
 The output of damma_expression() is a list of tables containing functional expression values grouped by genome (one table with various samples per genome). Depending on the downstream analyses, researchers might need to organise the information differently.  Using the function sweep_matrix_list() it is possible to change the organisation of the information to a list of tables grouped by sample (one table with various genomes per sample).
 
 ```
-distilled_expression_table2 <- sweep_matrix_list(distilled_expression_table)
+MCI_expression_table2 <- sweep_matrix_list(MCI_expression_table)
 ```
 
 Using lapply(), the damma_compounds() function can be applied to the list of expression tables.
 ```
-distilled_expression_table2_compounds <- lapply(distilled_expression_table2,function(x) damma_compounds(x,pathway_table))
+MCI_expression_table2_compounds <- lapply(MCI_expression_table2,function(x) damma_compounds(x,pathway_table))
 ```
 
-A compound level heatmap can be plotted per sample or averaging all samples
+A compound level heatmap can be plotted per sample
 ```
 library(data.table)
 library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-sample="CB20.13F1a"
-sample="CC20.13F1a"
-compounds_table_df <- melt(distilled_expression_table2_compounds[[sample]])
-colnames(compounds_table_df) <- c("MAGs","Compounds","Expression")
+compounds_table_df <- melt(MCI_expression_table2_compounds)
+colnames(compounds_table_df) <- c("MAGs","Compounds","Expression","Sample")
 compounds_table_df$Expression <- log(compounds_table_df$Expression)
-compounds_table_df$Expression[compounds_table_df$Expression == "-Inf"] <- 0
-compounds_table_df$Expression[compounds_table_df$Expression < 0] <- 0
+compounds_table_df$Expression[compounds_table_df$Expression == "-Inf"] <- NA
+compounds_table_df$Expression[compounds_table_df$Expression < 0] <- NA
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
 compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
@@ -209,8 +205,8 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Expression, group=Func
   scale_y_discrete(guide = guide_axis(check.overlap = TRUE))+
   scale_x_discrete(guide = guide_axis(check.overlap = TRUE))+
   #scale_fill_gradientn(limits = c(0,1), colours = rev(c("#781a25","#d53e4f", "#f46d43", "#fdae61", "#fee08b", "#e6f598", "#abdda4", "#ddf1da","#f1faf0","#f4f4f4")))+
-  scale_fill_gradientn(colours=brewer.pal(7, "YlGnBu"))+
-  facet_grid(Function ~ ., scales = "free", space = "free")+
+  scale_fill_gradientn(colours=brewer.pal(7, "YlGnBu"),na.value="#f4f4f4")+
+  facet_grid(Function ~ Sample, scales = "free", space = "free")+
   theme_grey(base_size=8)+
   theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
