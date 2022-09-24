@@ -1,4 +1,4 @@
-gene_annotations <- read.table("data/source/gene_annotations.tsv",header=TRUE,sep="\t",fill=TRUE)
+gene_annotations <- read.table("data/source/gene_annotations.csv",header=TRUE,sep=",")
 gene_expression <- read.table("data/source/gene_expression.tsv",header=TRUE,sep="\t",row.names=1)
 genome_counts <- read.table("data/source/genome_counts.tsv",header=TRUE,sep="\t",row.names=1)
 genome_quality <- read.table("data/source/genome_quality.tsv",header=TRUE,sep="\t")
