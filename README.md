@@ -90,7 +90,7 @@ MCI_table_compounds <- damma_compounds(MCI_table,pathway_table)
 
 DAMMA offers the possibility to convert the fullness table into a binary format by setting a cutoff threshold.
 ```
-MCI_table_compounds_bin <- damma_binary(MCI_table_compounds,threshold=0.9)
+MCI_table_compounds_bin <- damma_binary(MCI_table_compounds,threshold=0.75)
 ```
 
 ### Aggregrate compounds into 11 core functions
@@ -110,7 +110,7 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-compounds_table_df <- melt(MCI_table_compounds)
+compounds_table_df <- melt(MCI_table_compounds_bin)
 colnames(compounds_table_df) <- c("MAGs","Compounds","MCI")
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
@@ -130,7 +130,7 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=MCI, group=Function))+
 
 Combining DAMMA with ggplot2, it is possible to produce visual representations of both continuous fullness values as well as binary versions of it.
 
-![Comparison of fullness and binary outcome of compound metabolism.](images/compound_fullness-binary.jpg)
+![Comparison of continuous and binary MCIs at the compound level.](images/compound_MCIs.jpg)
 
 ### Function-level heatmap
 
@@ -210,6 +210,7 @@ ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=Expression, group=Func
   theme_grey(base_size=8)+
   theme(strip.text.y = element_text(angle = 0),axis.text.x=element_blank())
 ```
+![Gene expression-based MCIs at the compound level for each genome and sample.](images/expression_MCIs.jpg)
 
 ## Using DAMMA for community-level analysis
 DAMMA can also compute community-level capacities to perform specific metabolic functions through computing MCIs based on the community-weighed average representations of genes. When working with large annotation files and hundreds of samples, R can run out of memory and yield an error like "Error: vector memory exhausted (limit reached?)". In such cases, allocate more virtual memory to your R environment.
@@ -254,6 +255,8 @@ ggplot(compounds_table_df2, aes(x=Samples, y=Compounds, fill=MCI, group=Function
   theme_grey(base_size=8)+
   theme(strip.text.y = element_text(angle = 0))
 ```
+![Community-level MCIs for each sample sample.](images/community_MCIs.jpg)
+
 
 ## Using DAMMA outputs for statistical analyses
 MCIs can be used in downstream statistical analyses to test specific null hypotheses. The example data used here belongs to eight chicken individuals that were grown in two different trials, and the null hypothesis of no difference in function fullness between trials is tested with each compound. Given the fractional (values are bounded between 0 and 1) nature of the community-level fullness indices, we analyse the data with a binomial generalized linear model with logit link function and using robust standard errors (Papke and Wooldridge, 1996). Two tables are outputted with the functions that were significantly enriched in treatments TR1 and TR2, respectively.  
