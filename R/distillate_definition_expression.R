@@ -48,7 +48,7 @@ distillate_definition_expression <- function(sample, definition_expression, def_
         }else{
           value <- 0
         }
-      } else if("," %in% subdef){
+      }else if("," %in% subdef){
         subdef2 <- subdef[subdef != ","]
         subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
         subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
@@ -66,7 +66,22 @@ distillate_definition_expression <- function(sample, definition_expression, def_
           value <- 0
         }
       } else {
-        value <- 0
+        subdef2 <- subdef
+        subdef2_code <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)]
+        subdef2_number <- as.numeric(subdef2[!subdef2 %in% subdef2_code])
+        if(length(subdef2_code) > 0){
+          subdef2_expression <- expression_table[rownames(expression_table) %in% subdef2_code,sample]
+          if(length(subdef2_expression) == 0){
+            subdef2_expression <- 0
+          }
+        }else{
+          subdef2_expression <- NA
+        }
+        if(length(subdef2_expression) > 0 | is.na(subdef2_expression)){
+          value <- max(c(subdef2_number,subdef2_expression),na.rm=TRUE)
+        }else{
+          value <- 0
+        }
       }
       if(level == "L0_group"){
         definition_expression <- gsub(paste(subdef,collapse=""),value,definition_expression, fixed = TRUE)

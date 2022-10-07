@@ -34,18 +34,19 @@ distillate_definition <- function(definition, def_table, level, present){
       subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
       subdef2[subdef2=="FALSE"] <- 0
       subdef2[subdef2=="TRUE"] <- 1
-      value=mean(as.numeric(subdef2))
+      value=round(mean(as.numeric(subdef2)),2)
     } else if("," %in% subdef){
       subdef2 <- subdef[subdef != ","]
       subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
       subdef2[subdef2=="FALSE"] <- 0
       subdef2[subdef2=="TRUE"] <- 1
-      value=max(as.numeric(subdef2))
+      value=round(max(as.numeric(subdef2)),2)
     } else {
       subdef2 <- subdef
+      subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] <- subdef2[grepl("_", subdef2, fixed = TRUE) | grepl("[A-Z]", subdef2, fixed = FALSE)] %in% c(present)
       subdef2[subdef2=="FALSE"] <- 0
       subdef2[subdef2=="TRUE"] <- 1
-      value=round(max(as.numeric(subdef2)),1)
+      value=round(max(as.numeric(subdef2)),2)
     }
     if(level == "L0_group"){
       definition <- gsub(paste(subdef,collapse=""),value,definition, fixed = TRUE)
