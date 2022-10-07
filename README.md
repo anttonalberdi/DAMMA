@@ -110,11 +110,11 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Prepare input table
-compounds_table_df <- melt(MCI_table_compounds_bin)
+compounds_table_df <- melt(MCI_table_compounds)
 colnames(compounds_table_df) <- c("MAGs","Compounds","MCI")
 compounds_table_df2 <- merge(compounds_table_df,pathway_table,by.x="Compounds",by.y="Compound")
 compounds_table_df2$Function <- as.factor(compounds_table_df2$Function)
-compounds_table_df2$Function <- factor(compounds_table_df2$Function, levels=c("Polysaccharide degradation","Sugar degradation","Lipid degradation","Protein degradation","Mucin degradation","SCFA production","Organic anion production","Secondary bile acid production","Amino acid production","Amino acid derivative production","Vitamin production"))
+
 
 #Plot heatmap
 ggplot(compounds_table_df2, aes(x=MAGs, y=Compounds, fill=MCI, group=Function))+

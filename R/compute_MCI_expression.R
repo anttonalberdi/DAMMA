@@ -34,7 +34,7 @@ compute_MCI_expression <- function(definition,expression_table){
   }
 
   #Calculate number of levels
-  levels_list <- lapply(def_table_list, function(x) colnames(x[,c(3:ncol(x))]))
+  levels_list <- lapply(def_table_list, function(x) colnames(def_table)[c(3:ncol(def_table))])
 
   #Iterate calculation across levels and samples
   for(level in rev(levels_list[[1]])){

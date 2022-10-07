@@ -20,7 +20,7 @@ compute_MCI_community <- function(definition,abundance_vector){
   #Definition-level table
   def_table <- create_step_matrix(def_decomp,def_level)
   #List levels
-  levels <- colnames(def_table[,c(3:ncol(def_table))])
+  levels <- colnames(def_table)[c(3:ncol(def_table))]
   #Iterate calculation across levels
   for(level in rev(levels)){
     definition <- distillate_definition_community(definition, def_table, level, abundance_vector)
