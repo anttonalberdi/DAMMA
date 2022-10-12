@@ -208,7 +208,7 @@ damma_expression <- function(expression_table,annotation_table,pathway_table,gen
     #Convert sample list to matrix
     expression_MCI_list <- lapply(expression_MCI_list,function(x) as.numeric(x))
     expression_MCI_table <- do.call(rbind, expression_MCI_list)
-    colnames(expression_MCI_table) <- pathway_table$Code
+    colnames(expression_MCI_table) <- pathway_table$Code_pathway
 
     #Append to Genome list
     expression_MCI_table_list[[Genome]] <- expression_MCI_table

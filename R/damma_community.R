@@ -243,7 +243,7 @@ for(community in communities){
 
   #Format output MCI table
   rownames(MCI_table) <- communities
-  colnames(MCI_table) <- pathway_table$Code
+  colnames(MCI_table) <- pathway_table$Code_pathway
   MCI_table[is.na(MCI_table)] <- 0
 
   #Output MCI table

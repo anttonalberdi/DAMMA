@@ -13,12 +13,12 @@
 damma_compounds <- function(MCI_table,pathway_table){
 
    compounds_table <- t(as.data.frame(t(MCI_table)) %>%
-     rownames_to_column('Code') %>%
-     left_join(pathway_table[,c('Code', 'Compound')], by = 'Code') %>%
-     group_by(Compound) %>%
+     rownames_to_column('Code_pathway') %>%
+     left_join(pathway_table[,c('Code_pathway', 'Code_compound')], by = 'Code_pathway') %>%
+     group_by(Code_compound) %>%
      summarise(across(where(is.numeric), ~ max(.x, na.rm = TRUE))) %>%
-     arrange(factor(Compound, levels = unique(pathway_table$Compound))) %>%
-     column_to_rownames('Compound'))
+     arrange(factor(Code_compound, levels = unique(pathway_table$Code_compound))) %>%
+     column_to_rownames('Code_compound'))
 
    return(compounds_table)
 

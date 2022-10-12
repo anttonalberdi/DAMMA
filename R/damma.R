@@ -90,7 +90,7 @@ damma <- function(annotation_table,pathway_table,genomecol,keggcol,eccol,pepcol)
 
   #Format output MCI table
   rownames(MCI_table) <- Genomes
-  colnames(MCI_table) <- pathway_table$Code
+  colnames(MCI_table) <- pathway_table$Code_pathway
   MCI_table[is.na(MCI_table)] <- 0
 
   #Output MCI table
