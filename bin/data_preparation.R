@@ -1,3 +1,5 @@
+setwd("/Users/anttonalberdi/github/DAMMA/")
+
 gene_annotations <- read.table("data/source/gene_annotations.tsv",header=TRUE,sep="\t")
 library(gtools)
 gene_annotations <- gene_annotations[mixedorder(gene_annotations$genome),]

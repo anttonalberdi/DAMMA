@@ -8,7 +8,6 @@ damma_community(
   annotation_table,
   pathway_table,
   abundance_table,
-  MCI_table,
   completeness_table,
   genomecol,
   keggcol,
@@ -22,8 +21,6 @@ damma_community(
 \item{pathway_table}{Table containing definitions and metadata of metabolic functions (included in DAMMA package)}
 
 \item{abundance_table}{(Relative) abundance table with samples in columns and Genomes in rows. Required for computing sample-specific MCI values}
-
-\item{MCI_table}{Gene presence-based MCI table provided by damma() function}
 
 \item{completeness_table}{Genome completeness table to correct MCIs for varying completeness values}
 
