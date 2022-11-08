@@ -14,9 +14,10 @@ pathway_table_FD4 <- read.table("data/source/DAMMA_db4.tsv",header=TRUE,sep="\t"
 pathway_table_FD5 <- read.table("data/source/DAMMA_db5.tsv",header=TRUE,sep="\t")
 pathway_table_FD6 <- read.table("data/source/DAMMA_db6.tsv",header=TRUE,sep="\t")
 pathway_table_FD7 <- read.table("data/source/DAMMA_db7.tsv",header=TRUE,sep="\t")
+pathway_table_FD8 <- read.table("data/source/DAMMA_db8.tsv",header=TRUE,sep="\t")
 
 #Use latest version as default
-pathway_table <- pathway_table_FD7
+pathway_table <- pathway_table_FD8
 save(pathway_table,gene_annotations,gene_expression,genome_counts,genome_quality,
   pathway_table_FD1,
   pathway_table_FD2,
@@ -25,6 +26,7 @@ save(pathway_table,gene_annotations,gene_expression,genome_counts,genome_quality
   pathway_table_FD5,
   pathway_table_FD6,
   pathway_table_FD7,
+  pathway_table_FD8,
   file="data/damma_data.RData")
 
 #Remove and update DAMMA
